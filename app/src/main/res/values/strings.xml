@@ -831,7 +831,10 @@
         <item>Capital for business</item>
     </string-array>
 
-
     <string name="create_comaker">Co-Maker Details</string>
+    <string name="create_guarantor">Guarantor Details</string>
+    <string name="repayment_details">Repayment Details</string>
+    <string name="btn_back">BACK</string>
+    <string name="btn_view_repayment_details">VIEW REPAYMENT DETAILS</string>
 
 </resources>
