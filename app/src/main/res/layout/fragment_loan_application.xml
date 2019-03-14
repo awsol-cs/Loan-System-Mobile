@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.LoanApplicationFragment">
+
+    <TextView
+        android:id="@+id/tv_page_title"
+        style="@style/TextView.CreateLoanAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintBottom_toTopOf="@+id/tv_label_accountid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="tv_page_title" />
+
+    <TextView
+        android:id="@+id/tv_customer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_weight="1"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textAlignment="viewStart"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_page_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_page_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_page_title"
+        tools:text="Customer Name" />
+
+    <TextView
+        android:id="@+id/tv_label_accountid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/account_id"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_lproduct"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_page_title" />
+
+    <TextView
+        android:id="@+id/tv_account_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_label_accountid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_label_accountid"
+        app:layout_constraintTop_toTopOf="@+id/tv_label_accountid"
+        tools:text="@string/account_number" />
+
+    <TextView
+        android:id="@+id/tv_lproduct"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:paddingLeft="4dp"
+        android:paddingTop="16dp"
+        android:paddingRight="4dp"
+        android:text="@string/loanproduct"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/sp_lproduct"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_accountid" />
+
+    <Spinner
+        android:id="@+id/sp_lproduct"
+        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:entries="@array/array_loan_product"
+        android:paddingTop="10dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toTopOf="@+id/tv_loan_purpose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lproduct" />
+
+    <TextView
+        android:id="@+id/tv_loan_purpose"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="7dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/loan_purpose"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/sp_loan_purpose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_lproduct" />
+
+    <Spinner
+        android:id="@+id/sp_loan_purpose"
+        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:entries="@array/array_loan_purpose"
+        app:layout_constraintBottom_toTopOf="@+id/tv_loan_disbursement"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_loan_purpose" />
+
+    <TextView
+        android:id="@+id/tv_disbursementon_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="textEnd"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_loan_disbursement"
+        app:layout_constraintEnd_toStartOf="@+id/im_calendar"
+        app:layout_constraintStart_toEndOf="@+id/tv_loan_disbursement"
+        app:layout_constraintTop_toTopOf="@+id/tv_loan_disbursement"
+        tools:text="@string/disburse_date" />
+
+    <TextView
+        android:id="@+id/tv_loan_disbursement"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/loan_disbursement_date"
+        android:textAlignment="viewStart"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout5"
+        app:layout_constraintEnd_toStartOf="@+id/tv_disbursementon_date"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/barrier_title"
+        app:layout_constraintTop_toBottomOf="@+id/sp_loan_purpose" />
+
+    <ImageView
+        android:id="@+id/im_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/baseline_calendar_today_black_24"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_disbursementon_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_disbursementon_date"
+        app:layout_constraintTop_toTopOf="@+id/tv_disbursementon_date"
+        tools:ignore="ContentDescription" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_loan_term"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/barrier_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_loan_disbursement">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_principal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/loan_principal"
+            android:inputType="number"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_loan_term"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/loan_tenure"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_loan_interest_rate"
+        app:layout_constraintEnd_toStartOf="@+id/tv_loan_tenure_value"
+        app:layout_constraintStart_toEndOf="@+id/barrier_title"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
+
+    <TextView
+        android:id="@+id/tv_loan_tenure_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_loan_term"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_loan_term"
+        app:layout_constraintTop_toTopOf="@+id/tv_loan_term"
+        tools:text="@string/loan_tenure_value" />
+
+    <TextView
+        android:id="@+id/tv_loan_interest_rate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/loan_interest_rate"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_loan_interest_rate_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_loan_term" />
+
+    <TextView
+        android:id="@+id/tv_loan_interest_rate_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_loan_interest_rate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_loan_interest_rate"
+        app:layout_constraintTop_toTopOf="@+id/tv_loan_interest_rate"
+        tools:text="@string/loan_interest_rate_value" />
+
+    <TextView
+        android:id="@+id/tv_repayments"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/loan_repayments"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/tv_repayments_value"
+        app:layout_constraintStart_toEndOf="@+id/barrier_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_loan_interest_rate" />
+
+    <TextView
+        android:id="@+id/tv_repayments_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_repayments"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_repayments"
+        app:layout_constraintTop_toTopOf="@+id/tv_repayments"
+        tools:text="@string/loan_repayments_value" />
+
+    <Button
+        android:id="@+id/button"
+        style="@style/Button.Login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/primary"
+        android:text="@string/submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/barrier_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_repayments" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
