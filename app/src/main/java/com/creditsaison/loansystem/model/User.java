@@ -1,30 +1,25 @@
 package com.creditsaison.loansystem.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class User {
-    private String username;
-    private String password;
+    public String username;
+    public int userId;
 
-    public String getUsername() {
-        return username;
-    }
+    @SerializedName("base64EncodedAuthenticationKey")
+    @Expose
+    public String authenticationKey;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public boolean authenticated;
 
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", userId=" + userId +
+                ", authenticationKey='" + authenticationKey + '\'' +
+                ", authenticated=" + authenticated +
                 '}';
     }
 }
