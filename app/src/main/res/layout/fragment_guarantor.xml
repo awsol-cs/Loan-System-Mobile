@@ -7,18 +7,18 @@
 
         <variable
             name="viewModel"
-            type="com.creditsaison.loansystem.viewmodel.CoMakerViewModel" />
+            type="com.creditsaison.loansystem.viewmodel.GuarantorViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.CoMakerFragment">
+        tools:context=".fragments.GuarantorFragment">
 
         <TextView
             android:id="@+id/tv_page_title"
-            style="@style/TextView.CreateCoMaker"
+            style="@style/TextView.CreateGuarantor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -232,7 +232,6 @@
             android:layout_marginEnd="16dp"
             android:background="@color/primary"
             android:text="@string/submit"
-            android:onClick="@{viewModel::onButtonClick}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />

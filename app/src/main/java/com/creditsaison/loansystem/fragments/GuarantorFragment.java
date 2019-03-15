@@ -12,18 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.creditsaison.loansystem.R;
-import com.creditsaison.loansystem.databinding.FragmentLoanApplicationBinding;
-import com.creditsaison.loansystem.viewmodel.LoanApplicationViewModel;
+import com.creditsaison.loansystem.databinding.FragmentGuarantorBinding;
+import com.creditsaison.loansystem.viewmodel.GuarantorViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoanApplicationFragment extends Fragment {
+public class GuarantorFragment extends Fragment {
 
-    private FragmentLoanApplicationBinding binding;
-    private LoanApplicationViewModel viewModel;
+    private FragmentGuarantorBinding binding;
+    private GuarantorViewModel viewModel;
 
-    public LoanApplicationFragment() {
+
+    public GuarantorFragment() {
         // Required empty public constructor
     }
 
@@ -31,14 +32,14 @@ public class LoanApplicationFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = ViewModelProviders.of(this).get(LoanApplicationViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(GuarantorViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = FragmentLoanApplicationBinding.inflate(inflater, container, false);
+        binding = FragmentGuarantorBinding.inflate(inflater, container, false);
         binding.setViewModel(viewModel);
 
         return binding.getRoot();

@@ -38,7 +38,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha04'
 
     // ViewModel and LiveData
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha03'
 
     //jetpack navigation
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-rc02'

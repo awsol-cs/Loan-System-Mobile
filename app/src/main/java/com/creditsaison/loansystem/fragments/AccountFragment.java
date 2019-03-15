@@ -3,30 +3,46 @@ package com.creditsaison.loansystem.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.creditsaison.loansystem.R;
+import com.creditsaison.loansystem.databinding.FragmentAccountBinding;
+import com.creditsaison.loansystem.viewmodel.AccountViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AccountFragment extends Fragment {
 
+    private FragmentAccountBinding binding;
+    private AccountViewModel viewModel;
+
 
     public AccountFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        viewModel = ViewModelProviders.of(this).get(AccountViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+
+        binding = FragmentAccountBinding.inflate(inflater, container, false);
+        binding.setViewModel(viewModel);
+
+        return binding.getRoot();
     }
 
 }

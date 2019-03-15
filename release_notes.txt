@@ -4,6 +4,8 @@ r20190315
 r20190314
 -- codes from practice branch
 -- added flow from login to account screen
+-- added new screens
+-- added screen flow
 
 r20190308
 -- initial commit of .gitignore and release_notes.txt
