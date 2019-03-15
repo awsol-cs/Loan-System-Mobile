@@ -5,6 +5,7 @@ import timber.log.Timber;
 
 import android.os.Bundle;
 
+import com.creditsaison.loansystem.dagger.DaggerManager;
 import com.creditsaison.loansystem.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        DaggerManager.getInstance().buildComponentAndInject(this);
 
     }
 }
