@@ -836,5 +836,8 @@
     <string name="btn_back">BACK</string>
     <string name="btn_view_repayment_details">VIEW REPAYMENT DETAILS</string>
     <string name="loan_balance">Loan Balance</string>
+    <string name="button_new_application">NEW LOAN APPLICATION</string>
+    <string name="wait_for_approval">The approval process will take around 30 minutes. Please wait.</string>
+    <string name="button_finish">FINISH</string>
 
 </resources>

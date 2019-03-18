@@ -81,5 +81,18 @@
         android:id="@+id/guarantorFragment"
         android:name="com.creditsaison.loansystem.fragments.GuarantorFragment"
         android:label="fragment_guarantor"
-        tools:layout="@layout/fragment_guarantor" />
+        tools:layout="@layout/fragment_guarantor" >
+        <action
+            android:id="@+id/action_guarantorFragment_to_loanApplicationSentFragment"
+            app:destination="@id/loanApplicationSentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loanApplicationSentFragment"
+        android:name="com.creditsaison.loansystem.fragments.LoanApplicationSentFragment"
+        android:label="fragment_loan_application_sent"
+        tools:layout="@layout/fragment_loan_application_sent" >
+        <action
+            android:id="@+id/action_loanApplicationSentFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
 </navigation>
