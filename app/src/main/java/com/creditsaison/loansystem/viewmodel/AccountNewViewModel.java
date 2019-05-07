@@ -14,6 +14,8 @@ public class AccountNewViewModel extends ViewModel {
     }
 
     public void onButtonClick(View view) {
-        Navigation.findNavController(view).navigate(R.id.action_accountNewFragment_to_coMakerFragment2);
+        Navigation.findNavController(view).navigate(R.id.action_accountNewFragment_to_accountNewFragment2);
     }
+
+
 }

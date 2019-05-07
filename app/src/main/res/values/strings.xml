@@ -61,6 +61,7 @@
     <string name="submittedon">Submitted On</string>
     <string name="activation_date">Activation Date</string>
     <string name="office">Office</string>
+    <string name="office_required">Office*</string>
     <string name="group">Group</string>
     <string name="cancel">Cancel</string>
     <string name="review_payment">Review Payment</string>
@@ -839,5 +840,117 @@
     <string name="button_new_application">NEW LOAN APPLICATION</string>
     <string name="wait_for_approval">The approval process will take around 30 minutes. Please wait.</string>
     <string name="button_finish">FINISH</string>
+
+    <!-- jenny & jano added parts START -->
+    <string-array name="array_client">
+        <item>Personal</item>
+        <item>Company</item>
+    </string-array>
+
+    <string-array name="array_client_classification">
+        <item>Employee</item>
+        <item>Manager</item>
+    </string-array>
+
+    <string name="current_address">Current Address</string>
+    <string name="permanent_address">Permanent Address</string>
+    <string name="nationality">Nationality</string>
+    <string name="marital">Marital Status</string>
+
+    <string-array name="array_marital_status">
+        <item>Single</item>
+        <item>Married</item>
+        <item>Widow/er</item>
+        <item>Separated</item>
+    </string-array>
+
+    <string name="employment_type">Employment Type</string>
+    <string name="current_employer">Name of Current Employer/Business</string>
+    <string name="years_employment">Years of Employment</string>
+    <string name="gross_income">Annual Gross Income</string>
+
+    <string-array name="array_employment_type">
+        <item>Private Sector</item>
+        <item>Government</item>
+        <item>Self-Employed</item>
+        <item>Others</item>
+    </string-array>
+
+    <string name="gov_id">Government ID:</string>
+    <string name="gov_id_num">ID Number</string>
+    <string-array name="array_gov_ids">
+        <item>Type</item>
+        <item>Passport</item>
+        <item>PRC ID</item>
+        <item>SSS ID</item>
+    </string-array>
+
+    <string name="educ_stat">Educational Attainment:</string>
+    <string-array name="array_educ_stat">
+        <item>High School</item>
+        <item>College</item>
+        <item>Post Graduate</item>
+        <item>Others</item>
+    </string-array>
+
+    <string name="self_employed">Business Type (For Self Employed Only)</string>
+    <string-array name="array_self_employed_type">
+        <item>Sole Proprietor</item>
+        <item>Partnership</item>
+    </string-array>
+
+    <string name="operation_years">Years in Operation</string>
+    <string name="num_employees">Number of Employees</string>
+
+    <string name="num_dependents">Number of Dependents:</string>
+    <string name="for_others">For Others</string>
+    <string name="last_school">School Last Attended</string>
+    <string name="birthplace">Place of Birth</string>
+    <string name="mother_name">Mother\'s Full Maiden Name</string>
+
+    <string name="residence_ownership">Residence Ownership</string>
+    <string-array name="array_residence_ownership">
+        <item>Owned</item>
+        <item>Co. Quarters</item>
+        <item>Mortgaged</item>
+        <item>With Relatives</item>
+        <item>Rented</item>
+    </string-array>
+
+    <string-array name="array_rank">
+        <item>Senior Officer</item>
+        <item>Junior Officer</item>
+        <item>Non-Officer</item>
+    </string-array>
+
+    <string-array name="array_yes_no">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="array_officer_relationship">
+        <item>Spouse</item>
+        <item>Parent</item>
+        <item>Sibling</item>
+        <item>Child</item>
+        <item>Others</item>
+    </string-array>
+
+
+    <string name="button_add_photo">Add Your Photo</string>
+    <string name="button_add_docu_photo">Add photo of supporting documents</string>
+    <string name="terms_conditions">TERMS AND CONDITIONS</string>
+    <string name="loan_agreement">LOAN AGREEMENT</string>
+    <string name="promi_note">PROMISSORY NOTE</string>
+    <string name="button_terms_agree">AGREE and SIGN</string>
+    <string name="button_terms_disagree">DO NOT AGREE and CANCEL</string>
+    <string name="sign_here_title">Sign Here</string>
+    <string name="get_signature_text">Get Signature</string>
+    <string name="checkbox_text">I have Successfully Received the product</string>
+
+    <string name="agreement">I agree the terms and conditions.</string>
+    <string name="clear_pad">Clear Pad</string>
+    <string name="save_signature">Save Signature</string>
+
 
 </resources>

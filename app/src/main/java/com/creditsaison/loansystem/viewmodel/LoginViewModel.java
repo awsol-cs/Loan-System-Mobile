@@ -30,17 +30,18 @@ public class LoginViewModel extends ViewModel {
 
     public void onLoginClick(View view) {
         Timber.d("onLoginClick --> credentials: %s", credentials.toString());
+        Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_accountFragment);
 
-        //TODO add validation of username and password
-        compositeDisposable.add(repository.login(credentials.getUsername(), credentials.getPassword())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(user -> {
-                    if (user != null) {
-                        Timber.d("authentication --> user: %s", user.toString());
-                        Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_accountFragment);
-                    }
-                }, Timber::e));
+//        //TODO add validation of username and password
+//        compositeDisposable.add(repository.login(credentials.getUsername(), credentials.getPassword())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(user -> {
+//                    if (user != null) {
+//                        Timber.d("authentication --> user: %s", user.toString());
+//                        Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_accountFragment);
+//                    }
+//                }, Timber::e));
     }
 
     @Override

@@ -19,7 +19,7 @@ public class LoanApplicationViewModel extends ViewModel {
                 Navigation.findNavController(view).navigate(R.id.action_loanApplicationFragment_to_loanRepaymentDetailsFragment2);
                 break;
             case R.id.btn_submit:
-                Navigation.findNavController(view).navigate(R.id.action_loanApplicationFragment_to_guarantorFragment);
+                Navigation.findNavController(view).navigate(R.id.action_loanApplicationFragment_to_coMakerFragment);
                 break;
         }
     }
