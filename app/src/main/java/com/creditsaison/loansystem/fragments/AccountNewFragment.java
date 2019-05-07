@@ -84,7 +84,7 @@ public class AccountNewFragment extends Fragment {
                     } else {
                         Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                        if (camera_intent.resolveActivity(getPackageManager()) != null) {
+                        if (camera_intent.resolveActivity(getActivity().getPackageManager()) != null) {
                             // Create the File where the photo should go
                             try {
 
