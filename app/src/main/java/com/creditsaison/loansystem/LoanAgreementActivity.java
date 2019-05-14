@@ -51,25 +51,6 @@ public class LoanAgreementActivity extends AppCompatActivity implements View.OnC
         disagreeButton = (Button) findViewById(R.id.btn_disagree);
         disagreeButton.setOnClickListener(this);
 
-        checkBox = (CheckBox) findViewById(R.id.checkbox);
-        //disable button if checkbox is not checked else enable button
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                if ( isChecked )
-                {
-                    Log.v("log_tag", "MarkIF");
-                    signatureButton.setEnabled(true);
-                }
-                else{
-                    Log.v("log_tag", "MarkELSE");
-                    signatureButton.setEnabled(false);
-                }
-            }
-        });
-
-
 
         Log.v("log_tag", "kuha image");
 
@@ -131,20 +112,15 @@ public class LoanAgreementActivity extends AppCompatActivity implements View.OnC
 
             case R.id.getSign:
                 // do your code
-                if (checkBox.isChecked()){
-                    Intent i = new Intent(LoanAgreementActivity.this, SignatureActivity.class);
-                    startActivity(i);
-                }
-                else {
-                    signatureButton.setEnabled(false);
-                }
+                Intent i = new Intent(LoanAgreementActivity.this, SignatureActivity.class);
+                startActivity(i);
 
                 break;
 
             case R.id.btn_agree:
                 // do your code
-                Intent i = new Intent(LoanAgreementActivity.this, PromissoryNoteActivity.class);
-                startActivity(i);
+                Intent i2 = new Intent(LoanAgreementActivity.this, PromissoryNoteActivity.class);
+                startActivity(i2);
 
                 break;
 
