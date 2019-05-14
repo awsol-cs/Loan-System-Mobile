@@ -28,7 +28,9 @@ public class LoanAgreementFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         viewModel = ViewModelProviders.of(this).get(LoanAgreementViewModel.class);
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,7 +40,7 @@ public class LoanAgreementFragment extends Fragment {
         binding.setViewModel(viewModel);
 
         return binding.getRoot();
+
+
     }
-
-
 }

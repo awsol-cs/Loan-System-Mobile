@@ -4,6 +4,7 @@ package com.creditsaison.loansystem;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,6 +18,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -37,7 +40,6 @@ import com.creditsaison.loansystem.databinding.FragmentTermsConditionsBinding;
 import com.creditsaison.loansystem.fragments.TermsConditionsFragment;
 
 public class SignatureActivity extends AppCompatActivity {
-
     Button mClear, mGetSign, mCancel;
     File file;
     LinearLayout mContent;
@@ -49,6 +51,11 @@ public class SignatureActivity extends AppCompatActivity {
     String DIRECTORY = Environment.getExternalStorageDirectory().getPath() + "/UserSignature/";
     String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
     String StoredPath = DIRECTORY + pic_name + ".png";
+
+
+    public static TermsConditionsFragment newInstance() {
+        return new TermsConditionsFragment();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,14 +101,21 @@ public class SignatureActivity extends AppCompatActivity {
                     view.setDrawingCacheEnabled(true);
                     mSignature.save(view, StoredPath);
                     Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
+                    Log.v("log_tag", "dito ba?");
                     // Calling the same class
-                    recreate();
+                    //recreate(); //for activity
+
+
+
                 }
             } else if(v == mCancel){
                 Log.v("log_tag", "Panel Canceled");
                 // Calling the BillDetailsActivity
-                Intent intent = new Intent(SignatureActivity.this, TermsConditionsFragment.class);
-                startActivity(intent);
+//                Intent intent = new Intent(SignatureActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                Fragment fragment = new TermsConditionsFragment();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+
             }
         }
     };
@@ -129,6 +143,7 @@ public class SignatureActivity extends AppCompatActivity {
             view.setDrawingCacheEnabled(true);
             mSignature.save(view, StoredPath);
             Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
+            Log.v("log_tag", "o dito ba");
             // Calling the same class
             recreate();
         }
@@ -170,11 +185,44 @@ public class SignatureActivity extends AppCompatActivity {
                 FileOutputStream mFileOutStream = new FileOutputStream(StoredPath);
                 v.draw(canvas);
 
+                TermsConditionsFragment fragmentB = new TermsConditionsFragment();
+
                 // Convert the output file to Image such as .png
                 bitmap.compress(Bitmap.CompressFormat.PNG, 90, mFileOutStream);
-                Intent intent = new Intent(SignatureActivity.this, TermsConditionsFragment.class);
-                intent.putExtra("imagePath", StoredPath);
-                startActivity(intent);
+                Log.v("log_tag", StoredPath.toString());
+//                Bundle bundle = new Bundle();
+//                bundle.putString("imagePath", StoredPath);
+//                fragmentB.setArguments(bundle);
+
+
+                SharedPreferences sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                Log.v("log_tag", sharedpreferences.getString("currentSign", " "));
+
+                String currentPage = sharedpreferences.getString("currentSign", " ");
+
+                Log.v("log_tag", currentPage);
+
+                if (currentPage == "termsCondition"){
+                    editor.putString("termsConditionImg", StoredPath);
+
+                } else if (currentPage == "loanAgreement"){
+                    editor.putString("loanAgreementImg", StoredPath);
+
+                } else {
+                    editor.putString("promNoteImg", StoredPath);
+                }
+
+
+                editor.commit();
+
+//
+//                Intent intent = new Intent(SignatureActivity.this, TermsConditionsFragment.class);
+//                intent.putExtra("imagePath", StoredPath);
+//                startActivity(intent);
                 finish();
                 mFileOutStream.flush();
                 mFileOutStream.close();

@@ -13,6 +13,8 @@ public class LoanAgreementViewModel extends ViewModel {
 
     }
 
+
+
     public void onButtonClick(View view) {
         Navigation.findNavController(view).navigate(R.id.action_loanAgreementFragment_to_promiNoteFragment);
     }

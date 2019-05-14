@@ -3,20 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
 
-        <variable
-            name="viewModel"
-            type="com.creditsaison.loansystem.viewmodel.TermsConditionsViewModel" />
-    </data>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.TermsConditionsFragment">
+        tools:context=".LoanActivity">
 
         <TextView
             android:id="@+id/tv_note"
@@ -24,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="NOTE: Be sure to read the Terms and Conditions before signing."
+            android:text="NOTE: Be sure to read the Loan Agreement before signing."
             android:textSize="20sp"
             android:textColor="@color/blue"
             android:gravity="center"
@@ -39,7 +31,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
-            android:text="@string/terms_conditions"
+            android:text="@string/loan_agreement"
             android:textStyle="bold"
             android:textSize="25sp"
             android:gravity="center"
@@ -67,23 +59,24 @@ Volutpat sed cras ornare arcu dui vivamus arcu. At auctor urna nunc id cursus me
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="29dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="17dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
             android:background="@android:color/black"
-            app:layout_constraintEnd_toStartOf="@+id/textView6"
+            app:layout_constraintEnd_toStartOf="@+id/textView5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_content" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="36dp"
             android:text="@string/checkbox_text"
             android:textColor="@android:color/black"
-            app:layout_constraintTop_toBottomOf="@+id/tv_content"
-            tools:layout_editor_absoluteX="78dp" />
+            app:layout_constraintStart_toEndOf="@+id/checkbox"
+            app:layout_constraintTop_toBottomOf="@+id/tv_content" />
 
 
         <ImageView
@@ -91,21 +84,18 @@ Volutpat sed cras ornare arcu dui vivamus arcu. At auctor urna nunc id cursus me
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:src="@android:color/transparent"
-            app:layout_constraintBottom_toTopOf="@+id/getSign"
-            app:layout_constraintTop_toBottomOf="@+id/checkbox" />
+            app:layout_constraintTop_toBottomOf="@+id/checkbox"
+            android:src="@android:color/transparent" />
 
         <Button
             android:id="@+id/getSign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="16dp"
             android:background="@android:color/black"
             android:padding="15dp"
             android:text="@string/get_signature_text"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toTopOf="@+id/btn_agree"
             app:layout_constraintTop_toBottomOf="@+id/imageView1"
             tools:layout_editor_absoluteX="137dp" />
 
@@ -143,6 +133,7 @@ Volutpat sed cras ornare arcu dui vivamus arcu. At auctor urna nunc id cursus me
             app:layout_constraintHorizontal_bias="0.5"/>
 
 
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 </layout>

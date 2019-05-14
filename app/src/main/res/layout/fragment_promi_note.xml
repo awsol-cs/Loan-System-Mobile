@@ -9,7 +9,9 @@
             name="viewModel"
             type="com.creditsaison.loansystem.viewmodel.PromissoryViewModel" />
     </data>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout"
         android:layout_width="match_parent"
@@ -96,4 +98,5 @@ Volutpat sed cras ornare arcu dui vivamus arcu. At auctor urna nunc id cursus me
             app:layout_constraintHorizontal_bias="0.5"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

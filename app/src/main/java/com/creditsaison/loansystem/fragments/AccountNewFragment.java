@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -35,6 +36,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,13 +78,52 @@ public class AccountNewFragment extends Fragment {
             client_image = (ImageView) binding.getRoot().findViewById(R.id.client_image);
 
             btn_add_photo.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
+                    captureImage();
+                }
+            });
 
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-                    } else {
+//            btn_add_photo.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//
+//                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+//                    } else {
+//                        Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//                        if (camera_intent.resolveActivity(getActivity().getPackageManager()) != null) {
+//                            // Create the File where the photo should go
+//                            try {
+//
+//                                photoFile = createImageFile();
+//                                if (photoFile != null) {
+//                                    Log.i("Mayank", photoFile.getAbsolutePath());
+//                                    Uri photoURI = Uri.fromFile(photoFile);
+//                                    camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+//                                    startActivityForResult(camera_intent, pic_id);
+//                                }
+//                            } catch (Exception ex) {
+//                                // Error occurred while creating the File
+//                                Log.i("error", "error while creating the file");
+//                            }
+//
+//
+//                        } else {
+//                            Log.i("error", "error getpackagemanager");
+//                        }
+//
+//                    }
+//                }
+//            });
+
+        return binding.getRoot();
+    }
+
+    private void captureImage()
+    {
                         Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
                         if (camera_intent.resolveActivity(getActivity().getPackageManager()) != null) {
@@ -104,38 +146,22 @@ public class AccountNewFragment extends Fragment {
                         } else {
                             Log.i("error", "error getpackagemanager");
                         }
-
-
-                        // Start the activity with camera_intent,
-                        // and request pic id
-
-                    }
-                }
-            });
-
-        return binding.getRoot();
     }
+
 
 
     // This method will help to retrieve the image
     @Override
-    public void onActivityResult(int requestCode,
-                                    int resultCode,
-                                    Intent data)
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-
-        Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-        client_image.setImageBitmap(myBitmap);
-        // Match the request 'pic id with requestCode
-       // if (requestCode == pic_id) {
-
-            // BitMap is data structure of image file
-            // which stor the image in memory
-            //Bitmap photo = (Bitmap)data.getExtras().get("data");
-
-            // Set the image in imageview for display
-            //client_image.setImageBitmap(photo);
+        if(EasyPermissions.hasPermissions(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)){
+            Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+            client_image.setImageBitmap(myBitmap);
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_camera), 100, Manifest.permission.READ_EXTERNAL_STORAGE);
         }
+
+    }
 
 
     private File createImageFile()
@@ -158,5 +184,12 @@ public class AccountNewFragment extends Fragment {
         return mediaFile;
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, AccountNewFragment.this);
+    }
+
 
 }

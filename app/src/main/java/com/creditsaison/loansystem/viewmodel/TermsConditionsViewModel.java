@@ -16,4 +16,5 @@ public class TermsConditionsViewModel extends ViewModel {
     public void onButtonClick(View view) {
         Navigation.findNavController(view).navigate(R.id.action_termsConditionFragment_to_loanAgreementFragment);
     }
+
 }

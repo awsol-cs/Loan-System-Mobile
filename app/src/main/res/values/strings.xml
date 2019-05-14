@@ -952,5 +952,7 @@
     <string name="clear_pad">Clear Pad</string>
     <string name="save_signature">Save Signature</string>
 
+    <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
+
 
 </resources>
