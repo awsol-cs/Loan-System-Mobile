@@ -878,8 +878,8 @@
 
     <string name="gov_id">Government ID:</string>
     <string name="gov_id_num">ID Number</string>
+    <string name="type_prompt">Type</string>
     <string-array name="array_gov_ids">
-        <item>Type</item>
         <item>Passport</item>
         <item>PRC ID</item>
         <item>SSS ID</item>

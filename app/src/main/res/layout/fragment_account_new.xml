@@ -121,9 +121,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:src="@drawable/ic_dp_placeholder"
-            app:layout_constraintDimensionRatio="h,1:0.5"
+            app:layout_constraintDimensionRatio="h,1:1"
             app:layout_constraintBottom_toBottomOf="@+id/textInputLayout3"
-            app:layout_constraintLeft_toRightOf="@+id/textInputLayout2"
+
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textInputLayout"
             app:layout_constraintHorizontal_bias="0.5"
@@ -158,14 +158,14 @@
             style="@style/Button.Login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@color/primary"
             android:text="@string/button_add_photo"
             android:textSize="20sp"
             app:layout_constraintTop_toTopOf="@+id/textInputLayout4"
-            app:layout_constraintLeft_toRightOf="@id/textInputLayout4"
+            app:layout_constraintLeft_toLeftOf="@id/client_image"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/textInputLayout4"
             app:layout_constraintHorizontal_bias="0.5"/>
@@ -279,7 +279,7 @@
             android:text="@string/gov_id"
             android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@+id/sp_gender"
-            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintBottom_toTopOf="@+id/cb_doc"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/sp_gov_id_type"
             app:layout_constraintHorizontal_bias="0.5" />
@@ -297,7 +297,7 @@
             android:entries="@array/array_gov_ids"
             android:spinnerMode="dropdown"
             app:layout_constraintTop_toTopOf="@+id/textInputLayout6"
-            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout6"
             app:layout_constraintLeft_toRightOf="@+id/cb_gov_id"
             app:layout_constraintRight_toLeftOf="@id/textInputLayout6"
             app:layout_constraintHorizontal_bias="0.5" />
@@ -311,7 +311,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintTop_toBottomOf="@+id/sp_gender"
-            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout7"
             app:layout_constraintLeft_toRightOf="@+id/sp_gov_id_type"
             app:layout_constraintRight_toLeftOf="@id/btn_add_gov_id"
             app:layout_constraintHorizontal_bias="0.5">
@@ -336,13 +336,89 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/primary"
-            android:text="Upload"
+            android:text="Attach"
             android:textSize="20sp"
             app:layout_constraintTop_toBottomOf="@+id/sp_gender"
-            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintBottom_toTopOf="@+id/btn_add_doc"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_bias="0.5" />
 
+        <CheckBox
+            android:id="@+id/cb_doc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="Other documents"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/cb_gov_id"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_add_doc"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/sp_doc_type"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+        <Spinner
+            android:id="@+id/sp_doc_type"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+
+            android:backgroundTint="@color/gray_dark"
+            android:entries="@array/array_gov_ids"
+            android:spinnerMode="dropdown"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout7"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_add_doc"
+            app:layout_constraintLeft_toRightOf="@+id/cb_doc"
+            app:layout_constraintRight_toLeftOf="@id/textInputLayout7"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_add_doc"
+            app:layout_constraintLeft_toRightOf="@+id/sp_doc_type"
+            app:layout_constraintRight_toLeftOf="@id/btn_add_doc"
+            app:layout_constraintHorizontal_bias="0.5">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_doc_source"
+                style="@style/EditText.BaseWidth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Source/Office"
+                android:inputType="text"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_add_doc"
+            style="@style/Button.Login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/primary"
+            android:text="Attach"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/btn_add_gov_id"
+            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" />
 
         <Button
             android:id="@+id/btn_submit"
@@ -350,17 +426,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/primary"
             android:onClick="@{viewModel::onButtonClick}"
-            android:text="@string/submit"
+            android:text="Next"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cb_gov_id" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_add_doc" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
