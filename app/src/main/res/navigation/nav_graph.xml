@@ -107,6 +107,12 @@
         <action
             android:id="@+id/action_termsConditionFragment_to_loanAgreementFragment"
             app:destination="@id/loanAgreementFragment" />
+        <action
+            android:id="@+id/action_termsConditionFragment_to_signatureFragment"
+            app:destination="@id/signatureFragment" />
+        <action
+            android:id="@+id/action_termsConditionFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
 
     <fragment
@@ -117,6 +123,12 @@
         <action
             android:id="@+id/action_loanAgreementFragment_to_promiNoteFragment"
             app:destination="@id/promiNoteFragment" />
+        <action
+            android:id="@+id/action_loanAgreementFragment_to_signatureFragment"
+            app:destination="@id/signatureFragment" />
+        <action
+            android:id="@+id/action_loanAgreementFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
 
     <fragment
@@ -127,6 +139,28 @@
         <action
             android:id="@+id/action_promiNoteFragment_to_loanApplicationSentFragment"
             app:destination="@id/loanApplicationSentFragment" />
+        <action
+            android:id="@+id/action_promiNoteFragment_to_signatureFragment"
+            app:destination="@id/signatureFragment" />
+        <action
+            android:id="@+id/action_promiNoteFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signatureFragment"
+        android:name="com.creditsaison.loansystem.fragments.SignatureFragment"
+        android:label="fragment_signature"
+        tools:layout="@layout/fragment_signature" >
+        <action
+            android:id="@+id/action_signatureFragment_to_termsConditionFragment"
+            app:destination="@id/termsConditionFragment" />
+        <action
+            android:id="@+id/action_signatureFragment_to_loanAgreementFragment"
+            app:destination="@id/loanAgreementFragment" />
+        <action
+            android:id="@+id/action_signatureFragment_to_promiNoteFragment"
+            app:destination="@id/promiNoteFragment" />
     </fragment>
 
     <fragment

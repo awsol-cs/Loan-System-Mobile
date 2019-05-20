@@ -21,18 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SignatureActivity"
-            android:label="@string/app_name">
-        </activity>
-        <activity
-            android:name=".LoanAgreementActivity"
-            android:label="@string/app_name">
-        </activity>
-        <activity
-            android:name=".PromissoryNoteActivity"
-            android:label="@string/app_name">
-        </activity>
     </application>
 
 </manifest>

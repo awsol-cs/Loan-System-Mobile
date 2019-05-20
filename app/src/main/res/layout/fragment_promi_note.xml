@@ -63,20 +63,48 @@ Volutpat sed cras ornare arcu dui vivamus arcu. At auctor urna nunc id cursus me
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
 
+        <ImageView
+            android:id="@+id/signature"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:src="@android:color/transparent"
+            app:layout_constraintBottom_toTopOf="@+id/getSign"
+            app:layout_constraintTop_toBottomOf="@+id/tv_content" />
+
         <Button
-            android:id="@+id/btn_agree"
+            android:id="@+id/getSign"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/primary"
+            android:onClick="@{viewModel::onButtonClick}"
+            android:text="SIGN"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signature" />
+
+
+        <Button
+            android:id="@+id/btn_agree3"
             style="@style/Button.Login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/primary"
+            android:background="@drawable/button_background_selector"
             android:onClick="@{viewModel::onButtonClick}"
-            android:text="@string/button_terms_agree"
+            android:text="AGREE"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_content"
+            app:layout_constraintTop_toBottomOf="@+id/getSign"
             app:layout_constraintRight_toLeftOf="@id/btn_disagree"
             app:layout_constraintHorizontal_bias="0.5"/>
 
@@ -90,11 +118,11 @@ Volutpat sed cras ornare arcu dui vivamus arcu. At auctor urna nunc id cursus me
             android:layout_marginEnd="16dp"
             android:background="@color/primary"
             android:onClick="@{viewModel::onButtonClick}"
-            android:text="@string/button_terms_disagree"
+            android:text="CANCEL APPLICATION"
             android:textSize="20sp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_content"
-            app:layout_constraintLeft_toRightOf="@+id/btn_agree"
+            app:layout_constraintTop_toBottomOf="@+id/getSign"
+            app:layout_constraintLeft_toRightOf="@+id/btn_agree3"
             app:layout_constraintHorizontal_bias="0.5"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
