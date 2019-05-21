@@ -68,6 +68,7 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
     <color name="summer_sky">#29B6F6</color>
+    <color name="disabled_primary">#84C5F3</color>
 
     <!--Swipe Refresh Colors-->
     <array name="swipeRefreshColors">

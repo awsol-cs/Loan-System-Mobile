@@ -1,11 +1,11 @@
-r20190507
+r20190507e upload
 -- updated accountNewFragment
 
 r20190318
 -- updated screen transition
 
 r20190315
--- added calling of authentication API from backend
+-- added calling of authentication API from backendgit
 -- edit loan repayment screen
 
 r20190314
@@ -16,4 +16,4 @@ r20190314
 
 r20190308
 -- initial commit of .gitignore and release_notes.txt
--- initial code upload
+-- initial cod

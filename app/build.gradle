@@ -78,5 +78,6 @@ dependencies {
     //EasyPermissions library
     implementation 'pub.devrel:easypermissions:2.0.1'
 
+    
     android.defaultConfig.vectorDrawables.useSupportLibrary = true
 }

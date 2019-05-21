@@ -48,6 +48,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import pub.devrel.easypermissions.EasyPermissions;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -112,8 +113,8 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
             date = (TextView) binding.getRoot().findViewById(R.id.tv_dateofbirth);
             date.setOnClickListener(this);
 
-        return binding.getRoot();
-    }
+            return binding.getRoot();
+        }
 
     @Override
     public void onClick(View v) {
@@ -194,7 +195,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
     }
 
 
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
         if(rotatedBitmap != null) {
@@ -205,7 +206,6 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
             Log.i("resumed", "NULL");
             client_image.setImageResource(R.drawable.ic_dp_placeholder);
         }
-
     }
 
 
@@ -287,6 +287,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
 
     }
 
+
     public void checkOrientation (Bitmap bitmap) throws IOException
     {
 
@@ -345,11 +346,13 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, AccountNewFragment.this);
     }
 
+
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
                 matrix, true);
     }
+
 
 }

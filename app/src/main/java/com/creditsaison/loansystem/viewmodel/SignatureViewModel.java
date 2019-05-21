@@ -13,7 +13,4 @@ public class SignatureViewModel extends ViewModel {
 
     }
 
-    public void onButtonClick(View view) {
-
-    }
 }

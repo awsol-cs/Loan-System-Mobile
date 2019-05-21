@@ -9,7 +9,9 @@
             name="viewModel"
             type="com.creditsaison.loansystem.viewmodel.LoanApplicationViewModel" />
     </data>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout"
         android:layout_width="match_parent"
@@ -388,4 +390,5 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_repayment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
