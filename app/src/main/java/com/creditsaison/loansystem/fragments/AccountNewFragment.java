@@ -3,6 +3,7 @@ package com.creditsaison.loansystem.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -30,6 +31,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,6 +43,7 @@ import com.creditsaison.loansystem.viewmodel.AccountNewViewModel;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -55,8 +58,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
 
         ConstraintLayout layout1;
         ConstraintSet set;
-        TextView text, text1;
-        // Define the button and imageview type variable
+        TextView text, text1, date;
         Button btn_client_photo, btn_gov_id, btn_doc_photo;
         ImageView client_image;
         File photoFile = null;
@@ -67,6 +69,8 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
 
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         String govFileName, docFileName;
+
+        DatePickerDialog datePickerDialog;
 
         private FragmentAccountNewBinding binding;
         private AccountNewViewModel viewModel;
@@ -105,64 +109,88 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
             layout1 = (ConstraintLayout)binding.getRoot().findViewById(R.id.ConstraintLayout);
             set = new ConstraintSet();
 
+            date = (TextView) binding.getRoot().findViewById(R.id.tv_dateofbirth);
+            date.setOnClickListener(this);
+
         return binding.getRoot();
     }
 
     @Override
     public void onClick(View v) {
-        if(EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA) &&
-                EasyPermissions.hasPermissions(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-            Log.i("permission", "has permissions");
+            if(v == date) {
+                // calender class's instance and get current date , month and year from calender
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR); // current year
+                int mMonth = c.get(Calendar.MONTH); // current month
+                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                // date picker dialog
+                datePickerDialog = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                date.setText((monthOfYear + 1) + "/"
+                                        + dayOfMonth + "/" + year);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            } else {
+                if(EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA) &&
+                        EasyPermissions.hasPermissions(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    Log.i("permission", "has permissions");
 
-            Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (camera_intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                // Create the File where the photo should go
-                try {
-                    if(v == btn_client_photo) {
-                        Log.i("onClick", "client photo");
-                        photoFile = createImageFile(1);
-                        if (photoFile != null) {
-                            Log.i("Mayank", photoFile.getAbsolutePath());
-                            // Uri photoURI = Uri.fromFile(photoFile);
-                            Uri photoURI = FileProvider.getUriForFile(getContext(),
-                                    "com.creditsaison.loansystem.fileprovider",
-                                    photoFile);
-                            camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                            startActivityForResult(camera_intent, client_pic_code);
-                        }
-                    } else if(v == btn_gov_id) {
-                        Log.i("onClick", "gov id");
-                        govIdFile = createImageFile(2);
-                        if (govIdFile != null) {
-                            Log.i("Mayank", govIdFile.getAbsolutePath());
-                            Uri photoURI = FileProvider.getUriForFile(getContext(),
-                                    "com.creditsaison.loansystem.fileprovider",
-                                    govIdFile);
-                            camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                            startActivityForResult(camera_intent, 2);
-                        }
-                    } else {
-                        Log.i("onClick", "doc photo");
-                        docFile = createImageFile(3);
-                        if (docFile != null) {
-                            Log.i("Mayank", docFile.getAbsolutePath());
-                            Uri photoURI = FileProvider.getUriForFile(getContext(),
-                                    "com.creditsaison.loansystem.fileprovider",
-                                    docFile);
-                            camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                            startActivityForResult(camera_intent, 3);
+                    Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (camera_intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        // Create the File where the photo should go
+                        try {
+                            if(v == btn_client_photo) {
+                                Log.i("onClick", "client photo");
+                                photoFile = createImageFile(1);
+                                if (photoFile != null) {
+                                    Log.i("Mayank", photoFile.getAbsolutePath());
+                                    // Uri photoURI = Uri.fromFile(photoFile);
+                                    Uri photoURI = FileProvider.getUriForFile(getContext(),
+                                            "com.creditsaison.loansystem.fileprovider",
+                                            photoFile);
+                                    camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                                    startActivityForResult(camera_intent, client_pic_code);
+                                }
+                            } else if(v == btn_gov_id) {
+                                Log.i("onClick", "gov id");
+                                govIdFile = createImageFile(2);
+                                if (govIdFile != null) {
+                                    Log.i("Mayank", govIdFile.getAbsolutePath());
+                                    Uri photoURI = FileProvider.getUriForFile(getContext(),
+                                            "com.creditsaison.loansystem.fileprovider",
+                                            govIdFile);
+                                    camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                                    startActivityForResult(camera_intent, 2);
+                                }
+                            } else {
+                                Log.i("onClick", "doc photo");
+                                docFile = createImageFile(3);
+                                if (docFile != null) {
+                                    Log.i("Mayank", docFile.getAbsolutePath());
+                                    Uri photoURI = FileProvider.getUriForFile(getContext(),
+                                            "com.creditsaison.loansystem.fileprovider",
+                                            docFile);
+                                    camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                                    startActivityForResult(camera_intent, 3);
+                                }
+                            }
+
+                        } catch (Exception ex) {
+                            // Error occurred while creating the File
+                            Log.i("error", "error while creating the file");
                         }
                     }
-
-                } catch (Exception ex) {
-                    // Error occurred while creating the File
-                    Log.i("error", "error while creating the file");
+                } else {
+                    Log.i("permission", "has no camera permission");
+                    EasyPermissions.requestPermissions(getActivity(), getString(R.string.rationale_camera),1, perms);
                 }
             }
-        } else {
-            Log.i("permission", "has no camera permission");
-            EasyPermissions.requestPermissions(getActivity(), getString(R.string.rationale_camera),1, perms);
-        }
+
     }
 
 
