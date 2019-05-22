@@ -60,7 +60,6 @@ public class LoanAgreementFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        Log.v("log_tag", "uyNagResume");
 
         btn_agree = (Button) getActivity().findViewById(R.id.btn_agree2);
 

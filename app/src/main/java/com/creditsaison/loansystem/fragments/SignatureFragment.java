@@ -78,35 +78,18 @@ public class SignatureFragment extends Fragment {
             String currentPage = sharedpreferences.getString("currentSign", " ");
 
             if (v == mClear) {
-                Log.v("log_tag", "Panel Cleared");
                 mSignature.clear();
                 mGetSign.setEnabled(false);
             } else if (v == mGetSign) {
-                Log.v("log_tag", "Panel Saved");
                 if (Build.VERSION.SDK_INT > 23) {
-                    Log.v("log_tag", "MarkIF");
                     isStoragePermissionGranted();
                 } else {
-                    Log.v("log_tag", "MarkELSE");
                     view.setDrawingCacheEnabled(true);
                     mSignature.save(view, StoredPath);
                     Toast.makeText(getActivity().getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
-                    Log.v("log_tag", "dito ba?");
-
-
-                    Log.v("log_tag", currentPage);
-
-                    Log.v("log_tag", v.toString());
 
                     if (currentPage == "termsCondition"){
                         Navigation.findNavController(v).navigate(R.id.action_signatureFragment_to_termsConditionFragment);
-//
-//                        TermsConditionsFragment newFragment = new TermsConditionsFragment();
-//                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                        fragmentTransaction.replace(((ViewGroup)getView().getParent()).getId(), newFragment);
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-
                     } else if (currentPage == "loanAgreement"){
                         Navigation.findNavController(v).navigate(R.id.action_signatureFragment_to_loanAgreementFragment);
 
@@ -118,10 +101,8 @@ public class SignatureFragment extends Fragment {
 
                 }
             } else if(v == mCancel){
-                Log.v("log_tag", "Panel Canceled");
                 if (currentPage == "termsCondition"){
                     Navigation.findNavController(v).navigate(R.id.action_signatureFragment_to_termsConditionFragment);
-
                 } else if (currentPage == "loanAgreement"){
                     Navigation.findNavController(v).navigate(R.id.action_signatureFragment_to_loanAgreementFragment);
 
@@ -154,7 +135,6 @@ public class SignatureFragment extends Fragment {
             view.setDrawingCacheEnabled(true);
             mSignature.save(view, StoredPath);
             Toast.makeText(getActivity().getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
-            Log.v("log_tag", "o dito ba");
             // Calling the same class
             getActivity().recreate();
         }
@@ -185,8 +165,6 @@ public class SignatureFragment extends Fragment {
         }
 
         public void save(View v, String StoredPath) {
-            Log.v("log_tag", "Width: " + v.getWidth());
-            Log.v("log_tag", "Height: " + v.getHeight());
             if (bitmap == null) {
                 bitmap = Bitmap.createBitmap(mContent.getWidth(), mContent.getHeight(), Bitmap.Config.RGB_565);
             }
@@ -198,19 +176,11 @@ public class SignatureFragment extends Fragment {
 
                 // Convert the output file to Image such as .png
                 bitmap.compress(Bitmap.CompressFormat.PNG, 90, mFileOutStream);
-                Log.v("log_tag", StoredPath.toString());
-
 
                 SharedPreferences sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
-
                 SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                Log.v("log_tag", sharedpreferences.getString("currentSign", " "));
-
                 String currentPage = sharedpreferences.getString("currentSign", " ");
-
-                Log.v("log_tag", currentPage);
 
                 if (currentPage == "termsCondition"){
                     editor.putString("termsConditionImg", StoredPath);
