@@ -1,6 +1,8 @@
 package com.creditsaison.loansystem.fragments;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -41,6 +43,23 @@ public class AccountFragment extends Fragment {
 
         binding = FragmentAccountBinding.inflate(inflater, container, false);
         binding.setViewModel(viewModel);
+
+        final String MyPREFERENCES = "MyPrefs" ;
+
+        SharedPreferences sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.clear();
+
+//        String signImgDef = "/storage/emulated/0/UserSignature/20190507_025519.png";drawable://
+        String signImgDef = "default";
+
+        editor.putString("currentSign", "termsCondition");
+        editor.putString("termsConditionImg", signImgDef);
+        editor.putString("loanAgreementImg", signImgDef);
+        editor.putString("promNoteImg", signImgDef);
+        editor.commit();
 
         return binding.getRoot();
     }

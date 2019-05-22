@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
+    repositories{
+        mavenCentral()
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.creditsaison.loansystem"
@@ -29,8 +32,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha02'
@@ -69,6 +72,11 @@ dependencies {
 
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    implementation 'com.github.gcacace:signature-pad:1.2.1'
+
+    implementation 'pub.devrel:easypermissions:2.0.1'
+
 
     android.defaultConfig.vectorDrawables.useSupportLibrary = true
 }

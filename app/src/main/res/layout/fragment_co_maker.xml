@@ -9,7 +9,9 @@
             name="viewModel"
             type="com.creditsaison.loansystem.viewmodel.CoMakerViewModel" />
     </data>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout"
         android:layout_width="match_parent"
@@ -129,6 +131,29 @@
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_client_gender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/external_id"
+                style="@style/EditText.BaseWidth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/external_id"
+                android:inputType="text"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/tv_client_gender"
             android:layout_width="0dp"
@@ -144,7 +169,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
 
         <Spinner
             android:id="@+id/sp_gender"
@@ -217,10 +242,161 @@
             android:background="@color/gray_dark"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintBottom_toTopOf="@+id/tv_client"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_dateofbirth" />
+
+        <TextView
+            android:id="@+id/tv_client"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/client"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/sp_client"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <Spinner
+            android:id="@+id/sp_client"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/gray_dark"
+            android:entries="@array/array_client"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/tv_client_classification"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_client" />
+
+        <TextView
+            android:id="@+id/tv_client_classification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/client_classification"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/sp_client_classification"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_client" />
+
+        <Spinner
+            android:id="@+id/sp_client_classification"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/gray_dark"
+            android:entries="@array/array_client_classification"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/tv_client_office"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_client_classification" />
+
+        <TextView
+            android:id="@+id/tv_client_office"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/office_required"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/sp_client_office"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_client_classification" />
+
+        <Spinner
+            android:id="@+id/sp_client_office"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/gray_dark"
+            android:entries="@array/array_office"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/tv_client_staff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_client_office" />
+
+        <TextView
+            android:id="@+id/tv_client_staff"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/staff"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/sp_client_staff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_client_office" />
+
+        <Spinner
+            android:id="@+id/sp_client_staff"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/gray_dark"
+            android:entries="@array/array_staff"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/client_active"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_client_staff" />
+
+        <CheckBox
+            android:id="@+id/client_active"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/client_active"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_client_staff" />
 
         <Button
             android:id="@+id/btn_submit"
@@ -236,7 +412,8 @@
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
+            app:layout_constraintTop_toBottomOf="@+id/client_active" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

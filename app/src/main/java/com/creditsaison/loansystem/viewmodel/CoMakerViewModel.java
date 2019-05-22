@@ -14,6 +14,6 @@ public class CoMakerViewModel extends ViewModel {
     }
 
     public void onButtonClick(View view) {
-        Navigation.findNavController(view).navigate(R.id.action_coMakerFragment_to_loanApplicationFragment);
+        Navigation.findNavController(view).navigate(R.id.action_coMakerFragment_to_termsConditionFragment);
     }
 }
