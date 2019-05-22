@@ -54,7 +54,6 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 public class AccountNewFragment extends Fragment implements View.OnClickListener{
 
-        // Define the pic id
         private static final int client_pic_code = 1;
 
         ConstraintLayout layout1;
@@ -116,6 +115,12 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
             return binding.getRoot();
         }
 
+    /**
+     * This handles the functionalities of elements (e.g. buttons) set with an OnClickListener.
+     * Includes invoking of a datepicker for the date field.
+     * Also invokes the camera application of the device and checks/requests for permissions in accessing the device storage.
+     * @param v - refers to the clicked element
+     */
     @Override
     public void onClick(View v) {
             if(v == date) {
@@ -139,18 +144,14 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
             } else {
                 if(EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA) &&
                         EasyPermissions.hasPermissions(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    Log.i("permission", "has permissions");
 
                     Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (camera_intent.resolveActivity(getActivity().getPackageManager()) != null) {
                         // Create the File where the photo should go
                         try {
                             if(v == btn_client_photo) {
-                                Log.i("onClick", "client photo");
                                 photoFile = createImageFile(1);
                                 if (photoFile != null) {
-                                    Log.i("Mayank", photoFile.getAbsolutePath());
-                                    // Uri photoURI = Uri.fromFile(photoFile);
                                     Uri photoURI = FileProvider.getUriForFile(getContext(),
                                             "com.creditsaison.loansystem.fileprovider",
                                             photoFile);
@@ -158,10 +159,8 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                                     startActivityForResult(camera_intent, client_pic_code);
                                 }
                             } else if(v == btn_gov_id) {
-                                Log.i("onClick", "gov id");
                                 govIdFile = createImageFile(2);
                                 if (govIdFile != null) {
-                                    Log.i("Mayank", govIdFile.getAbsolutePath());
                                     Uri photoURI = FileProvider.getUriForFile(getContext(),
                                             "com.creditsaison.loansystem.fileprovider",
                                             govIdFile);
@@ -169,10 +168,8 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                                     startActivityForResult(camera_intent, 2);
                                 }
                             } else {
-                                Log.i("onClick", "doc photo");
                                 docFile = createImageFile(3);
                                 if (docFile != null) {
-                                    Log.i("Mayank", docFile.getAbsolutePath());
                                     Uri photoURI = FileProvider.getUriForFile(getContext(),
                                             "com.creditsaison.loansystem.fileprovider",
                                             docFile);
@@ -187,7 +184,6 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                         }
                     }
                 } else {
-                    Log.i("permission", "has no camera permission");
                     EasyPermissions.requestPermissions(getActivity(), getString(R.string.rationale_camera),1, perms);
                 }
             }
@@ -199,21 +195,27 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
         super.onResume();
 
         if(rotatedBitmap != null) {
-            Log.i("resume", photoFile.getAbsolutePath());
             //Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
             client_image.setImageBitmap(rotatedBitmap);
         } else {
-            Log.i("resumed", "NULL");
             client_image.setImageResource(R.drawable.ic_dp_placeholder);
         }
     }
 
 
-    // This method will help to retrieve the image
+    /**
+     * This function retrieves the created image file.
+     * If the requestCode passed in the startActivityForResult is 1, meaning the button for client's photo is the one clicked, the image will be
+     * set to the value of client_photo to be displayed in the imageview.
+     * If the requestCode is 2 or 3, for gov id and other document respectively, a textview will be added to the layout to display the filename
+     * of the image.
+     * @param requestCode - the requestCode passed in the startActivityForResult, way to determine which startActivityForResult was called
+     * @param resultCode - result code specified by startActivityForResult if the operation was successful or the operation failed.
+     * @param data - the result data of the operation.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        Log.i("activityResult", "entered activity result");
         if(EasyPermissions.hasPermissions(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)){
             if(requestCode == 1) { //client photo
                 if(resultCode == Activity.RESULT_OK) {
@@ -287,7 +289,11 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
 
     }
 
-
+    /**
+     * Function that checks the orientation of the captured photo and then calls the function rotateImage to set the image to portrait.
+     * @param bitmap - corresponds to the image file
+     * @throws IOException
+     */
     public void checkOrientation (Bitmap bitmap) throws IOException
     {
 
@@ -313,6 +319,13 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                 rotatedBitmap = bitmap;
         }
     }
+
+    /**
+     * Sets the filename of the image and the directory to where the file(s) will be stored.
+     * If the photo that will be taken is a gov id or document, selected type value from the dropdowns(spinner) will be appended in the filename.
+     * @param clickedButton - determiner if the file will be for the client's photo, gov_id, or other documents.
+     * @return
+     */
     private File createImageFile(int clickedButton)
     {
         // External sdcard location
@@ -340,13 +353,24 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
         return mediaFile;
     }
 
+    /**
+     * Handles the result of the permission requests.
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, AccountNewFragment.this);
     }
 
-
+    /**
+     * Rotates the image to a specified angle.
+     * @param source - the bitmap photo to be rotated
+     * @param angle - refers to how many degrees the image will be rotated
+     * @return - the final(rotated) bitmap photo
+     */
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
