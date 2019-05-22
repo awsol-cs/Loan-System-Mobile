@@ -40,9 +40,6 @@ public class TermsConditionsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        Log.v("log_tag", "onCreate");
-
         viewModel = ViewModelProviders.of(this).get(TermsConditionsViewModel.class);
 
     }
@@ -50,8 +47,6 @@ public class TermsConditionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        Log.v("log_tag", "onCreateView andito ba?");
 
 
         binding = FragmentTermsConditionsBinding.inflate(inflater, container, false);
@@ -66,8 +61,6 @@ public class TermsConditionsFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        Log.v("log_tag", "uyNagResume");
-
 
         btn_agree = (Button) getActivity().findViewById(R.id.btn_agree);
 
