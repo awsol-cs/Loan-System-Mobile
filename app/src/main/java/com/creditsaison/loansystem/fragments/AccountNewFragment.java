@@ -4,6 +4,8 @@ package com.creditsaison.loansystem.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -20,6 +22,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 import android.os.Environment;
 import android.util.Log;
@@ -31,7 +34,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -56,21 +61,25 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
 
         private static final int client_pic_code = 1;
 
+        SharedPreferences sharedpreferences;
+
         ConstraintLayout layout1;
         ConstraintSet set;
-        TextView text, text1, date;
-        Button btn_client_photo, btn_gov_id, btn_doc_photo;
+        TextView text, text1, date, page_title;
+        Button btn_client_photo, btn_gov_id, btn_doc_photo, btn_next;
         ImageView client_image;
         File photoFile = null;
         File govIdFile = null;
         File docFile = null;
         Bitmap rotatedBitmap = null;
-        Spinner govSpinner, docSpinner;
+        Spinner govSpinner, docSpinner, gender, marital_status, educational_status;
 
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         String govFileName, docFileName;
 
         DatePickerDialog datePickerDialog;
+
+        EditText first_name, middle_name, last_name, mobile_no, nationality, birth_place, dependents, gov_id_number, document_source;
 
         private FragmentAccountNewBinding binding;
         private AccountNewViewModel viewModel;
@@ -94,23 +103,48 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
             binding = FragmentAccountNewBinding.inflate(inflater, container, false);
             binding.setViewModel(viewModel);
 
+            page_title = (TextView) binding.getRoot().findViewById(R.id.tv_page_title);
+
             btn_client_photo = (Button) binding.getRoot().findViewById(R.id.btn_add_photo);
             btn_gov_id = (Button) binding.getRoot().findViewById(R.id.btn_add_gov_id);
             btn_doc_photo = (Button) binding.getRoot().findViewById(R.id.btn_add_doc);
             client_image = (ImageView) binding.getRoot().findViewById(R.id.client_image);
+            btn_next = (Button) binding.getRoot().findViewById(R.id.btn_next);
 
+            // input bindings
+            first_name = (EditText) binding.getRoot().findViewById(R.id.et_client_first_anme);
+            middle_name = (EditText) binding.getRoot().findViewById(R.id.et_client_middle_name);
+            last_name = (EditText) binding.getRoot().findViewById(R.id.et_client_last_name);
+            mobile_no = (EditText) binding.getRoot().findViewById(R.id.et_client_mobile_no);
+            nationality = (EditText) binding.getRoot().findViewById(R.id.et_nationality);
+            birth_place = (EditText) binding.getRoot().findViewById(R.id.et_birthplace);
+            dependents = (EditText) binding.getRoot().findViewById(R.id.et_num_of_dependents);
+            gov_id_number = (EditText) binding.getRoot().findViewById(R.id.et_gov_id_num);
+            document_source = (EditText) binding.getRoot().findViewById(R.id.et_doc_source);
+            gender = (Spinner) binding.getRoot().findViewById(R.id.sp_gender);
+            marital_status = (Spinner) binding.getRoot().findViewById(R.id.sp_marital);
+            educational_status = (Spinner) binding.getRoot().findViewById(R.id.sp_educ_stat);
             govSpinner = (Spinner) binding.getRoot().findViewById(R.id.sp_gov_id_type);
             docSpinner = (Spinner) binding.getRoot().findViewById(R.id.sp_doc_type);
 
             btn_client_photo.setOnClickListener(this);
             btn_gov_id.setOnClickListener(this);
             btn_doc_photo.setOnClickListener(this);
+            btn_next.setOnClickListener(this);
 
             layout1 = (ConstraintLayout)binding.getRoot().findViewById(R.id.ConstraintLayout);
             set = new ConstraintSet();
 
             date = (TextView) binding.getRoot().findViewById(R.id.tv_dateofbirth);
             date.setOnClickListener(this);
+
+            sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+            String restoredText = sharedpreferences.getString("createWhat", " ");
+
+            if (restoredText == "coMaker"){
+                page_title.setText("Create Co-Maker");
+            }
 
             return binding.getRoot();
         }
@@ -141,7 +175,90 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
-            } else {
+            } else if(v == btn_next) {
+                // Saving
+                // get inputs
+                String str_firstName = first_name.getText().toString();
+                String str_middleName = middle_name.getText().toString();
+                String str_lastName = last_name.getText().toString();
+                String str_mobileNo = mobile_no.getText().toString();
+                String str_nationality = nationality.getText().toString();
+                String str_birthPlace = birth_place.getText().toString();
+                String str_dependents = dependents.getText().toString();
+                String str_govIdNumber = gov_id_number.getText().toString();
+                String str_docSource = document_source.getText().toString();
+                String str_gender = gender.getSelectedItem().toString();
+                String str_maritalStatus = marital_status.getSelectedItem().toString();
+                String str_educStat = educational_status.getSelectedItem().toString();
+                String str_govSpinner = govSpinner.getSelectedItem().toString();
+                String str_docSpinner = docSpinner.getSelectedItem().toString();
+                Log.v("log_tag", str_firstName);
+
+                sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                String restoredText = sharedpreferences.getString("createWhat", " ");
+
+                if (restoredText == "client") {
+                    editor.putString("clientfirstName", str_firstName);
+                    editor.putString("clientmiddleName", str_middleName);
+                    editor.putString("clientlastName", str_lastName);
+                    editor.putString("clientMobileNo", str_mobileNo);
+                    editor.putString("clientNationality", str_nationality);
+                    editor.putString("clientbirthPlace", str_birthPlace);
+                    editor.putString("clientDependents", str_dependents);
+                    editor.putString("clientGovIdNo", str_govIdNumber);
+                    editor.putString("clientDocSource", str_docSource);
+                    editor.putString("clientGender", str_gender);
+                    editor.putString("clientMaritalStatus", str_maritalStatus);
+                    editor.putString("clientEducStat", str_educStat);
+                    editor.putString("clientGovSpinner", str_govSpinner);
+                    editor.putString("clientDocSpinner", str_docSpinner);
+                    if(photoFile != null) {
+                        editor.putString("clientPhoto", photoFile.getAbsolutePath());
+                    }
+                    if(govIdFile != null) {
+                        editor.putString("clientGovImage", govIdFile.getAbsolutePath());;
+                    }
+                    if(docFile != null) {
+                        editor.putString("clientDocImage", docFile.getAbsolutePath());
+                    }
+
+
+
+                } else {
+                    editor.putString("coMakerfirstName", str_firstName);
+                    editor.putString("coMakermiddleName", str_middleName);
+                    editor.putString("coMakerlastName", str_lastName);
+                    editor.putString("coMakerMobileNo", str_mobileNo);
+                    editor.putString("coMakerNationality", str_nationality);
+                    editor.putString("coMakerbirthPlace", str_birthPlace);
+                    editor.putString("coMakerDependents", str_dependents);
+                    editor.putString("coMakerGovIdNo", str_govIdNumber);
+                    editor.putString("coMakerDocSource", str_docSource);
+                    editor.putString("coMakerGender", str_gender);
+                    editor.putString("coMakerMaritalStatus", str_maritalStatus);
+                    editor.putString("coMakerEducStat", str_educStat);
+                    editor.putString("coMakerGovSpinner", str_govSpinner);
+                    editor.putString("coMakerDocSpinner", str_docSpinner);
+                    if(photoFile != null) {
+                        editor.putString("coMakerPhoto", photoFile.getAbsolutePath());
+                    }
+                    if(govIdFile != null) {
+                        editor.putString("coMakerGovImage", govIdFile.getAbsolutePath());;
+                    }
+                    if(docFile != null) {
+                        editor.putString("coMakerDocImage", docFile.getAbsolutePath());
+                    }
+
+                }
+
+                editor.commit();
+
+                // turn to next page
+                Navigation.findNavController(v).navigate(R.id.action_accountNewFragment_to_residenceInformationFragment);
+            }else {
                 if(EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA) &&
                         EasyPermissions.hasPermissions(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 

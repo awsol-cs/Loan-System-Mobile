@@ -59,6 +59,7 @@ public class AccountFragment extends Fragment {
         editor.putString("termsConditionImg", signImgDef);
         editor.putString("loanAgreementImg", signImgDef);
         editor.putString("promNoteImg", signImgDef);
+        editor.putString("createWhat", "client");
         editor.commit();
 
         return binding.getRoot();

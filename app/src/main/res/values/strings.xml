@@ -871,6 +871,7 @@
     <string-array name="array_employment_type">
         <item>Private Sector</item>
         <item>Government</item>
+        <item>Professional</item>
         <item>Self-Employed</item>
         <item>Others</item>
     </string-array>
@@ -909,10 +910,11 @@
     <string name="residence_ownership">Residence Ownership</string>
     <string-array name="array_residence_ownership">
         <item>Owned</item>
-        <item>Co. Quarters</item>
-        <item>Mortgaged</item>
-        <item>With Relatives</item>
-        <item>Rented</item>
+        <item>Tenant</item>
+        <!--<item>Co. Quarters</item>-->
+        <!--<item>Mortgaged</item>-->
+        <!--<item>With Relatives</item>-->
+        <!--<item>Rented</item>-->
     </string-array>
 
     <string-array name="array_rank">

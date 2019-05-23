@@ -28,7 +28,7 @@ public class EmploymentInfoFragment extends Fragment {
             office_phone, office_mobile, local_number, fax_number, email_add, position,
             gross_income, other_income, previous_employer, previous_employer_office,
             present_employer_years, previous_employer_years;
-    Spinner employmennt_type, self_employed;
+    Spinner employment_type, self_employed;
     Button btn_next;
 
     private FragmentEmploymentInfoBinding binding;
@@ -55,40 +55,33 @@ public class EmploymentInfoFragment extends Fragment {
 
         btn_next = (Button) binding.getRoot().findViewById(R.id.btn_next);
 
+        // bind elements
+        employment_others = (EditText) binding.getRoot().findViewById(R.id.et_employment_others);
+        operation_years = (EditText) binding.getRoot().findViewById(R.id.et_operation_years);
+        present_employer = (EditText) binding.getRoot().findViewById(R.id.et_present_employer);
+        business_nature = (EditText) binding.getRoot().findViewById(R.id.et_business_nature);
+        office_address = (EditText) binding.getRoot().findViewById(R.id.et_office_address);
+        office_phone = (EditText) binding.getRoot().findViewById(R.id.et_office_phone);
+        office_mobile = (EditText) binding.getRoot().findViewById(R.id.et_office_mobile);
+        local_number = (EditText) binding.getRoot().findViewById(R.id.et_local_number);
+        fax_number = (EditText) binding.getRoot().findViewById(R.id.et_fax_number);
+        email_add = (EditText) binding.getRoot().findViewById(R.id.et_email_add);
+        position = (EditText) binding.getRoot().findViewById(R.id.et_position);
+        gross_income = (EditText) binding.getRoot().findViewById(R.id.et_gross_income);
+        other_income = (EditText) binding.getRoot().findViewById(R.id.et_other_income);
+        previous_employer = (EditText) binding.getRoot().findViewById(R.id.et_previous_employer);
+        previous_employer_office = (EditText) binding.getRoot().findViewById(R.id.et_previous_employer_office);
+        present_employer_years = (EditText) binding.getRoot().findViewById(R.id.et_present_employer_years);
+        previous_employer_years = (EditText) binding.getRoot().findViewById(R.id.et_previous_employer_years);
+        employment_type = (Spinner) binding.getRoot().findViewById(R.id.sp_employment_type);
+        self_employed = (Spinner) binding.getRoot().findViewById(R.id.sp_self_employed);
+
+
         // start of click event
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString("currentSign", "termsCondition");
-                editor.commit();
-
-                String restoredText = sharedpreferences.getString("termsConditionImg", " ");
-
-                // bind elements
-                employment_others = (EditText) binding.getRoot().findViewById(R.id.et_employment_others);
-                operation_years = (EditText) binding.getRoot().findViewById(R.id.et_operation_years);
-                present_employer = (EditText) binding.getRoot().findViewById(R.id.et_present_employer);
-                business_nature = (EditText) binding.getRoot().findViewById(R.id.et_business_nature);
-                office_address = (EditText) binding.getRoot().findViewById(R.id.et_office_address);
-                office_phone = (EditText) binding.getRoot().findViewById(R.id.et_office_phone);
-                office_mobile = (EditText) binding.getRoot().findViewById(R.id.et_office_mobile);
-                local_number = (EditText) binding.getRoot().findViewById(R.id.et_local_number);
-                fax_number = (EditText) binding.getRoot().findViewById(R.id.et_fax_number);
-                email_add = (EditText) binding.getRoot().findViewById(R.id.et_email_add);
-                position = (EditText) binding.getRoot().findViewById(R.id.et_position);
-                gross_income = (EditText) binding.getRoot().findViewById(R.id.et_gross_income);
-                other_income = (EditText) binding.getRoot().findViewById(R.id.et_other_income);
-                previous_employer = (EditText) binding.getRoot().findViewById(R.id.et_previous_employer);
-                previous_employer_office = (EditText) binding.getRoot().findViewById(R.id.et_previous_employer_office);
-                present_employer_years = (EditText) binding.getRoot().findViewById(R.id.et_present_employer_years);
-                previous_employer_years = (EditText) binding.getRoot().findViewById(R.id.et_previous_employer_years);
-                employmennt_type = (Spinner) binding.getRoot().findViewById(R.id.sp_employment_type);
-                self_employed = (Spinner) binding.getRoot().findViewById(R.id.sp_self_employed);
-
+                // save
                 // get inputs
                 String str_employmentOthers = employment_others.getText().toString();
                 String str_operationYears = operation_years.getText().toString();
@@ -107,8 +100,58 @@ public class EmploymentInfoFragment extends Fragment {
                 String str_previousEmployerOffice = previous_employer_office.getText().toString();
                 String str_presentEmployerYears = present_employer_years.getText().toString();
                 String str_previousEmployerYears = previous_employer_years.getText().toString();
-                String str_employmenntType = employmennt_type.getSelectedItem().toString();
+                String str_employmentType = employment_type.getSelectedItem().toString();
                 String str_selfEmployed = self_employed.getSelectedItem().toString();
+
+                sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                String restoredText = sharedpreferences.getString("createWhat", " ");
+
+                if (restoredText == "client") {
+                    editor.putString("clientEmploymentOthers", str_employmentOthers);
+                    editor.putString("clientOperationYears", str_operationYears);
+                    editor.putString("clientPresentEmployer", str_presentEmployer);
+                    editor.putString("clientBusinessNature", str_businessNature);
+                    editor.putString("clientOfficeAddress", str_officeAddress);
+                    editor.putString("clientOfficePhone", str_officePhone);
+                    editor.putString("clientOfficeMobile", str_officeMobile);
+                    editor.putString("clientLocalNo", str_localNumber);
+                    editor.putString("clientFaxNo", str_faxNumber);
+                    editor.putString("clientEmailAddress", str_emailAddress);
+                    editor.putString("clientPosition", str_position);
+                    editor.putString("clientGrossIncome", str_grossIncome);
+                    editor.putString("clientOtherIncome", str_otherIncome);
+                    editor.putString("clientPreviousEmployer", str_previousEmployer);
+                    editor.putString("clientPreviousEmployerOffice", str_previousEmployerOffice);
+                    editor.putString("clientPresentEmployerYears", str_presentEmployerYears);
+                    editor.putString("clientPreviousEmployerYears", str_previousEmployerYears);
+                    editor.putString("clientEmploymentType", str_employmentType);
+                    editor.putString("clientSelfEmployed", str_selfEmployed);
+                } else {
+                    editor.putString("coMakerEmploymentOthers", str_employmentOthers);
+                    editor.putString("coMakerOperationYears", str_operationYears);
+                    editor.putString("coMakerPresentEmployer", str_presentEmployer);
+                    editor.putString("coMakerBusinessNature", str_businessNature);
+                    editor.putString("coMakerOfficeAddress", str_officeAddress);
+                    editor.putString("coMakerOfficePhone", str_officePhone);
+                    editor.putString("coMakerOfficeMobile", str_officeMobile);
+                    editor.putString("coMakerLocalNo", str_localNumber);
+                    editor.putString("coMakerFaxNo", str_faxNumber);
+                    editor.putString("coMakerEmailAddress", str_emailAddress);
+                    editor.putString("coMakerPosition", str_position);
+                    editor.putString("coMakerGrossIncome", str_grossIncome);
+                    editor.putString("coMakerOtherIncome", str_otherIncome);
+                    editor.putString("coMakerPreviousEmployer", str_previousEmployer);
+                    editor.putString("coMakerPreviousEmployerOffice", str_previousEmployerOffice);
+                    editor.putString("coMakerPresentEmployerYears", str_presentEmployerYears);
+                    editor.putString("coMakerPreviousEmployerYears", str_previousEmployerYears);
+                    editor.putString("coMakerEmploymentType", str_employmentType);
+                    editor.putString("coMakerSelfEmployed", str_selfEmployed);
+                }
+
+                editor.commit();
 
                 // turn to next page
                 Navigation.findNavController(v).navigate(R.id.action_employmentInformationFragment_to_personalReferenceFragment);

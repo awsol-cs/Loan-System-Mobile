@@ -55,30 +55,22 @@ public class PersonalReferenceFragment extends Fragment {
 
         btn_next = (Button) binding.getRoot().findViewById(R.id.btn_next);
 
+        // bind elements
+        reference_name = (EditText) binding.getRoot().findViewById(R.id.et_reference_name);
+        relationship = (EditText) binding.getRoot().findViewById(R.id.et_relationship);
+        reference_employer = (EditText) binding.getRoot().findViewById(R.id.et_reference_employer);
+        contact_no = (EditText) binding.getRoot().findViewById(R.id.et_contact_no);
+        ref_mobile = (EditText) binding.getRoot().findViewById(R.id.et_ref_mobile);
+        related_officer_name = (EditText) binding.getRoot().findViewById(R.id.et_related_officer_name);
+        officer_contact_no = (EditText) binding.getRoot().findViewById(R.id.et_officer_contact_no);
+        relationship_to_staff = (Spinner) binding.getRoot().findViewById(R.id.sp_relationship_to_staff);
+        related_to_staff = (CheckBox) binding.getRoot().findViewById(R.id.cb_related_to_staff);
+
         // start of click event
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString("currentSign", "termsCondition");
-                editor.commit();
-
-                String restoredText = sharedpreferences.getString("termsConditionImg", " ");
-
-                // bind elements
-                reference_name = (EditText) binding.getRoot().findViewById(R.id.et_reference_name);
-                relationship = (EditText) binding.getRoot().findViewById(R.id.et_relationship);
-                reference_employer = (EditText) binding.getRoot().findViewById(R.id.et_reference_employer);
-                contact_no = (EditText) binding.getRoot().findViewById(R.id.et_contact_no);
-                ref_mobile = (EditText) binding.getRoot().findViewById(R.id.et_ref_mobile);
-                related_officer_name = (EditText) binding.getRoot().findViewById(R.id.et_related_officer_name);
-                officer_contact_no = (EditText) binding.getRoot().findViewById(R.id.et_officer_contact_no);
-                relationship_to_staff = (Spinner) binding.getRoot().findViewById(R.id.sp_relationship_to_staff);
-                related_to_staff = (CheckBox) binding.getRoot().findViewById(R.id.cb_related_to_staff);
-
+                // save
                 // get inputs
                 String str_referenceName = reference_name.getText().toString();
                 String str_relationship = relationship.getText().toString();
@@ -97,18 +89,49 @@ public class PersonalReferenceFragment extends Fragment {
                     str_isRelated = "No";
                 }
 
-                // turn to next page
-                Navigation.findNavController(v).navigate(R.id.action_personalReferenceFragment_to_loanApplicationFragment);
+                sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                String restoredText = sharedpreferences.getString("createWhat", " ");
+
+                if (restoredText == "client") {
+                    editor.putString("clientRefName", str_referenceName);
+                    editor.putString("clientRefRelationship", str_relationship);
+                    editor.putString("clientRefEmployer", str_referenceEmployer);
+                    editor.putString("clientRefContactNo", str_contactNo);
+                    editor.putString("clientRefMobile", str_refMobile);
+                    editor.putString("clientRelatedOfficerName", str_relatedOfficerName);
+                    editor.putString("clientOfficerContactNo", str_officerContactNo);
+                    editor.putString("clientRelationshipToStaff", str_relationshipToStaff);
+                    editor.putString("clientIsRelated", str_isRelated);
+
+                    editor.commit();
+
+                    // turn to next page
+                    Navigation.findNavController(v).navigate(R.id.action_personalReferenceFragment_to_loanApplicationFragment);
+                } else {
+                    editor.putString("coMakerRefName", str_referenceName);
+                    editor.putString("coMakerRefRelationship", str_relationship);
+                    editor.putString("coMakerRefEmployer", str_referenceEmployer);
+                    editor.putString("coMakerRefContactNo", str_contactNo);
+                    editor.putString("coMakerRefMobile", str_refMobile);
+                    editor.putString("coMakerRelatedOfficerName", str_relatedOfficerName);
+                    editor.putString("coMakerOfficerContactNo", str_officerContactNo);
+                    editor.putString("coMakerRelationshipToStaff", str_relationshipToStaff);
+                    editor.putString("coMakerIsRelated", str_isRelated);
+
+                    editor.commit();
+
+                    // turn to next page
+                    Navigation.findNavController(v).navigate(R.id.action_personalReferenceFragment_to_termsConditionFragment);
+                }
 
             }
         });
         // end of click event
 
         return binding.getRoot();
-    }
-
-    public void samp() {
-        Log.v("log_tag", "sample function");
     }
 
 }

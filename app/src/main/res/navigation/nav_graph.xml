@@ -72,6 +72,9 @@
         <action
             android:id="@+id/action_personalReferenceFragment_to_loanApplicationFragment"
             app:destination="@id/loanApplicationFragment" />
+        <action
+            android:id="@+id/action_personalReferenceFragment_to_termsConditionFragment"
+            app:destination="@id/termsConditionFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountExistingFragment"
@@ -91,8 +94,11 @@
         android:label="fragment_loan_application"
         tools:layout="@layout/fragment_loan_application" >
         <action
-            android:id="@+id/action_loanApplicationFragment_to_coMakerFragment"
-            app:destination="@id/coMakerFragment" />
+            android:id="@+id/action_loanApplicationFragment_to_accountNewFragment_as_coMaker"
+            app:destination="@id/accountNewFragment" />
+        <action
+            android:id="@+id/action_loanApplicationFragment_to_termsConditionFragment"
+            app:destination="@id/termsConditionFragment" />
         <action
             android:id="@+id/action_loanApplicationFragment_to_loanRepaymentDetailsFragment"
             app:destination="@id/loanRepaymentDetailsFragment" />

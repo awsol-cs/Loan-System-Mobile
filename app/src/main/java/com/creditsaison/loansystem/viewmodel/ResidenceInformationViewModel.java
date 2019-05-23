@@ -15,9 +15,6 @@ public class ResidenceInformationViewModel extends ViewModel{
     }
 
     public void onButtonClick(View view) {
-        ResidenceInformationFragment riFrag = new ResidenceInformationFragment();
-        riFrag.storeData();
-
         Navigation.findNavController(view).navigate(R.id.action_residenceInformationFragment_to_employmentInformationFragment);
     }
 
