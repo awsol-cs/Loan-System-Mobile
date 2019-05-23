@@ -70,7 +70,7 @@
     <string name="center_id">Center Id</string>
     <string name="create_client">Create Client</string>
     <string name="create_savings_account">Add Savings Account</string>
-    <string name="create_loan_account">New Loan Application for </string>
+    <string name="create_loan_account">Loan Application</string>
     <string name="create_loan_terms">Loan Terms</string>
     <string name="create_center">Create Center</string>
     <string name="create_group">Create Group</string>
@@ -816,7 +816,6 @@
 
     <string-array name="array_loan_product">
         <item>Auto Loan</item>
-        <item>Auto Loan 6 Months</item>
         <item>Housing Loan</item>
         <item>Personal Loan</item>
         <item>Revolving Loan</item>
@@ -825,8 +824,8 @@
     </string-array>
 
     <string-array name="array_loan_purpose">
+        <item>Personal</item>
         <item>Tricycle for business</item>
-        <item>Free Purpose</item>
         <item>House downpayment</item>
         <item>Capital for business</item>
     </string-array>
@@ -879,7 +878,6 @@
     <string name="gov_id">Government ID:</string>
     <string name="gov_id_num">ID Number</string>
     <string-array name="array_gov_ids">
-        <item>Type</item>
         <item>Passport</item>
         <item>PRC ID</item>
         <item>SSS ID</item>
@@ -957,6 +955,8 @@
     <string name="clear_pad">Clear Pad</string>
     <string name="save_signature">Save Signature</string>
 
+    <string name="next">Next</string>
+
     <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
 
     <string name="residence_info">Residence Information</string>
@@ -971,7 +971,6 @@
     <string name="state_province">State/Province</string>
     <string name="postal_code">Postal Code</string>
     <string name="address_type">Address Type</string>
-    <string name="next">Next</string>
     <string name="employment_others">Other Employment Type</string>
     <string name="present_employer">Name of Present Employer or Business</string>
     <string name="business_nature">Nature of Business</string>
