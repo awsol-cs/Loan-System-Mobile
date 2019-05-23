@@ -7,15 +7,14 @@ import com.creditsaison.loansystem.R;
 import androidx.lifecycle.ViewModel;
 import androidx.navigation.Navigation;
 
-public class AccountNewViewModel extends ViewModel {
+public class EmploymentInfoViewModel extends ViewModel{
 
-    public AccountNewViewModel() {
+    public EmploymentInfoViewModel() {
 
     }
 
     public void onButtonClick(View view) {
-        Navigation.findNavController(view).navigate(R.id.action_accountNewFragment_to_residenceInformationFragment);
+        Navigation.findNavController(view).navigate(R.id.action_employmentInformationFragment_to_personalReferenceFragment);
     }
-
 
 }

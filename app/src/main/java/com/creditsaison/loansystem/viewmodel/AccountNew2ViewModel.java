@@ -28,7 +28,7 @@ public class AccountNew2ViewModel extends ViewModel {
         Log.v("log_tag", "para lang =malaman ang view");
         Log.v("log_tag", view.toString());
         Log.v("log_tag", "para lang malaman ang view");
-        Navigation.findNavController(view).navigate(R.id.action_accountNewFragment2_to_loanApplicationFragment2);
+//        Navigation.findNavController(view).navigate(R.id.action_accountNewFragment2_to_loanApplicationFragment);
     }
 
 
