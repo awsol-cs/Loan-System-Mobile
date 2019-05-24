@@ -34,7 +34,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -183,6 +182,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                 String str_lastName = last_name.getText().toString();
                 String str_mobileNo = mobile_no.getText().toString();
                 String str_nationality = nationality.getText().toString();
+                String str_birthDate = date.getText().toString();
                 String str_birthPlace = birth_place.getText().toString();
                 String str_dependents = dependents.getText().toString();
                 String str_govIdNumber = gov_id_number.getText().toString();
@@ -206,6 +206,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     editor.putString("clientlastName", str_lastName);
                     editor.putString("clientMobileNo", str_mobileNo);
                     editor.putString("clientNationality", str_nationality);
+                    editor.putString("clientbirthDate", str_birthDate);
                     editor.putString("clientbirthPlace", str_birthPlace);
                     editor.putString("clientDependents", str_dependents);
                     editor.putString("clientGovIdNo", str_govIdNumber);
@@ -213,8 +214,9 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     editor.putString("clientGender", str_gender);
                     editor.putString("clientMaritalStatus", str_maritalStatus);
                     editor.putString("clientEducStat", str_educStat);
-                    editor.putString("clientGovSpinner", str_govSpinner);
-                    editor.putString("clientDocSpinner", str_docSpinner);
+                    //editor.putString("clientGovSpinner", str_govSpinner);
+                    //editor.putString("clientDocSpinner", str_docSpinner);
+
                     if(photoFile != null) {
                         editor.putString("clientPhoto", photoFile.getAbsolutePath());
                     }
@@ -233,6 +235,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     editor.putString("coMakerlastName", str_lastName);
                     editor.putString("coMakerMobileNo", str_mobileNo);
                     editor.putString("coMakerNationality", str_nationality);
+                    editor.putString("coMakerbirthDate", str_birthDate);
                     editor.putString("coMakerbirthPlace", str_birthPlace);
                     editor.putString("coMakerDependents", str_dependents);
                     editor.putString("coMakerGovIdNo", str_govIdNumber);
@@ -240,8 +243,9 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     editor.putString("coMakerGender", str_gender);
                     editor.putString("coMakerMaritalStatus", str_maritalStatus);
                     editor.putString("coMakerEducStat", str_educStat);
-                    editor.putString("coMakerGovSpinner", str_govSpinner);
-                    editor.putString("coMakerDocSpinner", str_docSpinner);
+                    //editor.putString("coMakerGovSpinner", str_govSpinner);
+                    //editor.putString("coMakerDocSpinner", str_docSpinner);
+
                     if(photoFile != null) {
                         editor.putString("coMakerPhoto", photoFile.getAbsolutePath());
                     }

@@ -101,7 +101,6 @@ Volutpat sed cras ornare arcu dui vivamus arcu. At auctor urna nunc id cursus me
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/button_background_selector"
-            android:onClick="@{viewModel::onButtonClick}"
             android:text="AGREE"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
