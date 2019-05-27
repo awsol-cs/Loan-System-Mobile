@@ -18,6 +18,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentPromiNoteBinding;
 import com.creditsaison.loansystem.viewmodel.PromissoryViewModel;
@@ -25,7 +31,23 @@ import com.creditsaison.loansystem.viewmodel.PromissoryViewModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 public class PromissoryFragment extends Fragment implements View.OnClickListener {
 
@@ -105,6 +127,14 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
         JSONObject signatures = new JSONObject();
         JSONObject finalObject = new JSONObject();
 
+
+        JSONObject client1 = new JSONObject();
+        JSONObject kyc1 = new JSONObject();
+        JSONObject loan1 = new JSONObject();
+        JSONObject coMaker1 = new JSONObject();
+        JSONObject coMakerInfo1 = new JSONObject();
+        JSONObject coMakerKyc1 = new JSONObject();
+
         try {
             //client
             client.put("firstname", sp.getString("clientfirstName", " "));
@@ -115,7 +145,7 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             client.put("nationality", sp.getString("clientNationality", " "));
             client.put("date_of_birth", sp.getString("clientbirthDate", " "));
             client.put("birthplace", sp.getString("clientbirthPlace", " "));
-            client.put("dependents", Integer.parseInt(sp.getString("clientDependents", null)));
+            client.put("dependents", sp.getString("clientDependents", null));
             client.put("marital_status", sp.getString("clientMaritalStatus", " "));
             client.put("educational_status", sp.getString("clientEducStat", " "));
             //client.put("idNumber", sp.getString("clientGovIdNo", " "));
@@ -183,7 +213,7 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             coMakerInfo.put("nationality", sp.getString("coMakerNationality", " "));
             coMakerInfo.put("birthdate", sp.getString("coMakerbirthDate", " "));
             coMakerInfo.put("birthplace", sp.getString("coMakerbirthPlace", " "));
-            coMakerInfo.put("dependents", Integer.parseInt(sp.getString("coMakerDependents", null)));
+            coMakerInfo.put("dependents", sp.getString("coMakerDependents", null));
             coMakerInfo.put("marital_status", sp.getString("coMakerMaritalStatus", " "));
             coMakerInfo.put("educational_status", sp.getString("coMakerEducStat", " "));
             //coMakerInfo.put("id", sp.getString("coMakerGovIdNo", " "));
@@ -301,20 +331,68 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 
 
             //final object to be sent to API
-            finalObject.put("client", client);
-            finalObject.put("kyc", kyc);
-            finalObject.put("loan", loan);
-            finalObject.put("comaker", coMaker);
-            finalObject.put("image", image);
-            finalObject.put("documents", documents);
-            finalObject.put("signature", signatures);
-
-
-            Log.i("finalObj", finalObject.toString());
+//            finalObject.put("client", client);
+//            finalObject.put("kyc", kyc);
+//            finalObject.put("loan", loan);
+//            finalObject.put("comaker", coMaker);
+//            finalObject.put("image", image);
+//            finalObject.put("documents", documents);
+//            finalObject.put("signature", signatures);
 
 
 
+            client1.put("activationDate", "06 May 2019");
+            client1.put("active", "true");
+            client1.put("dateFormat", "dd MMMM yyyy");
+            client1.put("firstname", "trial");
+            client1.put("lastname", "trial");
+            client1.put("officeId", 1);
+            client1.put("locale", "en");
+            client1.put("savingsProductId", null);
+            client1.put("submittedOnDate", "06 May 2019");
 
+            kyc1.put("nationality", "Filipino");
+            kyc1.put("noOfDependents", 0);
+            kyc1.put("othersEducationalAttainment", "College");
+            kyc1.put("placeOfBirth", "trialate");
+            kyc1.put("motherMaidenName", "trial");
+            kyc1.put("rentedResidenceOwnership", 10000);
+            kyc1.put("otherEmployment", "Foreman");
+            kyc1.put("yearsInOperation", 1);
+            kyc1.put("noOfEmployees", 1);
+            kyc1.put("nameOfPresentEmployerBusiness", "AWS");
+            kyc1.put("nameReference", "Mother");
+            kyc1.put("grossAnnualIncome", 100000);
+            kyc1.put("otherIncome", 100000);
+            kyc1.put("yearsWithPresentEmployer", 1);
+            kyc1.put("locale", "en");
+
+            loan1.put("allowPartialPeriodInterestCalcualtion", false);
+            loan1.put("amortizationType", 1);
+            loan1.put("expectedDisbursementDate", "07 May 2019");
+            loan1.put("interestCalculationPeriodType", 1);
+            loan1.put("interestRatePerPeriod",  2);
+            loan1.put("interestType", 0);
+            loan1.put("isEqualAmortization", false);
+            loan1.put("loanTermFrequency", 6);
+            loan1.put("loanTermFrequencyType", 2);
+            loan1.put("loanType", "individual");
+            loan1.put("numberOfRepayments", 6);
+            loan1.put("principal", 10000);
+            loan1.put("productId", 1);
+            loan1.put("repaymentEvery", 1);
+            loan1.put("locale", "en");
+            loan1.put("repaymentFrequencyType", 2);
+            loan1.put("submittedOnDate", "07 May 2019");
+            loan1.put("transactionProcessingStrategyId", 1);
+
+            finalObject.put("client", client1);
+            finalObject.put("kyc", kyc1);
+            finalObject.put("loan", loan1);
+
+
+
+            sendPost(finalObject);
 
 
         } catch (JSONException e) {
@@ -335,5 +413,150 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
         String file = Base64.encodeToString(byte_arr, Base64.DEFAULT);
 
         return file;
+    }
+
+
+
+    public void sendPost(JSONObject finalData) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String uNameandPword = "mifos:password";
+                    String basicAutoPayload = "Basic " + Base64.encodeToString(uNameandPword.getBytes(), Base64.DEFAULT);
+                    URL auth = new URL("https://192.168.227.159/fineract-provider/api/v1/cs_clients");
+ //                   String url = "https://192.168.227.159/fineract-provider/api/v1/clients";
+                    trustAllHosts();
+
+//                    RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+//                    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+//                            new Response.Listener<String>(){
+//
+//                                @Override
+//                                public void onResponse(String response) {
+//                                    Log.i("STATUS", response);
+//                                }
+//                            }, new Response.ErrorListener() {
+//
+//                        @Override
+//                        public void onErrorResponse(VolleyError error) {
+//                            Log.i("STATUS", error.toString());
+//                        }
+//                    });
+//
+//                    requestQueue.add(stringRequest);
+
+
+
+
+//                    HttpURLConnection authConn = null;
+//                    if (auth.getProtocol().toLowerCase().equals("https")) {
+//                        trustAllHosts();
+//                        HttpsURLConnection https = (HttpsURLConnection) auth.openConnection();
+//                        https.setHostnameVerifier(DO_NOT_VERIFY);
+//                        authConn = https;
+//                    } else {
+//                        authConn = (HttpURLConnection) auth.openConnection();
+//                    }
+//
+//                    authConn.setRequestMethod("POST");
+//                    authConn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+//                    authConn.setRequestProperty("Fineract-Platform-TenantId", "default");
+//                    authConn.setRequestProperty("Accept","application/json");
+//                    authConn.setRequestProperty("Authorization",basicAutoPayload);
+//                    authConn.setDoOutput(true);
+//                    authConn.setDoInput(true);
+//                    Log.i("JSON", finalData.toString());
+//                    DataOutputStream os = new DataOutputStream(authConn.getOutputStream());
+//                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+//                    os.writeBytes(finalData.toString());
+//
+//
+//                    Log.i("STATUS", String.valueOf(authConn.getResponseCode()));
+//                    Log.i("MSG" , authConn.getResponseMessage());
+//
+//                    authConn.disconnect();
+
+
+                    URL url = new URL("https://192.168.227.159/fineract-provider/api/v1/cs_clients");
+                    //HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                    HttpURLConnection conn = null;
+
+                    if (url.getProtocol().toLowerCase().equals("https")) {
+                        trustAllHosts();
+                        HttpsURLConnection https = (HttpsURLConnection) url.openConnection();
+                        https.setHostnameVerifier(DO_NOT_VERIFY);
+                        conn = https;
+                    } else {
+                        conn = (HttpURLConnection) url.openConnection();
+                    }
+
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Fineract-Platform-TenantId", "default");
+                    conn.setRequestProperty("Accept","application/json");
+                    conn.setRequestProperty("Authorization",basicAutoPayload);
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    Log.i("JSON", finalData.toString());
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+                    os.writeBytes(finalData.toString());
+
+                    os.flush();
+                    os.close();
+
+
+                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                    Log.i("MSG" , conn.getResponseMessage());
+
+                    conn.disconnect();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
+    }
+
+    // always verify the host - dont check for certificate
+    final static HostnameVerifier DO_NOT_VERIFY = new HostnameVerifier() {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
+    };
+
+    /**
+     * Trust every server - dont check for any certificate
+     */
+    private static void trustAllHosts() {
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return new java.security.cert.X509Certificate[] {};
+            }
+
+            public void checkClientTrusted(X509Certificate[] chain,
+                                           String authType) throws CertificateException {
+            }
+
+            public void checkServerTrusted(X509Certificate[] chain,
+                                           String authType) throws CertificateException {
+            }
+        } };
+
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection
+                    .setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
