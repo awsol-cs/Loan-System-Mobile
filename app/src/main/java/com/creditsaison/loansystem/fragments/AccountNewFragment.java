@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,11 +35,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentAccountNewBinding;
@@ -46,6 +49,7 @@ import com.creditsaison.loansystem.viewmodel.AccountNewViewModel;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,6 +70,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
         ConstraintSet set;
         TextView text, text1, date, page_title;
         Button btn_client_photo, btn_gov_id, btn_doc_photo, btn_next;
+        CheckBox gov_id, oth_docu;
         ImageView client_image;
         File photoFile = null;
         File govIdFile = null;
@@ -126,6 +131,43 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
             govSpinner = (Spinner) binding.getRoot().findViewById(R.id.sp_gov_id_type);
             docSpinner = (Spinner) binding.getRoot().findViewById(R.id.sp_doc_type);
 
+            gov_id = (CheckBox) binding.getRoot().findViewById(R.id.cb_gov_id);
+            oth_docu = (CheckBox) binding.getRoot().findViewById(R.id.cb_doc);
+
+            gov_id_number.setEnabled(false);
+            govSpinner.setEnabled(false);
+            btn_gov_id.setEnabled(false);
+            document_source.setEnabled(false);
+            docSpinner.setEnabled(false);
+            btn_doc_photo.setEnabled(false);
+
+            gov_id.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if ( isChecked )
+                {
+                    gov_id_number.setEnabled(true);
+                    govSpinner.setEnabled(true);
+                    btn_gov_id.setEnabled(true);
+                }
+                else{
+                    gov_id_number.setEnabled(false);
+                    govSpinner.setEnabled(false);
+                    btn_gov_id.setEnabled(false);
+                }
+            });
+            oth_docu.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if ( isChecked )
+                {
+                    document_source.setEnabled(true);
+                    docSpinner.setEnabled(true);
+                    btn_doc_photo.setEnabled(true);
+                }
+                else{
+                    document_source.setEnabled(false);
+                    docSpinner.setEnabled(false);
+                    btn_doc_photo.setEnabled(false);
+                }
+            });
+
             btn_client_photo.setOnClickListener(this);
             btn_gov_id.setOnClickListener(this);
             btn_doc_photo.setOnClickListener(this);
@@ -175,93 +217,39 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
             } else if(v == btn_next) {
-                // Saving
-                // get inputs
-                String str_firstName = first_name.getText().toString();
-                String str_middleName = middle_name.getText().toString();
-                String str_lastName = last_name.getText().toString();
-                String str_mobileNo = mobile_no.getText().toString();
-                String str_nationality = nationality.getText().toString();
-                String str_birthDate = date.getText().toString();
-                String str_birthPlace = birth_place.getText().toString();
-                String str_dependents = dependents.getText().toString();
-                String str_govIdNumber = gov_id_number.getText().toString();
-                String str_docSource = document_source.getText().toString();
-                String str_gender = gender.getSelectedItem().toString();
-                String str_maritalStatus = marital_status.getSelectedItem().toString();
-                String str_educStat = educational_status.getSelectedItem().toString();
-                String str_govSpinner = govSpinner.getSelectedItem().toString();
-                String str_docSpinner = docSpinner.getSelectedItem().toString();
-                Log.v("log_tag", str_firstName);
 
-                sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-
-                String restoredText = sharedpreferences.getString("createWhat", " ");
-
-                if (restoredText == "client") {
-                    editor.putString("clientfirstName", str_firstName);
-                    editor.putString("clientmiddleName", str_middleName);
-                    editor.putString("clientlastName", str_lastName);
-                    editor.putString("clientMobileNo", str_mobileNo);
-                    editor.putString("clientNationality", str_nationality);
-                    editor.putString("clientbirthDate", str_birthDate);
-                    editor.putString("clientbirthPlace", str_birthPlace);
-                    editor.putString("clientDependents", str_dependents);
-                    editor.putString("clientGovIdNo", str_govIdNumber);
-                    editor.putString("clientDocSource", str_docSource);
-                    editor.putString("clientGender", str_gender);
-                    editor.putString("clientMaritalStatus", str_maritalStatus);
-                    editor.putString("clientEducStat", str_educStat);
-                    //editor.putString("clientGovSpinner", str_govSpinner);
-                    //editor.putString("clientDocSpinner", str_docSpinner);
-
-                    if(photoFile != null) {
-                        editor.putString("clientPhoto", photoFile.getAbsolutePath());
+                Date c = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("M/dd/yyyy");
+                String formattedDate = df.format(c);
+                Date dt_birthDate, dt_current;
+                boolean valid_date = true;
+                try {
+                    dt_birthDate = df.parse(date.getText().toString());
+                    dt_current = df.parse(formattedDate);
+                    if (dt_birthDate.after(c) || dt_birthDate.equals(dt_current)){
+                        valid_date = false;
                     }
-                    if(govIdFile != null) {
-                        editor.putString("clientGovImage", govIdFile.getAbsolutePath());;
-                    }
-                    if(docFile != null) {
-                        editor.putString("clientDocImage", docFile.getAbsolutePath());
-                    }
-
-
-
-                } else {
-                    editor.putString("coMakerfirstName", str_firstName);
-                    editor.putString("coMakermiddleName", str_middleName);
-                    editor.putString("coMakerlastName", str_lastName);
-                    editor.putString("coMakerMobileNo", str_mobileNo);
-                    editor.putString("coMakerNationality", str_nationality);
-                    editor.putString("coMakerbirthDate", str_birthDate);
-                    editor.putString("coMakerbirthPlace", str_birthPlace);
-                    editor.putString("coMakerDependents", str_dependents);
-                    editor.putString("coMakerGovIdNo", str_govIdNumber);
-                    editor.putString("coMakerDocSource", str_docSource);
-                    editor.putString("coMakerGender", str_gender);
-                    editor.putString("coMakerMaritalStatus", str_maritalStatus);
-                    editor.putString("coMakerEducStat", str_educStat);
-                    //editor.putString("coMakerGovSpinner", str_govSpinner);
-                    //editor.putString("coMakerDocSpinner", str_docSpinner);
-
-                    if(photoFile != null) {
-                        editor.putString("coMakerPhoto", photoFile.getAbsolutePath());
-                    }
-                    if(govIdFile != null) {
-                        editor.putString("coMakerGovImage", govIdFile.getAbsolutePath());;
-                    }
-                    if(docFile != null) {
-                        editor.putString("coMakerDocImage", docFile.getAbsolutePath());
-                    }
-
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
 
-                editor.commit();
+                if (TextUtils.isEmpty(first_name.getText().toString()) || TextUtils.isEmpty(last_name.getText().toString()) || TextUtils.isEmpty(date.getText().toString())) {
 
-                // turn to next page
-                Navigation.findNavController(v).navigate(R.id.action_accountNewFragment_to_residenceInformationFragment);
+                    Toast.makeText(getActivity().getApplicationContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show();
+
+                } else if (!valid_date){
+
+                    Toast.makeText(getActivity().getApplicationContext(), "Birth date cannot be equal or greater than the current date", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    // call function to save inputs to shared preferences
+                    saveToSharedPreference();
+
+                    // turn to next page
+                    Navigation.findNavController(v).navigate(R.id.action_accountNewFragment_to_residenceInformationFragment);
+                }
+
+
             }else {
                 if(EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA) &&
                         EasyPermissions.hasPermissions(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
@@ -497,6 +485,107 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
                 matrix, true);
+    }
+
+    /**
+     * Getting all inputs and setting them to variables and
+     * Saving user inputs to Shared Preferences
+     */
+    public void saveToSharedPreference () {
+        // get inputs
+        String str_firstName = first_name.getText().toString();
+        String str_middleName = middle_name.getText().toString();
+        String str_lastName = last_name.getText().toString();
+        String str_mobileNo = mobile_no.getText().toString();
+        String str_nationality = nationality.getText().toString();
+        String str_birthDate = date.getText().toString();
+        String str_birthPlace = birth_place.getText().toString();
+        String str_dependents = dependents.getText().toString();
+        String str_gender = gender.getSelectedItem().toString();
+        String str_maritalStatus = marital_status.getSelectedItem().toString();
+        String str_educStat = educational_status.getSelectedItem().toString();
+
+        String str_govIdNumber = gov_id_number.getText().toString();
+        String str_docSource = document_source.getText().toString();
+        String str_govSpinner = govSpinner.getSelectedItem().toString();
+        String str_docSpinner = docSpinner.getSelectedItem().toString();
+        boolean cbGovId = gov_id.isChecked();
+        boolean cbOthDoc = oth_docu.isChecked();
+
+        // Saving
+        sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+
+        // checker if the page would save a client or a comaker
+        String restoredText = sharedpreferences.getString("createWhat", " ");
+
+        if (restoredText == "client") {
+            editor.putString("clientfirstName", str_firstName);
+            editor.putString("clientmiddleName", str_middleName);
+            editor.putString("clientlastName", str_lastName);
+            editor.putString("clientMobileNo", str_mobileNo);
+            editor.putString("clientNationality", str_nationality);
+            editor.putString("clientbirthDate", str_birthDate);
+            editor.putString("clientbirthPlace", str_birthPlace);
+            editor.putString("clientDependents", str_dependents);
+            if (cbGovId) {
+                editor.putString("clientGovIdNo", str_govIdNumber);
+            }
+            if (cbOthDoc) {
+                editor.putString("clientDocSource", str_docSource);
+            }
+            editor.putString("clientGender", str_gender);
+            editor.putString("clientMaritalStatus", str_maritalStatus);
+            editor.putString("clientEducStat", str_educStat);
+            //editor.putString("clientGovSpinner", str_govSpinner);
+            //editor.putString("clientDocSpinner", str_docSpinner);
+
+            if(photoFile != null) {
+                editor.putString("clientPhoto", photoFile.getAbsolutePath());
+            }
+            if(govIdFile != null && cbGovId) {
+                editor.putString("clientGovImage", govIdFile.getAbsolutePath());;
+            }
+            if(docFile != null && cbOthDoc) {
+                editor.putString("clientDocImage", docFile.getAbsolutePath());
+            }
+
+
+        } else {
+            editor.putString("coMakerfirstName", str_firstName);
+            editor.putString("coMakermiddleName", str_middleName);
+            editor.putString("coMakerlastName", str_lastName);
+            editor.putString("coMakerMobileNo", str_mobileNo);
+            editor.putString("coMakerNationality", str_nationality);
+            editor.putString("coMakerbirthDate", str_birthDate);
+            editor.putString("coMakerbirthPlace", str_birthPlace);
+            editor.putString("coMakerDependents", str_dependents);
+            if (cbGovId) {
+                editor.putString("coMakerGovIdNo", str_govIdNumber);
+            }
+            if (cbOthDoc) {
+                editor.putString("coMakerDocSource", str_docSource);
+            }
+            editor.putString("coMakerGender", str_gender);
+            editor.putString("coMakerMaritalStatus", str_maritalStatus);
+            editor.putString("coMakerEducStat", str_educStat);
+            //editor.putString("coMakerGovSpinner", str_govSpinner);
+            //editor.putString("coMakerDocSpinner", str_docSpinner);
+
+            if(photoFile != null) {
+                editor.putString("coMakerPhoto", photoFile.getAbsolutePath());
+            }
+            if(govIdFile != null && cbGovId) {
+                editor.putString("coMakerGovImage", govIdFile.getAbsolutePath());;
+            }
+            if(docFile != null && cbOthDoc) {
+                editor.putString("coMakerDocImage", docFile.getAbsolutePath());
+            }
+
+        }
+
+        editor.commit();
+
     }
 
 

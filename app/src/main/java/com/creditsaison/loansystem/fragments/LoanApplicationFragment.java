@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentLoanApplicationBinding;
@@ -84,6 +85,8 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
         loanPurpose = (Spinner) binding.getRoot().findViewById(R.id.sp_loan_purpose);
 
 
+
+
         return binding.getRoot();
     }
 
@@ -97,30 +100,36 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
             String str_submissionDate = submissionDate.getText().toString();
             String str_disbursement = disbursementDate.getText().toString();
             String str_principal = principalAmount.getText().toString();
-            int int_principal = 0;
-            if (!TextUtils.isEmpty(str_principal)) {
-                int_principal = Integer.parseInt(str_principal);
-            }
 
-            sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            if (TextUtils.isEmpty(str_principal) || TextUtils.isEmpty(str_disbursement)) {
 
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("createWhat", "coMaker");
+                Toast.makeText(getActivity().getApplicationContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show();
 
-            editor.putString("LoanProduct", str_loanProduct);
-            editor.putString("LoanPurpose", str_loanPurpose);
-            editor.putString("LoanSubmissionDate", str_submissionDate);
-            editor.putString("LoanDisbursement", str_disbursement);
-            editor.putString("LoanPrincipal", str_principal);
-
-            editor.commit();
-
-
-            if (int_principal >= 50000) {
-                Navigation.findNavController(v).navigate(R.id.action_loanApplicationFragment_to_accountNewFragment_as_coMaker);
             } else {
-                Navigation.findNavController(v).navigate(R.id.action_loanApplicationFragment_to_termsConditionFragment);
+                int int_principal = Integer.parseInt(str_principal);
+
+                sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("createWhat", "coMaker");
+
+                editor.putString("LoanProduct", str_loanProduct);
+                editor.putString("LoanPurpose", str_loanPurpose);
+                editor.putString("LoanSubmissionDate", str_submissionDate);
+                editor.putString("LoanDisbursement", str_disbursement);
+                editor.putString("LoanPrincipal", str_principal);
+
+                editor.commit();
+
+
+                if (int_principal >= 50000) {
+                    Navigation.findNavController(v).navigate(R.id.action_loanApplicationFragment_to_accountNewFragment_as_coMaker);
+                } else {
+                    Navigation.findNavController(v).navigate(R.id.action_loanApplicationFragment_to_termsConditionFragment);
+                }
             }
+
+
         } else if (v == btn_repayment) {
             Navigation.findNavController(v).navigate(R.id.action_loanApplicationFragment_to_loanRepaymentDetailsFragment);
         } else {
