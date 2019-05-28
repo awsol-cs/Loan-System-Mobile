@@ -11,7 +11,7 @@
     <string name="confirm_button">CONFIRM</string>
     <string name="register">REGISTER</string>
     <string name="no_account">No account yet?</string>
-    <string name="existing_customer">Do you already have an MLhullier account?</string>
+    <string name="existing_customer">Do you already have an AWS Loaning account?</string>
     <string name="yes_button">YES</string>
     <string name="no_button">NO</string>
     <string name="create_account_button">No, but I want to create one</string>

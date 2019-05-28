@@ -28,17 +28,22 @@ import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentPromiNoteBinding;
 import com.creditsaison.loansystem.viewmodel.PromissoryViewModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
@@ -48,6 +53,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class PromissoryFragment extends Fragment implements View.OnClickListener {
 
@@ -137,22 +144,31 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 
         try {
             //client
+            client.put("activationDate", sp.getString("LoanSubmissionDate", null));
+            client.put("active", true);
+            client.put("dateFormat", "M/dd/yyyy");
             client.put("firstname", sp.getString("clientfirstName", " "));
             client.put("middlename", sp.getString("clientmiddleName", " "));
             client.put("lastname", sp.getString("clientlastName", " "));
-            client.put("mobile_no", sp.getString("clientMobileNo", " "));
-            client.put("gender", sp.getString("clientGender", " "));
-            client.put("nationality", sp.getString("clientNationality", " "));
-            client.put("date_of_birth", sp.getString("clientbirthDate", " "));
-            client.put("birthplace", sp.getString("clientbirthPlace", " "));
-            client.put("dependents", sp.getString("clientDependents", null));
-            client.put("marital_status", sp.getString("clientMaritalStatus", " "));
-            client.put("educational_status", sp.getString("clientEducStat", " "));
+            client.put("mobileNo", sp.getString("clientMobileNo", " "));
+            client.put("address", new JSONArray());
+            //client.put("genderId", sp.getString("clientGender", " "));
+
+            client.put("dateOfBirth", sp.getString("clientbirthDate", " "));
+            client.put("submittedOnDate", sp.getString("LoanSubmissionDate", null));
+            client.put("locale", "en");
+            client.put("officeId", 1);
+
             //client.put("idNumber", sp.getString("clientGovIdNo", " "));
             //client.put("documentSource", sp.getString("clientDocSource", " "));
             //client.put("id", sp.getString("clientGovSpinner", " "));
             //client.put("id", sp.getString("clientDocSpinner", " "));
 
+            kyc.put("nationality", sp.getString("clientNationality", " "));
+            kyc.put("birthplace", sp.getString("clientbirthPlace", " "));
+            kyc.put("dependents", sp.getString("clientDependents", null));
+            kyc.put("marital_status", sp.getString("clientMaritalStatus", " "));
+            kyc.put("educational_status", sp.getString("clientEducStat", " "));
 
             // client residence
             kyc.put("addressType", sp.getString("clientAddressType", " "));
@@ -164,6 +180,7 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             kyc.put("state_province", sp.getString("clientStateProvince", " "));
             kyc.put("postal_code", sp.getString("clientPostalCode", " "));
             kyc.put("residence_owner", sp.getString("clientResidenceOwner", " "));
+
 
             // client employment
             kyc.put("employment_type", sp.getString("clientEmploymentType", " "));
@@ -199,23 +216,41 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 
 
             //loan
-            loan.put("product", sp.getString("LoanProduct", " "));
-            loan.put("loan_purpose", sp.getString("LoanPurpose", " "));
-            loan.put("submittedon_date", sp.getString("LoanSubmissionDate", " "));
-            loan.put("disbursedon_date", sp.getString("LoanDisbursement", " "));
-            loan.put("principal_amount", sp.getString("LoanPrincipal", " "));
+            loan.put("dateFormat", "M/dd/yyyy");
+            loan.put("locale", "en");
+            loan.put("allowPartialPeriodInterestCalcualtion", false);
+            loan.put("amortizationType", "1");
+            loan.put("interestCalculationPeriodType", 1);
+            loan.put("interestRatePerPeriod", 1);
+            loan.put("interestType", 0);
+            loan.put("isEqualAmortization", false);
+            loan.put("loanTermFrequency", 6);
+            loan.put("loanTermFrequencyType", 2);
+            loan.put("loanType", "individual");
+            loan.put("numberOfRepayments", 6);
+            loan.put("productId", 1);
+            //loan.put("loan_purpose", sp.getString("LoanPurpose", " "));
+            loan.put("submittedOnDate", sp.getString("LoanSubmissionDate", " "));
+            loan.put("expectedDisbursementDate", sp.getString("LoanDisbursement", " "));
+            loan.put("principal", sp.getString("LoanPrincipal", " "));
+            loan.put("repaymentEvery", 1);
+            loan.put("repaymentFrequencyType", 2);
+            loan.put("transactionProcessingStrategyId", 1);
 
+
+            coMakerInfo.put("dateFormat", "M/dd/yyyy");
             coMakerInfo.put("firstname", sp.getString("coMakerfirstName", " "));
             coMakerInfo.put("middlename", sp.getString("coMakermiddleName", " "));
             coMakerInfo.put("lastname", sp.getString("coMakerlastName", " "));
-            coMakerInfo.put("mobile_no", sp.getString("coMakerMobileNo", " "));
-            coMakerInfo.put("gender", sp.getString("coMakerGender", " "));
+            coMakerInfo.put("mobileNno", sp.getString("coMakerMobileNo", " "));
+            //coMakerInfo.put("genderId", sp.getString("coMakerGender", " "));
             coMakerInfo.put("nationality", sp.getString("coMakerNationality", " "));
-            coMakerInfo.put("birthdate", sp.getString("coMakerbirthDate", " "));
+            coMakerInfo.put("dateOfBirth", sp.getString("coMakerbirthDate", " "));
             coMakerInfo.put("birthplace", sp.getString("coMakerbirthPlace", " "));
             coMakerInfo.put("dependents", sp.getString("coMakerDependents", null));
             coMakerInfo.put("marital_status", sp.getString("coMakerMaritalStatus", " "));
             coMakerInfo.put("educational_status", sp.getString("coMakerEducStat", " "));
+            coMakerInfo.put("locale", "en");
             //coMakerInfo.put("id", sp.getString("coMakerGovIdNo", " "));
             //coMakerInfo.put("id", sp.getString("coMakerDocSource", " "));
             //coMakerInfo.put("id", sp.getString("coMakerGovSpinner", " "));
@@ -274,6 +309,7 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
                 Bitmap myBitmap = BitmapFactory.decodeFile(clientImagePath);
                 String str_clientImage = convertImage(myBitmap, 1);
                 image.put("clientImage", str_clientImage);
+                Log.i("Client", str_clientImage);
             }
 
             if(sp.contains("coMakerPhoto")) {
@@ -331,65 +367,13 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 
 
             //final object to be sent to API
-//            finalObject.put("client", client);
-//            finalObject.put("kyc", kyc);
-//            finalObject.put("loan", loan);
-//            finalObject.put("comaker", coMaker);
+            finalObject.put("client", client);
+            finalObject.put("kyc", kyc);
+            finalObject.put("loan", loan);
+            finalObject.put("comaker", coMaker);
 //            finalObject.put("image", image);
 //            finalObject.put("documents", documents);
 //            finalObject.put("signature", signatures);
-
-
-
-            client1.put("activationDate", "06 May 2019");
-            client1.put("active", "true");
-            client1.put("dateFormat", "dd MMMM yyyy");
-            client1.put("firstname", "trial");
-            client1.put("lastname", "trial");
-            client1.put("officeId", 1);
-            client1.put("locale", "en");
-            client1.put("savingsProductId", null);
-            client1.put("submittedOnDate", "06 May 2019");
-
-            kyc1.put("nationality", "Filipino");
-            kyc1.put("noOfDependents", 0);
-            kyc1.put("othersEducationalAttainment", "College");
-            kyc1.put("placeOfBirth", "trialate");
-            kyc1.put("motherMaidenName", "trial");
-            kyc1.put("rentedResidenceOwnership", 10000);
-            kyc1.put("otherEmployment", "Foreman");
-            kyc1.put("yearsInOperation", 1);
-            kyc1.put("noOfEmployees", 1);
-            kyc1.put("nameOfPresentEmployerBusiness", "AWS");
-            kyc1.put("nameReference", "Mother");
-            kyc1.put("grossAnnualIncome", 100000);
-            kyc1.put("otherIncome", 100000);
-            kyc1.put("yearsWithPresentEmployer", 1);
-            kyc1.put("locale", "en");
-
-            loan1.put("allowPartialPeriodInterestCalcualtion", false);
-            loan1.put("amortizationType", 1);
-            loan1.put("expectedDisbursementDate", "07 May 2019");
-            loan1.put("interestCalculationPeriodType", 1);
-            loan1.put("interestRatePerPeriod",  2);
-            loan1.put("interestType", 0);
-            loan1.put("isEqualAmortization", false);
-            loan1.put("loanTermFrequency", 6);
-            loan1.put("loanTermFrequencyType", 2);
-            loan1.put("loanType", "individual");
-            loan1.put("numberOfRepayments", 6);
-            loan1.put("principal", 10000);
-            loan1.put("productId", 1);
-            loan1.put("repaymentEvery", 1);
-            loan1.put("locale", "en");
-            loan1.put("repaymentFrequencyType", 2);
-            loan1.put("submittedOnDate", "07 May 2019");
-            loan1.put("transactionProcessingStrategyId", 1);
-
-            finalObject.put("client", client1);
-            finalObject.put("kyc", kyc1);
-            finalObject.put("loan", loan1);
-
 
 
             sendPost(finalObject);
@@ -505,12 +489,16 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
                     //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
                     os.writeBytes(finalData.toString());
 
+//                    InputStream in = new BufferedInputStream(conn.getInputStream());
+
+
                     os.flush();
                     os.close();
 
 
                     Log.i("STATUS", String.valueOf(conn.getResponseCode()));
                     Log.i("MSG" , conn.getResponseMessage());
+                    Log.i("OUTPUT", readStream(conn.getInputStream()));
 
                     conn.disconnect();
 
@@ -521,6 +509,18 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
         });
 
         thread.start();
+    }
+
+    public String readStream(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length;
+
+        while((length = inputStream.read(buffer)) != -1){
+            result.write(buffer, 0, length);
+        }
+
+        return result.toString(UTF_8.name());
     }
 
     // always verify the host - dont check for certificate
