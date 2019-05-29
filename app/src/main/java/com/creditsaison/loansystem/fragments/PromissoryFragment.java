@@ -18,12 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentPromiNoteBinding;
 import com.creditsaison.loansystem.viewmodel.PromissoryViewModel;
@@ -32,18 +26,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
@@ -134,14 +123,6 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
         JSONObject signatures = new JSONObject();
         JSONObject finalObject = new JSONObject();
 
-
-        JSONObject client1 = new JSONObject();
-        JSONObject kyc1 = new JSONObject();
-        JSONObject loan1 = new JSONObject();
-        JSONObject coMaker1 = new JSONObject();
-        JSONObject coMakerInfo1 = new JSONObject();
-        JSONObject coMakerKyc1 = new JSONObject();
-
         try {
             //client
             client.put("activationDate", sp.getString("LoanSubmissionDate", null));
@@ -153,7 +134,6 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             client.put("mobileNo", sp.getString("clientMobileNo", " "));
             client.put("address", new JSONArray());
             //client.put("genderId", sp.getString("clientGender", " "));
-
             client.put("dateOfBirth", sp.getString("clientbirthDate", " "));
             client.put("submittedOnDate", sp.getString("LoanSubmissionDate", null));
             client.put("locale", "en");
@@ -167,8 +147,8 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             kyc.put("nationality", sp.getString("clientNationality", " "));
             kyc.put("birthplace", sp.getString("clientbirthPlace", " "));
             kyc.put("dependents", sp.getString("clientDependents", null));
-            kyc.put("marital_status", sp.getString("clientMaritalStatus", " "));
-            kyc.put("educational_status", sp.getString("clientEducStat", " "));
+            kyc.put("maritalStatusId", sp.getString("clientMaritalStatus", " "));
+            kyc.put("educationalAttainmentId", sp.getString("clientEducStat", " "));
 
             // client residence
             kyc.put("addressType", sp.getString("clientAddressType", " "));
@@ -183,12 +163,12 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 
 
             // client employment
-            kyc.put("employment_type", sp.getString("clientEmploymentType", " "));
+            kyc.put("employmentId", sp.getString("clientEmploymentType", " "));
             kyc.put("other_employment", sp.getString("clientEmploymentOthers", " "));
             kyc.put("selfEmploymentType", sp.getString("clientSelfEmployed", " "));
             kyc.put("operation_years", sp.getString("clientOperationYears", " "));
-            kyc.put("present_employer", sp.getString("clientPresentEmployer", " "));
-            kyc.put("business_nature", sp.getString("clientBusinessNature", " "));
+            kyc.put("nameOfPresentEmployerBusiness", sp.getString("clientPresentEmployer", " "));
+            kyc.put("natureOfBusiness", sp.getString("clientBusinessNature", " "));
             kyc.put("office_address", sp.getString("clientOfficeAddress", " "));
             kyc.put("office_phone", sp.getString("clientOfficePhone", " "));
             kyc.put("office_mobile", sp.getString("clientOfficeMobile", " "));
@@ -196,23 +176,24 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             kyc.put("fax_no", sp.getString("clientFaxNo", " "));
             kyc.put("email_ad", sp.getString("clientEmailAddress", " "));
             kyc.put("position", sp.getString("clientPosition", " "));
-            kyc.put("gross_income", sp.getString("clientGrossIncome", " "));
+            kyc.put("grossAnnualIncome", sp.getString("clientGrossIncome", " "));
             kyc.put("other_income", sp.getString("clientOtherIncome", " "));
-            kyc.put("previous_employer", sp.getString("clientPreviousEmployer", " "));
+            kyc.put("nameOfPreviousEmployer", sp.getString("clientPreviousEmployer", " "));
             kyc.put("previous_employer_office", sp.getString("clientPreviousEmployerOffice", " "));
             kyc.put("years_with_present_employer", sp.getString("clientPresentEmployerYears", " "));
             kyc.put("years_with_previous_employer", sp.getString("clientPreviousEmployerYears", " "));
 
             // client reference
-            kyc.put("reference_name", sp.getString("clientRefName", " "));
+            kyc.put("nameReference", sp.getString("clientRefName", " "));
             kyc.put("relationship", sp.getString("clientRefRelationship", " "));
-            kyc.put("employer", sp.getString("clientRefEmployer", " "));
-            kyc.put("contact_no", sp.getString("clientRefContactNo", " "));
+            kyc.put("employerReference", sp.getString("clientRefEmployer", " "));
+            kyc.put("mobileReference", sp.getString("clientRefContactNo", " "));
             kyc.put("mobile_no", sp.getString("clientRefMobile", " "));
             kyc.put("isRelatedToStaff", sp.getString("clientIsRelated", " "));
-            kyc.put("staff_name", sp.getString("clientRelatedOfficerName", " "));
-            kyc.put("staff_contact", sp.getString("clientOfficerContactNo", " "));
+            kyc.put("nameOfOfficer", sp.getString("clientRelatedOfficerName", " "));
+            kyc.put("contactNumberOfficer", sp.getString("clientOfficerContactNo", " "));
             kyc.put("staff_relationship", sp.getString("clientRelationshipToStaff", " "));
+            kyc.put("locale", "en");
 
 
             //loan
@@ -244,17 +225,19 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             coMakerInfo.put("lastname", sp.getString("coMakerlastName", " "));
             coMakerInfo.put("mobileNno", sp.getString("coMakerMobileNo", " "));
             //coMakerInfo.put("genderId", sp.getString("coMakerGender", " "));
-            coMakerInfo.put("nationality", sp.getString("coMakerNationality", " "));
             coMakerInfo.put("dateOfBirth", sp.getString("coMakerbirthDate", " "));
-            coMakerInfo.put("birthplace", sp.getString("coMakerbirthPlace", " "));
-            coMakerInfo.put("dependents", sp.getString("coMakerDependents", null));
-            coMakerInfo.put("marital_status", sp.getString("coMakerMaritalStatus", " "));
-            coMakerInfo.put("educational_status", sp.getString("coMakerEducStat", " "));
             coMakerInfo.put("locale", "en");
+
             //coMakerInfo.put("id", sp.getString("coMakerGovIdNo", " "));
             //coMakerInfo.put("id", sp.getString("coMakerDocSource", " "));
             //coMakerInfo.put("id", sp.getString("coMakerGovSpinner", " "));
             //coMakerInfo.put("id", sp.getString("coMakerDocSpinner", " "));
+
+            coMakerInfo.put("nationality", sp.getString("coMakerNationality", " "));
+            coMakerInfo.put("birthplace", sp.getString("coMakerbirthPlace", " "));
+            coMakerInfo.put("dependents", sp.getString("coMakerDependents", null));
+            coMakerInfo.put("marital_status", sp.getString("coMakerMaritalStatus", " "));
+            coMakerInfo.put("educational_status", sp.getString("coMakerEducStat", " "));
 
             //comaker residence
             coMakerKyc.put("address_type", sp.getString("coMakerAddressType", " "));
@@ -308,7 +291,7 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
                 String clientImagePath = sp.getString("clientPhoto", null);
                 Bitmap myBitmap = BitmapFactory.decodeFile(clientImagePath);
                 String str_clientImage = convertImage(myBitmap, 1);
-                image.put("clientImage", str_clientImage);
+                image.put("clientImage", "data:image/jpeg;base64," + str_clientImage);
                 Log.i("Client", str_clientImage);
             }
 
@@ -316,7 +299,7 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
                 String coMakerImagePath = sp.getString("coMakerPhoto", null);
                 Bitmap myBitmap = BitmapFactory.decodeFile(coMakerImagePath);
                 String str_coMakerImage = convertImage(myBitmap, 1);
-                image.put("coMakerImage", str_coMakerImage);
+                image.put("coMakerImage", "data:image/jpeg;base64," + str_coMakerImage);
             }
 
             //documents
@@ -324,28 +307,28 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
                 String clientGovImagePath = sp.getString("clientGovImage", null);
                 Bitmap myBitmap = BitmapFactory.decodeFile(clientGovImagePath);
                 String str_clientGovIdImage = convertImage(myBitmap, 1);
-                documents.put("clientGovId", str_clientGovIdImage);
+                documents.put("clientGovId", "data:image/jpeg;base64," + str_clientGovIdImage);
             }
 
             if(sp.contains("clientDocImage")) {
                 String clientDocImagePath = sp.getString("clientDocImage", null);
                 Bitmap myBitmap = BitmapFactory.decodeFile(clientDocImagePath);
                 String str_clientDocImage = convertImage(myBitmap, 1);
-                documents.put("clientDocument", str_clientDocImage);
+                documents.put("clientDocument", "data:image/jpeg;base64," + str_clientDocImage);
             }
 
             if(sp.contains("coMakerGovImage")) {
                 String coMakerGovImagePath = sp.getString("coMakerGovImage", null);
                 Bitmap myBitmap = BitmapFactory.decodeFile(coMakerGovImagePath);
                 String str_coMakerGovIdImage = convertImage(myBitmap, 1);
-                documents.put("comakerGovId", str_coMakerGovIdImage);
+                documents.put("comakerGovId", "data:image/jpeg;base64," + str_coMakerGovIdImage);
             }
 
             if(sp.contains("coMakerDocImage")) {
                 String coMakerDocImagePath = sp.getString("coMakerDocImage", null);
                 Bitmap myBitmap = BitmapFactory.decodeFile(coMakerDocImagePath);
                 String str_coMakerDocImage = convertImage(myBitmap, 1);
-                documents.put("comakerDocument", str_coMakerDocImage);
+                documents.put("comakerDocument", "data:image/jpeg;base64," + str_coMakerDocImage);
             }
 
             //signatures
@@ -361,9 +344,9 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             String str_loanAgreementSign = convertImage(loanAgreementSignBitmap, 2);
             String str_promiNoteSign = convertImage(promiNoteSignBitmap, 2);
 
-            signatures.put("termsConditionSign", str_termsConditionSign);
-            signatures.put("loanAgreementSign", str_loanAgreementSign);
-            signatures.put("promiNoteSign", str_promiNoteSign);
+            signatures.put("termsConditionSign", "data:image/png;base64," + str_termsConditionSign);
+            signatures.put("loanAgreementSign", "data:image/png;base64," + str_loanAgreementSign);
+            signatures.put("promiNoteSign", "data:image/png;base64," + str_promiNoteSign);
 
 
             //final object to be sent to API
@@ -371,9 +354,9 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             finalObject.put("kyc", kyc);
             finalObject.put("loan", loan);
             finalObject.put("comaker", coMaker);
-//            finalObject.put("image", image);
-//            finalObject.put("documents", documents);
-//            finalObject.put("signature", signatures);
+            finalObject.put("image", image);
+            finalObject.put("documents", documents);
+            finalObject.put("signature", signatures);
 
 
             sendPost(finalObject);
@@ -408,10 +391,9 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
                 try {
                     String uNameandPword = "mifos:password";
                     String basicAutoPayload = "Basic " + Base64.encodeToString(uNameandPword.getBytes(), Base64.DEFAULT);
-                    URL auth = new URL("https://192.168.227.159/fineract-provider/api/v1/cs_clients");
- //                   String url = "https://192.168.227.159/fineract-provider/api/v1/clients";
-                    trustAllHosts();
 
+ //                   String url = "https://192.168.227.159/fineract-provider/api/v1/clients";
+ //                   trustAllHosts();
 //                    RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 //                    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
 //                            new Response.Listener<String>(){
@@ -431,40 +413,9 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 //                    requestQueue.add(stringRequest);
 
 
-
-
-//                    HttpURLConnection authConn = null;
-//                    if (auth.getProtocol().toLowerCase().equals("https")) {
-//                        trustAllHosts();
-//                        HttpsURLConnection https = (HttpsURLConnection) auth.openConnection();
-//                        https.setHostnameVerifier(DO_NOT_VERIFY);
-//                        authConn = https;
-//                    } else {
-//                        authConn = (HttpURLConnection) auth.openConnection();
-//                    }
-//
-//                    authConn.setRequestMethod("POST");
-//                    authConn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-//                    authConn.setRequestProperty("Fineract-Platform-TenantId", "default");
-//                    authConn.setRequestProperty("Accept","application/json");
-//                    authConn.setRequestProperty("Authorization",basicAutoPayload);
-//                    authConn.setDoOutput(true);
-//                    authConn.setDoInput(true);
-//                    Log.i("JSON", finalData.toString());
-//                    DataOutputStream os = new DataOutputStream(authConn.getOutputStream());
-//                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
-//                    os.writeBytes(finalData.toString());
-//
-//
-//                    Log.i("STATUS", String.valueOf(authConn.getResponseCode()));
-//                    Log.i("MSG" , authConn.getResponseMessage());
-//
-//                    authConn.disconnect();
-
-
                     URL url = new URL("https://192.168.227.159/fineract-provider/api/v1/cs_clients");
-                    //HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
+                    //HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     HttpURLConnection conn = null;
 
                     if (url.getProtocol().toLowerCase().equals("https")) {
