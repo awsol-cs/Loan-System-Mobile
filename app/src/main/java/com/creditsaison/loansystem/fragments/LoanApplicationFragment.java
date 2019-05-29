@@ -42,7 +42,7 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
     SharedPreferences sharedpreferences;
 
     Button btn_repayment, btn_next;
-    TextView submissionDate, disbursementDate;
+    TextView submissionDate, disbursementDate, customer;
     DatePickerDialog datePickerDialog;
     EditText principalAmount;
     Spinner loanProduct, loanPurpose;
@@ -65,11 +65,17 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
         binding = FragmentLoanApplicationBinding.inflate(inflater, container, false);
         binding.setViewModel(viewModel);
 
+        sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
         btn_repayment = (Button) binding.getRoot().findViewById(R.id.btn_repayment);
         btn_repayment.setOnClickListener(this);
 
         btn_next = (Button) binding.getRoot().findViewById(R.id.btn_next);
         btn_next.setOnClickListener(this);
+
+        customer = (TextView) binding.getRoot().findViewById(R.id.tv_customer);
+        customer.setText(sharedpreferences.getString("clientfirstName", "") + " " +
+                sharedpreferences.getString("clientlastName", ""));
 
         submissionDate = (TextView) binding.getRoot().findViewById(R.id.tv_submission_date);
         String date = new SimpleDateFormat("M/dd/yyyy", Locale.getDefault()).format(new Date());
@@ -102,7 +108,6 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
                 int_principal = Integer.parseInt(str_principal);
             }
 
-            sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString("createWhat", "coMaker");

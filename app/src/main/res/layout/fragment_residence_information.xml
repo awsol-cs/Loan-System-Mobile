@@ -168,7 +168,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/textInputLayout6"
+                app:layout_constraintBottom_toTopOf="@+id/tv_country"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
@@ -183,31 +183,72 @@
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout6"
+            <TextView
+                android:id="@+id/tv_country"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/textInputLayout7"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="Country"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/sp_country"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_state"
-                    style="@style/EditText.BaseWidth"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/state_province"
-                    android:inputType="text"
-                    android:singleLine="true" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                android:id="@+id/sp_country"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/gray_dark"
+                android:entries="@array/array_residence_ownership"
+                android:spinnerMode="dropdown"
+                app:layout_constraintBottom_toTopOf="@+id/tv_state"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_country" />
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="State"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/sp_state"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sp_country" />
+
+            <Spinner
+                android:id="@+id/sp_state"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/gray_dark"
+                android:entries="@array/array_residence_ownership"
+                android:spinnerMode="dropdown"
+                app:layout_constraintBottom_toTopOf="@+id/textInputLayout6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_state" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout7"
+                android:id="@+id/textInputLayout6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -217,7 +258,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/tv_residence_ownership"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
+                app:layout_constraintTop_toBottomOf="@+id/sp_state">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_postal_code"
@@ -244,7 +285,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout7" />
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
 
             <Spinner
                 android:id="@+id/sp_residence_ownership"

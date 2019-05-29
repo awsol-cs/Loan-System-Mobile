@@ -113,6 +113,8 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
         String restoredText = sp.getString("termsConditionImg", " ");
 
         JSONObject client = new JSONObject();
+        JSONObject addressObject = new JSONObject();
+        JSONArray addressArray = new JSONArray();
         JSONObject kyc = new JSONObject();
         JSONObject loan = new JSONObject();
         JSONObject coMaker = new JSONObject();
@@ -132,12 +134,28 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             client.put("middlename", sp.getString("clientmiddleName", " "));
             client.put("lastname", sp.getString("clientlastName", " "));
             client.put("mobileNo", sp.getString("clientMobileNo", " "));
-            client.put("address", new JSONArray());
-            //client.put("genderId", sp.getString("clientGender", " "));
+//            client.put("genderId", sp.getString("clientGender", " "));
+            client.put("genderId", 38);
             client.put("dateOfBirth", sp.getString("clientbirthDate", " "));
             client.put("submittedOnDate", sp.getString("LoanSubmissionDate", null));
             client.put("locale", "en");
             client.put("officeId", 1);
+
+            //client address
+            addressObject.put("addressLine1", sp.getString("clientAddressLine1", " "));
+            addressObject.put("addressLine2", sp.getString("clientAddressLine2", " "));
+            addressObject.put("addressLine3", sp.getString("clientAddressLine3", " "));
+//            addressObject.put("addressTypeId", sp.getString("clientAddressType", " "));
+            addressObject.put("addressTypeId", 129);
+            addressObject.put("city", sp.getString("clientCity", " "));
+//            addressObject.put("countryId", sp.getString("clientCountry", " "));
+            addressObject.put("countryId", 128);
+            addressObject.put("postalCode", sp.getString("clientPostalCode", " "));
+//            addressObject.put("stateProvinceId", sp.getString("clientStateProvince", " "));
+            addressObject.put("stateProvinceId", 94);
+            addressObject.put("street", sp.getString("clientStreet", " "));
+            addressArray.put(addressObject);
+            client.put("address", addressArray);
 
             //client.put("idNumber", sp.getString("clientGovIdNo", " "));
             //client.put("documentSource", sp.getString("clientDocSource", " "));
@@ -145,56 +163,48 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             //client.put("id", sp.getString("clientDocSpinner", " "));
 
             kyc.put("nationality", sp.getString("clientNationality", " "));
-            kyc.put("birthplace", sp.getString("clientbirthPlace", " "));
-            kyc.put("dependents", sp.getString("clientDependents", null));
-            kyc.put("maritalStatusId", sp.getString("clientMaritalStatus", " "));
-            kyc.put("educationalAttainmentId", sp.getString("clientEducStat", " "));
-
-            // client residence
-            kyc.put("addressType", sp.getString("clientAddressType", " "));
-            kyc.put("street", sp.getString("clientStreet", " "));
-            kyc.put("address_line_1", sp.getString("clientAddressLine1", " "));
-            kyc.put("address_line_2", sp.getString("clientAddressLine2", " "));
-            kyc.put("address_line_3", sp.getString("clientAddressLine3", " "));
-            kyc.put("city", sp.getString("clientCity", " "));
-            kyc.put("state_province", sp.getString("clientStateProvince", " "));
-            kyc.put("postal_code", sp.getString("clientPostalCode", " "));
-            kyc.put("residence_owner", sp.getString("clientResidenceOwner", " "));
-
+            kyc.put("placeOfBirth", sp.getString("clientbirthPlace", " "));
+            kyc.put("noOfDependents", sp.getString("clientDependents", null));
+//            kyc.put("maritalStatusId", sp.getString("clientMaritalStatus", " "));
+            kyc.put("maritalStatusId", 40);
+//            kyc.put("educationalAttainmentId", sp.getString("clientEducStat", " "));
+            kyc.put("educationalAttainmentId", 21);
+//            kyc.put("residenceOwnershipId", sp.getString("clientResidenceOwner", " "));
+            kyc.put("residenceOwnershipId", 17);
 
             // client employment
-            kyc.put("employmentId", sp.getString("clientEmploymentType", " "));
+//            kyc.put("employmentId", sp.getString("clientEmploymentType", " "));
+            kyc.put("employmentId", 27);
             kyc.put("other_employment", sp.getString("clientEmploymentOthers", " "));
-            kyc.put("selfEmploymentType", sp.getString("clientSelfEmployed", " "));
-            kyc.put("operation_years", sp.getString("clientOperationYears", " "));
+           // kyc.put("selfEmployedId", sp.getString("clientSelfEmployed", " "));
+            kyc.put("yearsInOperation", sp.getString("clientOperationYears", " "));
             kyc.put("nameOfPresentEmployerBusiness", sp.getString("clientPresentEmployer", " "));
             kyc.put("natureOfBusiness", sp.getString("clientBusinessNature", " "));
-            kyc.put("office_address", sp.getString("clientOfficeAddress", " "));
-            kyc.put("office_phone", sp.getString("clientOfficePhone", " "));
-            kyc.put("office_mobile", sp.getString("clientOfficeMobile", " "));
-            kyc.put("local_no", sp.getString("clientLocalNo", " "));
-            kyc.put("fax_no", sp.getString("clientFaxNo", " "));
-            kyc.put("email_ad", sp.getString("clientEmailAddress", " "));
-            kyc.put("position", sp.getString("clientPosition", " "));
+            kyc.put("officeAddress", sp.getString("clientOfficeAddress", " "));
+            kyc.put("officePhone", sp.getString("clientOfficePhone", " "));
+            kyc.put("officeMobilePhone", sp.getString("clientOfficeMobile", " "));
+            kyc.put("officeLocalNumber", sp.getString("clientLocalNo", " "));
+            kyc.put("officeFaxNumber", sp.getString("clientFaxNo", " "));
+            kyc.put("officeEmailAddress", sp.getString("clientEmailAddress", " "));
+            kyc.put("titleOrPosition", sp.getString("clientPosition", " "));
             kyc.put("grossAnnualIncome", sp.getString("clientGrossIncome", " "));
-            kyc.put("other_income", sp.getString("clientOtherIncome", " "));
+            kyc.put("otherIncome", sp.getString("clientOtherIncome", " "));
             kyc.put("nameOfPreviousEmployer", sp.getString("clientPreviousEmployer", " "));
-            kyc.put("previous_employer_office", sp.getString("clientPreviousEmployerOffice", " "));
-            kyc.put("years_with_present_employer", sp.getString("clientPresentEmployerYears", " "));
-            kyc.put("years_with_previous_employer", sp.getString("clientPreviousEmployerYears", " "));
+            kyc.put("officeAddressPrevious", sp.getString("clientPreviousEmployerOffice", " "));
+            kyc.put("yearsWithPresentEmployer", sp.getString("clientPresentEmployerYears", " "));
+            kyc.put("yearsWithPreviousEmployer", sp.getString("clientPreviousEmployerYears", " "));
 
             // client reference
             kyc.put("nameReference", sp.getString("clientRefName", " "));
-            kyc.put("relationship", sp.getString("clientRefRelationship", " "));
+            kyc.put("relationshipReference", sp.getString("clientRefRelationship", " "));
             kyc.put("employerReference", sp.getString("clientRefEmployer", " "));
-            kyc.put("mobileReference", sp.getString("clientRefContactNo", " "));
-            kyc.put("mobile_no", sp.getString("clientRefMobile", " "));
-            kyc.put("isRelatedToStaff", sp.getString("clientIsRelated", " "));
+            kyc.put("contactNumberReference", sp.getString("clientRefContactNo", " "));
+            kyc.put("mobileReference", sp.getString("clientRefMobile", " "));
+       //     kyc.put("relatedToOfficerId", sp.getString("clientIsRelated", " "));
             kyc.put("nameOfOfficer", sp.getString("clientRelatedOfficerName", " "));
             kyc.put("contactNumberOfficer", sp.getString("clientOfficerContactNo", " "));
-            kyc.put("staff_relationship", sp.getString("clientRelationshipToStaff", " "));
+       //     kyc.put("relationshipOfOfficerId", sp.getString("clientRelationshipToStaff", " "));
             kyc.put("locale", "en");
-
 
             //loan
             loan.put("dateFormat", "M/dd/yyyy");
@@ -223,8 +233,8 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             coMakerInfo.put("firstname", sp.getString("coMakerfirstName", " "));
             coMakerInfo.put("middlename", sp.getString("coMakermiddleName", " "));
             coMakerInfo.put("lastname", sp.getString("coMakerlastName", " "));
-            coMakerInfo.put("mobileNno", sp.getString("coMakerMobileNo", " "));
-            //coMakerInfo.put("genderId", sp.getString("coMakerGender", " "));
+            coMakerInfo.put("mobileNo", sp.getString("coMakerMobileNo", " "));
+       //     coMakerInfo.put("genderId", sp.getString("coMakerGender", " "));
             coMakerInfo.put("dateOfBirth", sp.getString("coMakerbirthDate", " "));
             coMakerInfo.put("locale", "en");
 
@@ -233,11 +243,12 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             //coMakerInfo.put("id", sp.getString("coMakerGovSpinner", " "));
             //coMakerInfo.put("id", sp.getString("coMakerDocSpinner", " "));
 
-            coMakerInfo.put("nationality", sp.getString("coMakerNationality", " "));
-            coMakerInfo.put("birthplace", sp.getString("coMakerbirthPlace", " "));
-            coMakerInfo.put("dependents", sp.getString("coMakerDependents", null));
-            coMakerInfo.put("marital_status", sp.getString("coMakerMaritalStatus", " "));
-            coMakerInfo.put("educational_status", sp.getString("coMakerEducStat", " "));
+            coMakerKyc.put("locale", "en");
+            coMakerKyc.put("nationality", sp.getString("coMakerNationality", " "));
+            coMakerKyc.put("placeOfBirth", sp.getString("coMakerbirthPlace", " "));
+            coMakerKyc.put("dependents", sp.getString("coMakerDependents", null));
+          //  coMakerKyc.put("maritalStatusId", sp.getString("coMakerMaritalStatus", " "));
+          //  coMakerKyc.put("educationalAttainmentId", sp.getString("coMakerEducStat", " "));
 
             //comaker residence
             coMakerKyc.put("address_type", sp.getString("coMakerAddressType", " "));
@@ -248,39 +259,39 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             coMakerKyc.put("city", sp.getString("coMakerCity", " "));
             coMakerKyc.put("state_province", sp.getString("coMakerStateProvince", " "));
             coMakerKyc.put("postal_code", sp.getString("coMakerPostalCode", " "));
-            coMakerKyc.put("residence_owner", sp.getString("coMakerResidenceOwner", " "));
+         //   coMakerKyc.put("residenceOwnershipId", sp.getString("coMakerResidenceOwner", " "));
 
             // comaker employment
-            coMakerKyc.put("employment_type", sp.getString("coMakerEmploymentType", " "));
+        //    coMakerKyc.put("employmentId", sp.getString("coMakerEmploymentType", " "));
             coMakerKyc.put("other_employment", sp.getString("coMakerEmploymentOthers", " "));
             coMakerKyc.put("selfEmploymentType", sp.getString("coMakerSelfEmployed", " "));
             coMakerKyc.put("operation_years", sp.getString("coMakerOperationYears", " "));
-            coMakerKyc.put("present_employer", sp.getString("coMakerPresentEmployer", " "));
-            coMakerKyc.put("business_nature", sp.getString("coMakerBusinessNature", " "));
-            coMakerKyc.put("office_address", sp.getString("coMakerOfficeAddress", " "));
-            coMakerKyc.put("office_phone", sp.getString("coMakerOfficePhone", " "));
-            coMakerKyc.put("office_mobile", sp.getString("coMakerOfficeMobile", " "));
-            coMakerKyc.put("local_no", sp.getString("coMakerLocalNo", " "));
-            coMakerKyc.put("fax_no", sp.getString("coMakerFaxNo", " "));
-            coMakerKyc.put("email_ad", sp.getString("coMakerEmailAddress", " "));
-            coMakerKyc.put("position", sp.getString("coMakerPosition", " "));
-            coMakerKyc.put("gross_income", sp.getString("coMakerGrossIncome", " "));
-            coMakerKyc.put("other_income", sp.getString("coMakerOtherIncome", " "));
-            coMakerKyc.put("previous_employer", sp.getString("coMakerPreviousEmployer", " "));
-            coMakerKyc.put("previous_employer_office", sp.getString("coMakerPreviousEmployerOffice", " "));
-            coMakerKyc.put("years_with_present_employer", sp.getString("coMakerPresentEmployerYears", " "));
-            coMakerKyc.put("years_with_previous_employer", sp.getString("coMakerPreviousEmployerYears", " "));
+            coMakerKyc.put("nameOfPresentEmployerBusiness", sp.getString("coMakerPresentEmployer", " "));
+            coMakerKyc.put("natureOfBusiness", sp.getString("coMakerBusinessNature", " "));
+            coMakerKyc.put("officeAddress", sp.getString("coMakerOfficeAddress", " "));
+            coMakerKyc.put("officePhone", sp.getString("coMakerOfficePhone", " "));
+            coMakerKyc.put("officeMobilePhone", sp.getString("coMakerOfficeMobile", " "));
+            coMakerKyc.put("officeLocalNumber", sp.getString("coMakerLocalNo", " "));
+            coMakerKyc.put("officeFaxNumber", sp.getString("coMakerFaxNo", " "));
+            coMakerKyc.put("officeEmailAddress", sp.getString("coMakerEmailAddress", " "));
+            coMakerKyc.put("titleOrPosition", sp.getString("coMakerPosition", " "));
+            coMakerKyc.put("grossAnnualIncome", sp.getString("coMakerGrossIncome", " "));
+            coMakerKyc.put("otherIncome", sp.getString("coMakerOtherIncome", " "));
+            coMakerKyc.put("nameOfPreviousEmployer", sp.getString("coMakerPreviousEmployer", " "));
+            coMakerKyc.put("officeAddressPrevious", sp.getString("coMakerPreviousEmployerOffice", " "));
+            coMakerKyc.put("yearsWithPresentEmployer", sp.getString("coMakerPresentEmployerYears", " "));
+            coMakerKyc.put("yearsWithPreviousEmployer", sp.getString("coMakerPreviousEmployerYears", " "));
 
             // comaker reference
-            coMakerKyc.put("reference_name", sp.getString("coMakerRefName", " "));
-            coMakerKyc.put("relationship", sp.getString("coMakerRefRelationship", " "));
-            coMakerKyc.put("employer", sp.getString("coMakerRefEmployer", " "));
-            coMakerKyc.put("contact_no", sp.getString("coMakerRefContactNo", " "));
-            coMakerKyc.put("mobile_no", sp.getString("coMakerRefMobile", " "));
-            coMakerKyc.put("isRelatedToStaff", sp.getString("coMakerRelatedOfficerName", " "));
-            coMakerKyc.put("staff_name", sp.getString("coMakerOfficerContactNo", " "));
-            coMakerKyc.put("staff_contact", sp.getString("coMakerRelationshipToStaff", " "));
-            coMakerKyc.put("staff_relationship", sp.getString("coMakerIsRelated", " "));
+            coMakerKyc.put("nameReference", sp.getString("coMakerRefName", " "));
+            coMakerKyc.put("relationshipReference", sp.getString("coMakerRefRelationship", " "));
+            coMakerKyc.put("employerReference", sp.getString("coMakerRefEmployer", " "));
+            coMakerKyc.put("contactNumberReference", sp.getString("coMakerRefContactNo", " "));
+            coMakerKyc.put("mobileReference", sp.getString("coMakerRefMobile", " "));
+        //    coMakerKyc.put("relatedToOfficerId", sp.getString("coMakerIsRelated", " "));
+            coMakerKyc.put("staff_name", sp.getString("coMakerRelatedOfficerName", " "));
+            coMakerKyc.put("staff_contact", sp.getString("coMakerOfficerContactNo", " "));
+            coMakerKyc.put("staff_relationship", sp.getString("coMakerRelationshipToStaff", " "));
 
             //final comaker object
             coMaker.put("info", coMakerInfo);
@@ -412,7 +423,6 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 //
 //                    requestQueue.add(stringRequest);
 
-
                     URL url = new URL("https://192.168.227.159/fineract-provider/api/v1/cs_clients");
 
                     //HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -449,7 +459,13 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 
                     Log.i("STATUS", String.valueOf(conn.getResponseCode()));
                     Log.i("MSG" , conn.getResponseMessage());
-                    Log.i("OUTPUT", readStream(conn.getInputStream()));
+                  //  Log.i("OUTPUT", readStream(conn.getInputStream()));
+
+                    if(conn.getResponseCode() != 200){
+                        Log.i("OUTPUT", readStream(conn.getErrorStream()));
+                    }else {
+                        Log.i("OUTPUT", readStream(conn.getInputStream()));
+                    }
 
                     conn.disconnect();
 
