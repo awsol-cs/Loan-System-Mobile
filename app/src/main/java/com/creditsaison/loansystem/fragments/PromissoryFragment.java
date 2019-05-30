@@ -108,9 +108,6 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        sp = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
-        String restoredText = sp.getString("termsConditionImg", " ");
 
         JSONObject client = new JSONObject();
         JSONObject kyc = new JSONObject();
