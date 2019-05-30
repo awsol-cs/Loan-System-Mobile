@@ -379,8 +379,7 @@
 
     <!-- Create Client Terms -->
 
-    <!--<string name="first_name_mandatory">First Name*</string>-->
-    <string name="first_name_mandatory"><![CDATA[<b><font color=#FF0000>Hello world!</font></b>]]></string>
+    <string name="first_name_mandatory">First Name*</string>
     <string name="mname">Middle Name</string>
     <string name="last_name_mandatory">Last Name*</string>
     <string name="mnumber">Mobile Number</string>
@@ -940,6 +939,17 @@
     <string-array name="array_address_type">
         <item>Permanent</item>
         <item>Current</item>
+    </string-array>
+
+    <string-array name="array_countries">
+        <item>Philippines</item>
+    </string-array>
+
+    <string-array name="array_states">
+        <item>Abra</item>
+        <item>Albay</item>
+        <item>Bataan</item>
+        <item>Cagayan</item>
     </string-array>
 
 

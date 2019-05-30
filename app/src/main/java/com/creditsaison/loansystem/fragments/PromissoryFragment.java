@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 import android.util.Base64;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentPromiNoteBinding;
@@ -142,18 +144,18 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             client.put("officeId", 1);
 
             //client address
-            addressObject.put("addressLine1", sp.getString("clientAddressLine1", " "));
-            addressObject.put("addressLine2", sp.getString("clientAddressLine2", " "));
-            addressObject.put("addressLine3", sp.getString("clientAddressLine3", " "));
+            addressObject.put("addressLine1", sp.getString("clientAddressLine1", ""));
+            addressObject.put("addressLine2", sp.getString("clientAddressLine2", ""));
+            addressObject.put("addressLine3", sp.getString("clientAddressLine3", ""));
 //            addressObject.put("addressTypeId", sp.getString("clientAddressType", " "));
             addressObject.put("addressTypeId", 129);
-            addressObject.put("city", sp.getString("clientCity", " "));
+            addressObject.put("city", sp.getString("clientCity", ""));
 //            addressObject.put("countryId", sp.getString("clientCountry", " "));
             addressObject.put("countryId", 128);
-            addressObject.put("postalCode", sp.getString("clientPostalCode", " "));
+            addressObject.put("postalCode", sp.getString("clientPostalCode", "1234"));
 //            addressObject.put("stateProvinceId", sp.getString("clientStateProvince", " "));
             addressObject.put("stateProvinceId", 94);
-            addressObject.put("street", sp.getString("clientStreet", " "));
+            addressObject.put("street", sp.getString("clientStreet", ""));
             addressArray.put(addressObject);
             client.put("address", addressArray);
 
@@ -370,8 +372,7 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             finalObject.put("signature", signatures);
 
 
-            sendPost(finalObject);
-
+            sendPost(finalObject, v);
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
@@ -395,7 +396,7 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 
 
 
-    public void sendPost(JSONObject finalData) {
+    public void sendPost(JSONObject finalData, View v) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -452,25 +453,32 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 
 //                    InputStream in = new BufferedInputStream(conn.getInputStream());
 
-
                     os.flush();
                     os.close();
 
 
                     Log.i("STATUS", String.valueOf(conn.getResponseCode()));
                     Log.i("MSG" , conn.getResponseMessage());
-                  //  Log.i("OUTPUT", readStream(conn.getInputStream()));
 
                     if(conn.getResponseCode() != 200){
                         Log.i("OUTPUT", readStream(conn.getErrorStream()));
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(getActivity(), "Request Failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     }else {
                         Log.i("OUTPUT", readStream(conn.getInputStream()));
+                        Navigation.findNavController(v).navigate(R.id.action_promiNoteFragment_to_loanApplicationSentFragment);
                     }
 
                     conn.disconnect();
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Toast.makeText(getActivity().getApplicationContext(), "Request Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
