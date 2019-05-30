@@ -33,6 +33,7 @@ import android.view.ViewGroup;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -44,11 +45,17 @@ import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentAccountNewBinding;
 import com.creditsaison.loansystem.viewmodel.AccountNewViewModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import pub.devrel.easypermissions.EasyPermissions;
@@ -143,6 +150,57 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
 
             if (restoredText == "coMaker"){
                 page_title.setText("Create Co-Maker");
+            }
+
+            // (1) get a reference to the spinner
+            Spinner sp_gender = (Spinner) binding.getRoot().findViewById(R.id.sp_gender);
+
+            // (2) create a simple static list of strings
+//            List<Integer> spinnerArray = new ArrayList<>();
+//            spinnerArray.add(10);
+//            spinnerArray.add(11);
+
+            // (3) create an adapter from the list
+//            ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(
+//                    getActivity(),
+//                    android.R.layout.simple_spinner_item,
+//                    spinnerArray
+//            );
+
+//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+// (4) set the adapter on the spinner
+//            spinner1.setAdapter(adapter);
+
+            // this is the part where you assign the saved data in sharedpreference to array
+            try {
+                JSONArray arr_gender = new JSONArray(sharedpreferences.getString("arr_gender", " "));
+                JSONArray arr_marital_status = new JSONArray(sharedpreferences.getString("arr_marital_status", " "));
+                JSONArray arr_educ_attain = new JSONArray(sharedpreferences.getString("arr_educ_attain", " "));
+
+                List<String> genderArray = new ArrayList<>();
+                for(int i=0; i<arr_gender.length(); i++){
+                    JSONObject jsonObject1 = arr_gender.getJSONObject(i);
+                    String id = jsonObject1.optString("id");
+                    String name = jsonObject1.optString("name") + " hehe";
+                    Log.v("!!!!!!!!!!!!!!!", name + " = " + id);
+                    genderArray.add(name);
+                }
+                ArrayAdapter<String> adapter_gender = new ArrayAdapter<String>(
+                        getActivity(),
+                        android.R.layout.simple_spinner_item,
+                        genderArray
+                );
+                sp_gender.setAdapter(adapter_gender);
+
+                String ito = Integer.toString(arr_gender.length());
+                Log.v("ito", ito);
+                String marital_status = Integer.toString(arr_marital_status.length());
+                Log.v("ito", marital_status);
+                String educ_attain = Integer.toString(arr_educ_attain.length());
+                Log.v("ito", educ_attain);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
             return binding.getRoot();

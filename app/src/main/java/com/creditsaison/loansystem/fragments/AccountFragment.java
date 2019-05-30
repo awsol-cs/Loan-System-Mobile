@@ -19,6 +19,7 @@ import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentAccountBinding;
 import com.creditsaison.loansystem.viewmodel.AccountViewModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,6 +47,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public class AccountFragment extends Fragment {
 
+    SharedPreferences sharedpreferences;
+
     private FragmentAccountBinding binding;
     private AccountViewModel viewModel;
 
@@ -60,7 +63,7 @@ public class AccountFragment extends Fragment {
 
         final String MyPREFERENCES = "MyPrefs" ;
 
-        SharedPreferences sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
 
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -242,6 +245,21 @@ public class AccountFragment extends Fragment {
                     Log.v("**********************", "\"**********************");
                     Log.v("keys", key);
                 }
+
+                // this is the part where you save data in sharedpreference
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                JSONArray arr_gender = jsonObject.getJSONArray("genderOptions");
+                JSONArray arr_marital_status = jsonObject.getJSONArray("clientMaritalStatusOptions");
+                JSONArray arr_educ_attain = jsonObject.getJSONArray("clientEducationalAttainmentOptions");
+
+                editor.putString("arr_gender", arr_gender.toString());
+                editor.putString("arr_marital_status", arr_marital_status.toString());
+                editor.putString("arr_educ_attain", arr_educ_attain.toString());
+
+
+
+                editor.commit();
 
             } catch (JSONException e) {
                 e.printStackTrace();
