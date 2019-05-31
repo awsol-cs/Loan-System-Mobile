@@ -103,7 +103,7 @@ public class ResidenceInformationFragment extends Fragment {
                 ownershipArray.add(name);
                 ownershipIds.add(id);
             }
-            //setting spinner for gender
+            //setting spinner for residence ownership
             ArrayAdapter<String> adapter_ownership = new ArrayAdapter<String>(
                     getActivity(),
                     android.R.layout.simple_spinner_item,
@@ -131,7 +131,6 @@ public class ResidenceInformationFragment extends Fragment {
                 JSONObject jsonObject1 = arr_state.getJSONObject(i);
                 Integer id = jsonObject1.optInt("id");
                 String name = jsonObject1.optString("name");
-                Log.v("EDUC", name + " = " + id);
                 stateArray.add(name);
                 stateIds.add(id);
             }
@@ -147,7 +146,6 @@ public class ResidenceInformationFragment extends Fragment {
                 JSONObject jsonObject1 = arr_country.getJSONObject(i);
                 Integer id = jsonObject1.optInt("id");
                 String name = jsonObject1.optString("name");
-                Log.v("EDUC", name + " = " + id);
                 countryArray.add(name);
                 countryIds.add(id);
             }

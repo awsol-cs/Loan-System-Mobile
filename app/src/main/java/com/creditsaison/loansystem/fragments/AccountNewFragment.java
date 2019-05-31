@@ -197,7 +197,6 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     JSONObject jsonObject1 = arr_gender.getJSONObject(i);
                     Integer id = jsonObject1.optInt("id");
                     String name = jsonObject1.optString("name");
-                    Log.v("GENDER", name + " = " + id);
                     genderArray.add(name);
                     genderIds.add(id);
                 }
@@ -214,7 +213,6 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     JSONObject jsonObject1 = arr_marital_status.getJSONObject(i);
                     Integer id = jsonObject1.optInt("id");
                     String name = jsonObject1.optString("name");
-                    Log.v("MARITAL", name + " = " + id);
                     maritalArray.add(name);
                     maritalStatIds.add(id);
                 }
@@ -230,7 +228,6 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     JSONObject jsonObject1 = arr_educ_attain.getJSONObject(i);
                     Integer id = jsonObject1.optInt("id");
                     String name = jsonObject1.optString("name");
-                    Log.v("EDUC", name + " = " + id);
                     educStatArray.add(name);
                     educStatIds.add(id);
                 }

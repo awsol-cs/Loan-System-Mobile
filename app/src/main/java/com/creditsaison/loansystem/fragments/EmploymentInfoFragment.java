@@ -109,7 +109,7 @@ public class EmploymentInfoFragment extends Fragment {
                 employmentTypeArray.add(name);
                 employmentTypeIds.add(id);
             }
-            //setting spinner for gender
+            //setting spinner for employment type
             ArrayAdapter<String> adapter_employment_type = new ArrayAdapter<String>(
                     getActivity(),
                     android.R.layout.simple_spinner_item,

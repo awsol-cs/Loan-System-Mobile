@@ -237,7 +237,6 @@ public class AccountFragment extends Fragment {
             try {
 
                 JSONObject jsonObject = new JSONObject(data);
-                Log.i("LENGTH", String.valueOf(jsonObject.length()));
 
                 Iterator<String> keys = jsonObject.keys();
 
@@ -312,6 +311,16 @@ public class AccountFragment extends Fragment {
                     Log.v("**********************", "\"**********************");
                     Log.v("keys", key);
                 }
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                //getting loan products
+                JSONArray arr_loan_products = jsonObject.getJSONArray("productOptions");
+
+                //add to sharedpreferences
+                editor.putString("arr_loan_products", arr_loan_products.toString());
+
+                editor.commit();
 
             } catch (JSONException e) {
                 e.printStackTrace();

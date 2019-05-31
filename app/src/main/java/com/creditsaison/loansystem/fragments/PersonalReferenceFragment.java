@@ -99,7 +99,7 @@ public class PersonalReferenceFragment extends Fragment {
                 relationshipArray.add(name);
                 relationshipIds.add(id);
             }
-            //setting spinner for gender
+            //setting spinner
             ArrayAdapter<String> adapter_relationship = new ArrayAdapter<String>(
                     getActivity(),
                     android.R.layout.simple_spinner_item,
