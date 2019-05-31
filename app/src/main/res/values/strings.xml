@@ -11,7 +11,7 @@
     <string name="confirm_button">CONFIRM</string>
     <string name="register">REGISTER</string>
     <string name="no_account">No account yet?</string>
-    <string name="existing_customer">Do you already have an AWS Loaning account?</string>
+    <string name="existing_customer">Do you already have an existing account?</string>
     <string name="yes_button">YES</string>
     <string name="no_button">NO</string>
     <string name="create_account_button">No, but I want to create one</string>
@@ -876,7 +876,7 @@
         <item>Others</item>
     </string-array>
 
-    <string name="gov_id">Government ID:</string>
+    <string name="gov_id">Government ID</string>
     <string name="gov_id_num">ID Number</string>
     <string-array name="array_gov_ids">
         <item>Passport</item>
@@ -884,7 +884,7 @@
         <item>SSS ID</item>
     </string-array>
 
-    <string name="educ_stat">Educational Attainment:</string>
+    <string name="educ_stat">Educational Attainment</string>
     <string-array name="array_educ_stat">
         <item>High School</item>
         <item>College</item>
@@ -901,7 +901,7 @@
     <string name="operation_years">Years in Operation</string>
     <string name="num_employees">Number of Employees</string>
 
-    <string name="num_dependents">Number of Dependents:</string>
+    <string name="num_dependents">Number of Dependents</string>
     <string name="for_others">For Others</string>
     <string name="last_school">School Last Attended</string>
     <string name="birthplace">Place of Birth</string>
@@ -939,6 +939,17 @@
     <string-array name="array_address_type">
         <item>Permanent</item>
         <item>Current</item>
+    </string-array>
+
+    <string-array name="array_countries">
+        <item>Philippines</item>
+    </string-array>
+
+    <string-array name="array_states">
+        <item>Abra</item>
+        <item>Albay</item>
+        <item>Bataan</item>
+        <item>Cagayan</item>
     </string-array>
 
 

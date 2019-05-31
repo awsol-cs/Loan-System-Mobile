@@ -24,8 +24,8 @@ import com.creditsaison.loansystem.viewmodel.ResidenceInformationViewModel;
 public class ResidenceInformationFragment extends Fragment {
 
     SharedPreferences sharedpreferences;
-    EditText street, address_line_1, address_line_2, address_line_3, city, state_province, postal_code;
-    Spinner address_type, residence_ownership;
+    EditText street, address_line_1, address_line_2, address_line_3, city, postal_code;
+    Spinner state_province, country, address_type, residence_ownership;
     Button btn_next;
 
     private FragmentResidenceInformationBinding binding;
@@ -60,7 +60,8 @@ public class ResidenceInformationFragment extends Fragment {
         address_line_2 = (EditText) binding.getRoot().findViewById(R.id.et_address_line_2);
         address_line_3 = (EditText) binding.getRoot().findViewById(R.id.et_address_line_3);
         city = (EditText) binding.getRoot().findViewById(R.id.et_city);
-        state_province = (EditText) binding.getRoot().findViewById(R.id.et_state);
+        country = (Spinner) binding.getRoot().findViewById(R.id.sp_country);
+        state_province = (Spinner) binding.getRoot().findViewById(R.id.sp_state);
         postal_code = (EditText) binding.getRoot().findViewById(R.id.et_postal_code);
         residence_ownership = (Spinner) binding.getRoot().findViewById(R.id.sp_residence_ownership);
 
@@ -76,7 +77,8 @@ public class ResidenceInformationFragment extends Fragment {
                 String str_addLine2 = address_line_2.getText().toString();
                 String str_addLine3 = address_line_3.getText().toString();
                 String str_city = city.getText().toString();
-                String str_stateProvice = state_province.getText().toString();
+                String str_country = country.getSelectedItem().toString();
+                String str_stateProvice = state_province.getSelectedItem().toString();
                 String str_postalCode = postal_code.getText().toString();
                 String str_residenceOwner = residence_ownership.getSelectedItem().toString();
 
@@ -93,6 +95,7 @@ public class ResidenceInformationFragment extends Fragment {
                     editor.putString("clientAddressLine2", str_addLine2);
                     editor.putString("clientAddressLine3", str_addLine3);
                     editor.putString("clientCity", str_city);
+                    editor.putString("clientCountry", str_country);
                     editor.putString("clientStateProvince", str_stateProvice);
                     editor.putString("clientPostalCode", str_postalCode);
                     editor.putString("clientResidenceOwner", str_residenceOwner);
@@ -103,6 +106,7 @@ public class ResidenceInformationFragment extends Fragment {
                     editor.putString("coMakerAddressLine2", str_addLine2);
                     editor.putString("coMakerAddressLine3", str_addLine3);
                     editor.putString("coMakerCity", str_city);
+                    editor.putString("coMakerCountry", str_country);
                     editor.putString("coMakerStateProvince", str_stateProvice);
                     editor.putString("coMakerPostalCode", str_postalCode);
                     editor.putString("coMakerResidenceOwner", str_residenceOwner);

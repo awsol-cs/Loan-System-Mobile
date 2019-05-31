@@ -46,8 +46,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_page_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_page_title"
-            app:layout_constraintTop_toTopOf="@+id/tv_page_title"
-            android:text="Juan Dela Cruz" />
+            app:layout_constraintTop_toTopOf="@+id/tv_page_title" />
 
         <TextView
             android:id="@+id/tv_lproduct"
