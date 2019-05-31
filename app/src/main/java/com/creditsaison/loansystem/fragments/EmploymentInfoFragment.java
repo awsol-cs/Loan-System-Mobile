@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,6 +21,13 @@ import android.widget.Spinner;
 import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentEmploymentInfoBinding;
 import com.creditsaison.loansystem.viewmodel.EmploymentInfoViewModel;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmploymentInfoFragment extends Fragment {
 
@@ -30,6 +38,10 @@ public class EmploymentInfoFragment extends Fragment {
             present_employer_years, previous_employer_years;
     Spinner employment_type, self_employed;
     Button btn_next;
+
+    //arrays for dropdown values and their corresponding ids
+    List<String> employmentTypeArray, selfEmployedTypeArray;
+    List<Integer> employmentTypeIds, selfEmployedTypeIds;
 
     private FragmentEmploymentInfoBinding binding;
     private EmploymentInfoViewModel viewModel;
@@ -76,6 +88,55 @@ public class EmploymentInfoFragment extends Fragment {
         employment_type = (Spinner) binding.getRoot().findViewById(R.id.sp_employment_type);
         self_employed = (Spinner) binding.getRoot().findViewById(R.id.sp_self_employed);
 
+        sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+        employmentTypeArray = new ArrayList<>();
+        selfEmployedTypeArray = new ArrayList<>();
+        employmentTypeIds = new ArrayList<>();
+        selfEmployedTypeIds = new ArrayList<>();
+
+        // this is the part where you assign the saved data in sharedpreference to array
+        try {
+
+            JSONArray arr_employment_type = new JSONArray(sharedpreferences.getString("arr_employment_type", " "));
+            JSONArray arr_self_employment = new JSONArray(sharedpreferences.getString("arr_self_employment", " "));
+
+            //populate arrays for employment type values(String) and ids(Int)
+            for(int i = 0; i < arr_employment_type.length(); i++) {
+                JSONObject jsonObject1 = arr_employment_type.getJSONObject(i);
+                Integer id = jsonObject1.optInt("id");
+                String name = jsonObject1.optString("name");
+                employmentTypeArray.add(name);
+                employmentTypeIds.add(id);
+            }
+            //setting spinner for gender
+            ArrayAdapter<String> adapter_employment_type = new ArrayAdapter<String>(
+                    getActivity(),
+                    android.R.layout.simple_spinner_item,
+                    employmentTypeArray
+            );
+            employment_type.setAdapter(adapter_employment_type);
+
+            //for address type
+            for(int i = 0; i < arr_self_employment.length(); i++) {
+                JSONObject jsonObject1 = arr_self_employment.getJSONObject(i);
+                Integer id = jsonObject1.optInt("id");
+                String name = jsonObject1.optString("name");
+                selfEmployedTypeArray.add(name);
+                selfEmployedTypeIds.add(id);
+            }
+            ArrayAdapter<String> adapter_self_employment = new ArrayAdapter<String>(
+                    getActivity(),
+                    android.R.layout.simple_spinner_item,
+                    selfEmployedTypeArray
+            );
+            self_employed.setAdapter(adapter_self_employment);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         // start of click event
         btn_next.setOnClickListener(new View.OnClickListener() {
@@ -100,10 +161,18 @@ public class EmploymentInfoFragment extends Fragment {
                 String str_previousEmployerOffice = previous_employer_office.getText().toString();
                 String str_presentEmployerYears = present_employer_years.getText().toString();
                 String str_previousEmployerYears = previous_employer_years.getText().toString();
-                String str_employmentType = employment_type.getSelectedItem().toString();
-                String str_selfEmployed = self_employed.getSelectedItem().toString();
 
-                sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                //getting selected values from dropdowns and its corresponding ids
+                //for employment type
+                String str_employmentType = employment_type.getSelectedItem().toString();
+                int type_index = employmentTypeArray.indexOf(str_employmentType);
+                int employment_type_id = employmentTypeIds.get(type_index);
+
+                //for self-employed type
+                String str_selfEmployed = self_employed.getSelectedItem().toString();
+                int self_employed_index = selfEmployedTypeArray.indexOf(str_selfEmployed);
+                int self_employment_id = selfEmployedTypeIds.get(self_employed_index);
+
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
 
@@ -127,8 +196,8 @@ public class EmploymentInfoFragment extends Fragment {
                     editor.putString("clientPreviousEmployerOffice", str_previousEmployerOffice);
                     editor.putString("clientPresentEmployerYears", str_presentEmployerYears);
                     editor.putString("clientPreviousEmployerYears", str_previousEmployerYears);
-                    editor.putString("clientEmploymentType", str_employmentType);
-                    editor.putString("clientSelfEmployed", str_selfEmployed);
+                    editor.putInt("clientEmploymentType", employment_type_id);
+                    editor.putInt("clientSelfEmployed", self_employment_id);
                 } else {
                     editor.putString("coMakerEmploymentOthers", str_employmentOthers);
                     editor.putString("coMakerOperationYears", str_operationYears);
@@ -147,8 +216,8 @@ public class EmploymentInfoFragment extends Fragment {
                     editor.putString("coMakerPreviousEmployerOffice", str_previousEmployerOffice);
                     editor.putString("coMakerPresentEmployerYears", str_presentEmployerYears);
                     editor.putString("coMakerPreviousEmployerYears", str_previousEmployerYears);
-                    editor.putString("coMakerEmploymentType", str_employmentType);
-                    editor.putString("coMakerSelfEmployed", str_selfEmployed);
+                    editor.putInt("coMakerEmploymentType", employment_type_id);
+                    editor.putInt("coMakerSelfEmployed", self_employment_id);
                 }
 
                 editor.commit();

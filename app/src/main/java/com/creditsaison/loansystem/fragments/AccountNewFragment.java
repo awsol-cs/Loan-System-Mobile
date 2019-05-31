@@ -89,7 +89,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
 
         //arrays for dropdown values and their corresponding ids
         List<String> genderArray, maritalArray, educStatArray;
-        List<Integer> IdGenderArray, IdMaritalArray, IdEducStatArray;
+        List<Integer> genderIds, maritalStatIds, educStatIds;
 
 
         private FragmentAccountNewBinding binding;
@@ -160,9 +160,9 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
             genderArray = new ArrayList<>();
             maritalArray = new ArrayList<>();
             educStatArray = new ArrayList<>();
-            IdGenderArray = new ArrayList<>();
-            IdMaritalArray = new ArrayList<>();
-            IdEducStatArray = new ArrayList<>();
+            genderIds = new ArrayList<>();
+            maritalStatIds = new ArrayList<>();
+            educStatIds = new ArrayList<>();
 
 
             // (1) get a reference to the spinner
@@ -199,7 +199,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     String name = jsonObject1.optString("name");
                     Log.v("GENDER", name + " = " + id);
                     genderArray.add(name);
-                    IdGenderArray.add(id);
+                    genderIds.add(id);
                 }
                 //setting spinner for gender
                 ArrayAdapter<String> adapter_gender = new ArrayAdapter<String>(
@@ -216,7 +216,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     String name = jsonObject1.optString("name");
                     Log.v("MARITAL", name + " = " + id);
                     maritalArray.add(name);
-                    IdMaritalArray.add(id);
+                    maritalStatIds.add(id);
                 }
                 ArrayAdapter<String> adapter_marital_stat = new ArrayAdapter<String>(
                         getActivity(),
@@ -232,7 +232,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     String name = jsonObject1.optString("name");
                     Log.v("EDUC", name + " = " + id);
                     educStatArray.add(name);
-                    IdEducStatArray.add(id);
+                    educStatIds.add(id);
                 }
                 ArrayAdapter<String> adapter_educ_stat = new ArrayAdapter<String>(
                         getActivity(),
@@ -274,8 +274,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                date.setText((monthOfYear + 1) + "/"
-                                        + dayOfMonth + "/" + year);
+                                date.setText((monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -298,19 +297,19 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                 //get selected gender and its corresponding id
                 String str_gender = gender.getSelectedItem().toString();
                 int gender_index = genderArray.indexOf(str_gender);
-                int gender_id = IdGenderArray.get(gender_index);
+                int gender_id = genderIds.get(gender_index);
                 Log.i("SELECTED GENDER + ID", str_gender + String.valueOf(gender_id));
 
                 //for marital status
                 String str_maritalStatus = marital_status.getSelectedItem().toString();
                 int marital_index = maritalArray.indexOf(str_maritalStatus);
-                int marital_status_id = IdMaritalArray.get(marital_index);
+                int marital_status_id = maritalStatIds.get(marital_index);
                 Log.i("SELECTED MARITAL + ID", str_maritalStatus + String.valueOf(marital_status_id));
 
                 //for educational stat
                 String str_educStat = educational_status.getSelectedItem().toString();
                 int educ_index = educStatArray.indexOf(str_educStat);
-                int educ_status_id = IdEducStatArray.get(educ_index);
+                int educ_status_id = educStatIds.get(educ_index);
                 Log.i("SELECTED EDUC + ID", str_educStat + String.valueOf(educ_status_id));
 
                 sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -359,9 +358,9 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     editor.putString("coMakerDependents", str_dependents);
                     editor.putString("coMakerGovIdNo", str_govIdNumber);
                     editor.putString("coMakerDocSource", str_docSource);
-                    editor.putString("coMakerGender", str_gender);
-                    editor.putString("coMakerMaritalStatus", str_maritalStatus);
-                    editor.putString("coMakerEducStat", str_educStat);
+                    editor.putInt("coMakerGender", gender_id);
+                    editor.putInt("coMakerMaritalStatus", marital_status_id);
+                    editor.putInt("coMakerEducStat", educ_status_id);
                     //editor.putString("coMakerGovSpinner", str_govSpinner);
                     //editor.putString("coMakerDocSpinner", str_docSpinner);
 

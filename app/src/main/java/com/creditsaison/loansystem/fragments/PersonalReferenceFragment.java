@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,6 +23,13 @@ import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentPersonalReferenceBinding;
 import com.creditsaison.loansystem.viewmodel.PersonalReferenceViewModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class PersonalReferenceFragment extends Fragment {
 
     SharedPreferences sharedpreferences;
@@ -30,6 +38,10 @@ public class PersonalReferenceFragment extends Fragment {
     Spinner relationship_to_staff;
     CheckBox related_to_staff;
     Button btn_next;
+
+    //arrays for dropdown values and their corresponding ids
+    List<String> relationshipArray, isRelatedArray;
+    List<Integer> relationshipIds, isRelatedIds;
 
     private FragmentPersonalReferenceBinding binding;
     private PersonalReferenceViewModel viewModel;
@@ -66,6 +78,48 @@ public class PersonalReferenceFragment extends Fragment {
         relationship_to_staff = (Spinner) binding.getRoot().findViewById(R.id.sp_relationship_to_staff);
         related_to_staff = (CheckBox) binding.getRoot().findViewById(R.id.cb_related_to_staff);
 
+        sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+        relationshipArray = new ArrayList<>();
+        relationshipIds = new ArrayList<>();
+        isRelatedArray = new ArrayList<>();
+        isRelatedIds = new ArrayList<>();
+
+        // this is the part where you assign the saved data in sharedpreference to array
+        try {
+
+            JSONArray arr_relationship = new JSONArray(sharedpreferences.getString("arr_relationship", " "));
+            JSONArray arr_isRelated = new JSONArray(sharedpreferences.getString("arr_isRelated", " "));
+
+            //populate arrays for relationship type values(String) and ids(Int)
+            for(int i = 0; i < arr_relationship.length(); i++) {
+                JSONObject jsonObject1 = arr_relationship.getJSONObject(i);
+                Integer id = jsonObject1.optInt("id");
+                String name = jsonObject1.optString("name");
+                relationshipArray.add(name);
+                relationshipIds.add(id);
+            }
+            //setting spinner for gender
+            ArrayAdapter<String> adapter_relationship = new ArrayAdapter<String>(
+                    getActivity(),
+                    android.R.layout.simple_spinner_item,
+                    relationshipArray
+            );
+            relationship_to_staff.setAdapter(adapter_relationship);
+
+            for(int i = 0; i < arr_isRelated.length(); i++) {
+                JSONObject jsonObject1 = arr_isRelated.getJSONObject(i);
+                Integer id = jsonObject1.optInt("id");
+                String name = jsonObject1.optString("name");
+                isRelatedArray.add(name);
+                isRelatedIds.add(id);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         // start of click event
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +133,14 @@ public class PersonalReferenceFragment extends Fragment {
                 String str_refMobile = ref_mobile.getText().toString();
                 String str_relatedOfficerName = related_officer_name.getText().toString();
                 String str_officerContactNo = officer_contact_no.getText().toString();
+
+                //getting selected values from dropdowns and its corresponding ids
+                //for relationship to staff
                 String str_relationshipToStaff = relationship_to_staff.getSelectedItem().toString();
+                int rel_index = relationshipArray.indexOf(str_relationshipToStaff);
+                int relationship_id = relationshipIds.get(rel_index);
+
+
                 boolean cbRelatedtoStaff = related_to_staff.isChecked();
                 String str_isRelated;
 
@@ -89,7 +150,9 @@ public class PersonalReferenceFragment extends Fragment {
                     str_isRelated = "No";
                 }
 
-                sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                int isRelated_index = isRelatedArray.indexOf(str_isRelated);
+                int related_id = isRelatedIds.get(isRelated_index);
+
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
 
@@ -103,8 +166,8 @@ public class PersonalReferenceFragment extends Fragment {
                     editor.putString("clientRefMobile", str_refMobile);
                     editor.putString("clientRelatedOfficerName", str_relatedOfficerName);
                     editor.putString("clientOfficerContactNo", str_officerContactNo);
-                    editor.putString("clientRelationshipToStaff", str_relationshipToStaff);
-                    editor.putString("clientIsRelated", str_isRelated);
+                    editor.putInt("clientRelationshipToStaff", relationship_id);
+                    editor.putInt("clientIsRelated", related_id);
 
                     editor.commit();
 
@@ -118,8 +181,8 @@ public class PersonalReferenceFragment extends Fragment {
                     editor.putString("coMakerRefMobile", str_refMobile);
                     editor.putString("coMakerRelatedOfficerName", str_relatedOfficerName);
                     editor.putString("coMakerOfficerContactNo", str_officerContactNo);
-                    editor.putString("coMakerRelationshipToStaff", str_relationshipToStaff);
-                    editor.putString("coMakerIsRelated", str_isRelated);
+                    editor.putInt("coMakerRelationshipToStaff", relationship_id);
+                    editor.putInt("coMakerIsRelated", related_id);
 
                     editor.commit();
 

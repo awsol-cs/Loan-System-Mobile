@@ -262,6 +262,13 @@ public class AccountFragment extends Fragment {
                 JSONArray arr_state = jsonObject.getJSONArray("address").getJSONObject(0).getJSONArray("stateProvinceIdOptions");
                 JSONArray arr_country = jsonObject.getJSONArray("address").getJSONObject(0).getJSONArray("countryIdOptions");
 
+                //for employment info
+                JSONArray arr_employment_type = jsonObject.getJSONArray("clientEmploymentOptions");
+                JSONArray arr_self_employment = jsonObject.getJSONArray("clientSelfEmployedOptions");
+
+                //for personal reference
+                JSONArray arr_relationship = jsonObject.getJSONArray("clientRelationshipOfOfficerOptions");
+                JSONArray arr_isRelated = jsonObject.getJSONArray("clientRelatedToOfficerOptions");
 
 
                 //saving arrays to sharedpreferences
@@ -275,6 +282,14 @@ public class AccountFragment extends Fragment {
                 editor.putString("arr_address_type", arr_address_type.toString());
                 editor.putString("arr_state", arr_state.toString());
                 editor.putString("arr_country", arr_country.toString());
+
+                //for employment info
+                editor.putString("arr_employment_type", arr_employment_type.toString());
+                editor.putString("arr_self_employment", arr_self_employment.toString());
+
+                //for personal reference
+                editor.putString("arr_relationship", arr_relationship.toString());
+                editor.putString("arr_isRelated", arr_isRelated.toString());
 
 
                 editor.commit();
