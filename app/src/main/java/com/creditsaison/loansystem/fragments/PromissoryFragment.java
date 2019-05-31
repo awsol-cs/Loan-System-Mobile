@@ -134,7 +134,6 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             client.put("lastname", sp.getString("clientlastName", " "));
             client.put("mobileNo", sp.getString("clientMobileNo", " "));
             client.put("genderId", sp.getInt("clientGender", 0));
-            client.put("genderId", 38);
             client.put("dateOfBirth", sp.getString("clientbirthDate", " "));
             client.put("submittedOnDate", sp.getString("LoanSubmissionDate", null));
             client.put("locale", "en");
