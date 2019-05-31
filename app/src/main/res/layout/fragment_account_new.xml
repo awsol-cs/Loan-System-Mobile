@@ -259,7 +259,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/gray_dark"
-            android:entries="@array/array_gender"
+
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toTopOf="@+id/textInputNationality"
             app:layout_constraintEnd_toEndOf="parent"
@@ -338,7 +338,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/gray_dark"
-            android:entries="@array/array_marital_status"
+
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toTopOf="@+id/textInputNumDependents"
             app:layout_constraintEnd_toEndOf="parent"
@@ -394,7 +394,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/gray_dark"
-            android:entries="@array/array_educ_stat"
+
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toTopOf="@+id/sp_gov_id_type"
             app:layout_constraintEnd_toEndOf="parent"

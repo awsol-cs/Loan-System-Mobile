@@ -87,6 +87,11 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
 
         EditText first_name, middle_name, last_name, mobile_no, nationality, birth_place, dependents, gov_id_number, document_source;
 
+        //arrays for dropdown values and their corresponding ids
+        List<String> genderArray, maritalArray, educStatArray;
+        List<Integer> IdGenderArray, IdMaritalArray, IdEducStatArray;
+
+
         private FragmentAccountNewBinding binding;
         private AccountNewViewModel viewModel;
 
@@ -152,8 +157,16 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                 page_title.setText("Create Co-Maker");
             }
 
+            genderArray = new ArrayList<>();
+            maritalArray = new ArrayList<>();
+            educStatArray = new ArrayList<>();
+            IdGenderArray = new ArrayList<>();
+            IdMaritalArray = new ArrayList<>();
+            IdEducStatArray = new ArrayList<>();
+
+
             // (1) get a reference to the spinner
-            Spinner sp_gender = (Spinner) binding.getRoot().findViewById(R.id.sp_gender);
+  //          Spinner sp_gender = (Spinner) binding.getRoot().findViewById(R.id.sp_gender);
 
             // (2) create a simple static list of strings
 //            List<Integer> spinnerArray = new ArrayList<>();
@@ -174,31 +187,65 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
 
             // this is the part where you assign the saved data in sharedpreference to array
             try {
+
                 JSONArray arr_gender = new JSONArray(sharedpreferences.getString("arr_gender", " "));
                 JSONArray arr_marital_status = new JSONArray(sharedpreferences.getString("arr_marital_status", " "));
                 JSONArray arr_educ_attain = new JSONArray(sharedpreferences.getString("arr_educ_attain", " "));
 
-                List<String> genderArray = new ArrayList<>();
-                for(int i=0; i<arr_gender.length(); i++){
+                //populate arrays for gender values(String) and ids(Int)
+                for(int i = 0; i < arr_gender.length(); i++) {
                     JSONObject jsonObject1 = arr_gender.getJSONObject(i);
-                    String id = jsonObject1.optString("id");
-                    String name = jsonObject1.optString("name") + " hehe";
-                    Log.v("!!!!!!!!!!!!!!!", name + " = " + id);
+                    Integer id = jsonObject1.optInt("id");
+                    String name = jsonObject1.optString("name");
+                    Log.v("GENDER", name + " = " + id);
                     genderArray.add(name);
+                    IdGenderArray.add(id);
                 }
+                //setting spinner for gender
                 ArrayAdapter<String> adapter_gender = new ArrayAdapter<String>(
                         getActivity(),
                         android.R.layout.simple_spinner_item,
                         genderArray
                 );
-                sp_gender.setAdapter(adapter_gender);
+                gender.setAdapter(adapter_gender);
 
-                String ito = Integer.toString(arr_gender.length());
-                Log.v("ito", ito);
-                String marital_status = Integer.toString(arr_marital_status.length());
-                Log.v("ito", marital_status);
-                String educ_attain = Integer.toString(arr_educ_attain.length());
-                Log.v("ito", educ_attain);
+                //for marital_status
+                for(int i = 0; i < arr_marital_status.length(); i++) {
+                    JSONObject jsonObject1 = arr_marital_status.getJSONObject(i);
+                    Integer id = jsonObject1.optInt("id");
+                    String name = jsonObject1.optString("name");
+                    Log.v("MARITAL", name + " = " + id);
+                    maritalArray.add(name);
+                    IdMaritalArray.add(id);
+                }
+                ArrayAdapter<String> adapter_marital_stat = new ArrayAdapter<String>(
+                        getActivity(),
+                        android.R.layout.simple_spinner_item,
+                        maritalArray
+                );
+                marital_status.setAdapter(adapter_marital_stat);
+
+                //for educational attainment
+                for(int i = 0; i < arr_educ_attain.length(); i++) {
+                    JSONObject jsonObject1 = arr_educ_attain.getJSONObject(i);
+                    Integer id = jsonObject1.optInt("id");
+                    String name = jsonObject1.optString("name");
+                    Log.v("EDUC", name + " = " + id);
+                    educStatArray.add(name);
+                    IdEducStatArray.add(id);
+                }
+                ArrayAdapter<String> adapter_educ_stat = new ArrayAdapter<String>(
+                        getActivity(),
+                        android.R.layout.simple_spinner_item,
+                        educStatArray
+                );
+                educational_status.setAdapter(adapter_educ_stat);
+
+                Log.i("GENDER SIZE", String.valueOf(genderArray.size()));
+                Log.i("MARITAL SIZE", String.valueOf(maritalArray.size()));
+                Log.i("EDUC SIZE", String.valueOf(educStatArray.size()));
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -245,12 +292,26 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                 String str_dependents = dependents.getText().toString();
                 String str_govIdNumber = gov_id_number.getText().toString();
                 String str_docSource = document_source.getText().toString();
-                String str_gender = gender.getSelectedItem().toString();
-                String str_maritalStatus = marital_status.getSelectedItem().toString();
-                String str_educStat = educational_status.getSelectedItem().toString();
                 String str_govSpinner = govSpinner.getSelectedItem().toString();
                 String str_docSpinner = docSpinner.getSelectedItem().toString();
-                Log.v("log_tag", str_firstName);
+
+                //get selected gender and its corresponding id
+                String str_gender = gender.getSelectedItem().toString();
+                int gender_index = genderArray.indexOf(str_gender);
+                int gender_id = IdGenderArray.get(gender_index);
+                Log.i("SELECTED GENDER + ID", str_gender + String.valueOf(gender_id));
+
+                //for marital status
+                String str_maritalStatus = marital_status.getSelectedItem().toString();
+                int marital_index = maritalArray.indexOf(str_maritalStatus);
+                int marital_status_id = IdMaritalArray.get(marital_index);
+                Log.i("SELECTED MARITAL + ID", str_maritalStatus + String.valueOf(marital_status_id));
+
+                //for educational stat
+                String str_educStat = educational_status.getSelectedItem().toString();
+                int educ_index = educStatArray.indexOf(str_educStat);
+                int educ_status_id = IdEducStatArray.get(educ_index);
+                Log.i("SELECTED EDUC + ID", str_educStat + String.valueOf(educ_status_id));
 
                 sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
@@ -269,9 +330,9 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                     editor.putString("clientDependents", str_dependents);
                     editor.putString("clientGovIdNo", str_govIdNumber);
                     editor.putString("clientDocSource", str_docSource);
-                    editor.putString("clientGender", str_gender);
-                    editor.putString("clientMaritalStatus", str_maritalStatus);
-                    editor.putString("clientEducStat", str_educStat);
+                    editor.putInt("clientGender", gender_id);
+                    editor.putInt("clientMaritalStatus", marital_status_id);
+                    editor.putInt("clientEducStat", educ_status_id);
                     //editor.putString("clientGovSpinner", str_govSpinner);
                     //editor.putString("clientDocSpinner", str_docSpinner);
 

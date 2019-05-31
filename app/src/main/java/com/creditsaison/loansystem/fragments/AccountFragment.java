@@ -237,6 +237,7 @@ public class AccountFragment extends Fragment {
             try {
 
                 JSONObject jsonObject = new JSONObject(data);
+                Log.i("LENGTH", String.valueOf(jsonObject.length()));
 
                 Iterator<String> keys = jsonObject.keys();
 
@@ -249,14 +250,31 @@ public class AccountFragment extends Fragment {
                 // this is the part where you save data in sharedpreference
                 SharedPreferences.Editor editor = sharedpreferences.edit();
 
+                //getting arrays from json object
+                //for client basic info
                 JSONArray arr_gender = jsonObject.getJSONArray("genderOptions");
                 JSONArray arr_marital_status = jsonObject.getJSONArray("clientMaritalStatusOptions");
                 JSONArray arr_educ_attain = jsonObject.getJSONArray("clientEducationalAttainmentOptions");
 
+                //for residence info
+                JSONArray arr_residence_ownership = jsonObject.getJSONArray("clientResidenceOwnershipOptions");
+                JSONArray arr_address_type = jsonObject.getJSONArray("address").getJSONObject(0).getJSONArray("addressTypeIdOptions");
+                JSONArray arr_state = jsonObject.getJSONArray("address").getJSONObject(0).getJSONArray("stateProvinceIdOptions");
+                JSONArray arr_country = jsonObject.getJSONArray("address").getJSONObject(0).getJSONArray("countryIdOptions");
+
+
+
+                //saving arrays to sharedpreferences
+                //for client basic info
                 editor.putString("arr_gender", arr_gender.toString());
                 editor.putString("arr_marital_status", arr_marital_status.toString());
                 editor.putString("arr_educ_attain", arr_educ_attain.toString());
 
+                //for residence info
+                editor.putString("arr_residence_ownership", arr_residence_ownership.toString());
+                editor.putString("arr_address_type", arr_address_type.toString());
+                editor.putString("arr_state", arr_state.toString());
+                editor.putString("arr_country", arr_country.toString());
 
 
                 editor.commit();
