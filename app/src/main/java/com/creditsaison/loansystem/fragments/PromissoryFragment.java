@@ -306,7 +306,14 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             coMakerKyc.put("employerReference", sp.getString("coMakerRefEmployer", " "));
             coMakerKyc.put("contactNumberReference", sp.getString("coMakerRefContactNo", " "));
             coMakerKyc.put("mobileReference", sp.getString("coMakerRefMobile", " "));
-            coMakerKyc.put("relatedToOfficerId", sp.getInt("coMakerIsRelated", 0));
+
+
+            if(sp.contains("coMakerIsRelated")) {
+                coMakerKyc.put("relatedToOfficerId", sp.getInt("coMakerIsRelated", 0));
+            } else {
+                coMakerInfo.put("relatedToOfficerId", null);
+            }
+
             coMakerKyc.put("staff_name", sp.getString("coMakerRelatedOfficerName", " "));
             coMakerKyc.put("staff_contact", sp.getString("coMakerOfficerContactNo", " "));
             if(sp.contains("coMakerRelationshipToStaff")) {
@@ -499,7 +506,6 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(getActivity().getApplicationContext(), "Request Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
