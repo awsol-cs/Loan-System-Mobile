@@ -12,16 +12,19 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentLoanApplicationBinding;
@@ -31,12 +34,29 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,7 +69,7 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
     SharedPreferences sharedpreferences;
 
     Button btn_repayment, btn_next;
-    TextView submissionDate, disbursementDate, customer;
+    TextView submissionDate, disbursementDate, customer, loanTenure, interestRate, noOfRepayments;
     DatePickerDialog datePickerDialog;
     EditText principalAmount;
     Spinner loanProduct, loanPurpose;
@@ -98,6 +118,10 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
         loanProduct = (Spinner) binding.getRoot().findViewById(R.id.sp_lproduct);
         loanPurpose = (Spinner) binding.getRoot().findViewById(R.id.sp_loan_purpose);
 
+        loanTenure = (TextView) binding.getRoot().findViewById(R.id.tv_loan_tenure_value);
+        interestRate = (TextView) binding.getRoot().findViewById(R.id.tv_loan_interest_rate_value);
+        noOfRepayments = (TextView) binding.getRoot().findViewById(R.id.tv_repayments_value);
+
         loanProductArray = new ArrayList<>();
         loanProductIds = new ArrayList<>();
 
@@ -113,6 +137,7 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
                 String name = jsonObject1.optString("name");
                 loanProductArray.add(name);
                 loanProductIds.add(id);
+                Log.i("LOAN PRODUCT", name + "-" + id);
             }
             //setting spinner for residence ownership
             ArrayAdapter<String> adapter_products = new ArrayAdapter<String>(
@@ -129,6 +154,24 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        loanProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                int selectedProductIndex= parentView.getSelectedItemPosition();
+                int selectedProductID = loanProductIds.get(selectedProductIndex);
+                Log.i("SELECTED PROD ID", String.valueOf(selectedProductID));
+
+                getLoanProductDetails(selectedProductID);
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                //do nothing
+            }
+        });
 
         return binding.getRoot();
     }
@@ -189,6 +232,165 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
 
             datePickerDialog.show();
         }
+    }
+
+
+    //get details of selected loan product
+    public void getLoanProductDetails(int selectedLoanProductID) {
+        Thread getLoanDetails = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String uNameandPword = "mifos:password";
+                    String basicAutoPayload = "Basic " + Base64.encodeToString(uNameandPword.getBytes(), Base64.DEFAULT);
+
+                    URL url = new URL("https://192.168.227.159/fineract-provider/api/v1/loans/template?activeOnly=true&productId="+selectedLoanProductID+"&templateType=individual");
+
+                    HttpURLConnection conn = null;
+
+                    if (url.getProtocol().toLowerCase().equals("https")) {
+                        trustAllHosts();
+                        HttpsURLConnection https = (HttpsURLConnection) url.openConnection();
+                        https.setHostnameVerifier(DO_NOT_VERIFY);
+                        conn = https;
+                    } else {
+                        conn = (HttpURLConnection) url.openConnection();
+                    }
+
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Fineract-Platform-TenantId", "default");
+                    conn.setRequestProperty("Accept","application/json");
+                    conn.setRequestProperty("Authorization",basicAutoPayload);
+                    conn.setDoInput(true);
+
+                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                    Log.i("MSG" , conn.getResponseMessage());
+                    Log.i("OUTPUT", readStream(conn.getInputStream()));
+
+                    conn.disconnect();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        getLoanDetails.start();
+    }
+
+    final static HostnameVerifier DO_NOT_VERIFY = new HostnameVerifier() {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
+    };
+
+    /**
+     * Trust every server - dont check for any certificate
+     */
+    private static void trustAllHosts() {
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return new java.security.cert.X509Certificate[] {};
+            }
+
+            public void checkClientTrusted(X509Certificate[] chain,
+                                           String authType) throws CertificateException {
+            }
+
+            public void checkServerTrusted(X509Certificate[] chain,
+                                           String authType) throws CertificateException {
+            }
+        } };
+
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection
+                    .setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String readStream(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length;
+
+        while((length = inputStream.read(buffer)) != -1){
+            result.write(buffer, 0, length);
+        }
+
+        String data = result.toString(UTF_8.name());
+
+
+            try {
+
+                JSONObject detailsObject = new JSONObject(data);
+
+                Iterator<String> keys = detailsObject.keys();
+
+                while(keys.hasNext()) {
+                    String key = keys.next();
+                    Log.v("**********************", "\"**********************");
+                    Log.v("keys", key);
+                }
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                //getting loan products
+                //JSONArray arr_loan_products = detailsObject.getJSONArray("productOptions");
+                boolean allowPartialPeriodInterestCalcualtion =  detailsObject.optBoolean("allowPartialPeriodInterestCalcualtion");
+                int amortizationType =  detailsObject.getJSONObject("amortizationType").getInt("id");
+                int interestCalculationPeriodType =  detailsObject.getJSONObject("interestCalculationPeriodType").getInt("id");
+                int interestRatePerPeriod =  detailsObject.optInt("interestRatePerPeriod");
+                int interestType =  detailsObject.getJSONObject("interestType").getInt("id");
+                boolean isEqualAmortization =  detailsObject.optBoolean("isEqualAmortization");
+                int numberOfRepayments =  detailsObject.optInt("numberOfRepayments");
+                int repaymentEvery =  detailsObject.optInt("repaymentEvery");
+                int repaymentFrequencyTypeID =  detailsObject.getJSONObject("repaymentFrequencyType").getInt("id");
+                String repaymentFrequencyTypeValue = detailsObject.getJSONObject("repaymentFrequencyType").getString("value");
+                int transactionProcessingStrategyId =  detailsObject.optInt("transactionProcessingStrategyId");
+                int loanTermFrequency =  detailsObject.optInt("termFrequency");
+                int loanTermFrequencyTypeID =  detailsObject.getJSONObject("termPeriodFrequencyType").getInt("id");
+                String loanTermFrequencyTypeValue = detailsObject.getJSONObject("termPeriodFrequencyType").getString("value");
+
+
+                //add to sharedpreferences
+                editor.putBoolean("allowPartialPeriodInterestCalculation", allowPartialPeriodInterestCalcualtion);
+                editor.putInt("amortizationType", amortizationType);
+                editor.putInt("interestCalculationPeriodType", interestCalculationPeriodType);
+                editor.putInt("interestRatePerPeriod", interestRatePerPeriod);
+                editor.putInt("interestType", interestType);
+                editor.putBoolean("isEqualAmortization", isEqualAmortization);
+                editor.putInt("numberOfRepayments", numberOfRepayments);
+                editor.putInt("repaymentEvery", repaymentEvery);
+                editor.putInt("repaymentFrequencyTypeID", repaymentFrequencyTypeID);
+                editor.putInt("transactionProcessingStrategyId", transactionProcessingStrategyId);
+                editor.putInt("loanTermFrequency", loanTermFrequency);
+                editor.putInt("loanTermFrequencyTypeID", loanTermFrequencyTypeID);
+
+
+                editor.commit();
+
+                //set textviews
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        loanTenure.setText(String.valueOf(loanTermFrequency) + " " + loanTermFrequencyTypeValue);
+                        interestRate.setText(String.valueOf(interestRatePerPeriod) + "%");
+                        noOfRepayments.setText(String.valueOf(numberOfRepayments) + " " + repaymentFrequencyTypeValue);
+                    }
+                });
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        return data;
     }
 
 }

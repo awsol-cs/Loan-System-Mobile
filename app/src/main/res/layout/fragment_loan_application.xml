@@ -292,8 +292,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_loan_term"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_loan_term"
-            app:layout_constraintTop_toTopOf="@+id/tv_loan_term"
-            android:text="@string/loan_tenure_value" />
+            app:layout_constraintTop_toTopOf="@+id/tv_loan_term" />
 
         <TextView
             android:id="@+id/tv_loan_interest_rate"
@@ -320,8 +319,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_loan_interest_rate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_loan_interest_rate"
-            app:layout_constraintTop_toTopOf="@+id/tv_loan_interest_rate"
-            android:text="@string/loan_interest_rate_value" />
+            app:layout_constraintTop_toTopOf="@+id/tv_loan_interest_rate" />
 
         <TextView
             android:id="@+id/tv_repayments"
@@ -350,8 +348,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_repayments"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_repayments"
-            app:layout_constraintTop_toTopOf="@+id/tv_repayments"
-            android:text= "60 months" />
+            app:layout_constraintTop_toTopOf="@+id/tv_repayments" />
 
         <Button
             android:id="@+id/btn_repayment"

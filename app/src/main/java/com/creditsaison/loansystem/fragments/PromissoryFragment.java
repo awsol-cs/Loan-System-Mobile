@@ -197,27 +197,28 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             kyc.put("relationshipOfOfficerId", sp.getInt("clientRelationshipToStaff", 0));
             kyc.put("locale", "en");
 
+
             //loan
             loan.put("dateFormat", "M/dd/yyyy");
             loan.put("locale", "en");
-            loan.put("allowPartialPeriodInterestCalcualtion", false);
-            loan.put("amortizationType", "1");
-            loan.put("interestCalculationPeriodType", 1);
-            loan.put("interestRatePerPeriod", 1);
-            loan.put("interestType", 0);
-            loan.put("isEqualAmortization", false);
-            loan.put("loanTermFrequency", 6);
-            loan.put("loanTermFrequencyType", 2);
+            loan.put("allowPartialPeriodInterestCalcualtion", sp.getBoolean("allowPartialPeriodInterestCalculation", false));
+            loan.put("amortizationType", sp.getInt("amortizationType", 0));
+            loan.put("interestCalculationPeriodType", sp.getInt("interestCalculationPeriodType", 0));
+            loan.put("interestRatePerPeriod", sp.getInt("interestRatePerPeriod", 0));
+            loan.put("interestType", sp.getInt("interestType", 0));
+            loan.put("isEqualAmortization",  sp.getBoolean("isEqualAmortization", false));
+            loan.put("loanTermFrequency", sp.getInt("loanTermFrequency", 0));
+            loan.put("loanTermFrequencyType",  sp.getInt("loanTermFrequencyTypeID", 0));
             loan.put("loanType", "individual");
-            loan.put("numberOfRepayments", 6);
-            loan.put("productId", 1);
+            loan.put("numberOfRepayments", sp.getInt("numberOfRepayments", 0));
+            loan.put("productId", sp.getInt("LoanProduct", 0));
             //loan.put("loan_purpose", sp.getString("LoanPurpose", " "));
             loan.put("submittedOnDate", sp.getString("LoanSubmissionDate", " "));
             loan.put("expectedDisbursementDate", sp.getString("LoanDisbursement", " "));
             loan.put("principal", sp.getString("LoanPrincipal", " "));
-            loan.put("repaymentEvery", 1);
-            loan.put("repaymentFrequencyType", 2);
-            loan.put("transactionProcessingStrategyId", 1);
+            loan.put("repaymentEvery", sp.getInt("repaymentEvery", 0));
+            loan.put("repaymentFrequencyType", sp.getInt("repaymentFrequencyTypeID", 0));
+            loan.put("transactionProcessingStrategyId", sp.getInt("transactionProcessingStrategyId", 0));
 
 
             coMakerInfo.put("dateFormat", "M/dd/yyyy");
@@ -225,7 +226,12 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             coMakerInfo.put("middlename", sp.getString("coMakermiddleName", " "));
             coMakerInfo.put("lastname", sp.getString("coMakerlastName", " "));
             coMakerInfo.put("mobileNo", sp.getString("coMakerMobileNo", " "));
-            coMakerInfo.put("genderId", sp.getInt("coMakerGender", 0));
+            if(sp.contains("coMakerGender")) {
+                coMakerInfo.put("genderId", sp.getInt("coMakerGender", 0));
+            } else {
+                coMakerInfo.put("genderId", null);
+            }
+
             coMakerInfo.put("dateOfBirth", sp.getString("coMakerbirthDate", " "));
             coMakerInfo.put("locale", "en");
 
@@ -238,8 +244,17 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             coMakerKyc.put("nationality", sp.getString("coMakerNationality", " "));
             coMakerKyc.put("placeOfBirth", sp.getString("coMakerbirthPlace", " "));
             coMakerKyc.put("dependents", sp.getString("coMakerDependents", null));
-            coMakerKyc.put("maritalStatusId", sp.getInt("coMakerMaritalStatus", 0));
-            coMakerKyc.put("educationalAttainmentId", sp.getInt("coMakerEducStat", 0));
+            if(sp.contains("coMakerMaritalStatus")) {
+                coMakerKyc.put("maritalStatusId", sp.getInt("coMakerMaritalStatus", 0));
+            } else {
+                coMakerInfo.put("maritalStatusId", null);
+            }
+
+            if(sp.contains("coMakerEducStat")) {
+                coMakerKyc.put("educationalAttainmentId", sp.getInt("coMakerEducStat", 0));
+            } else {
+                coMakerInfo.put("educationalAttainmentId", null);
+            }
 
             //comaker residence
 //            coMakerKyc.put("address_type", sp.getString("coMakerAddressType", " "));
@@ -253,9 +268,21 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 //            coMakerKyc.put("residenceOwnershipId", sp.getString("coMakerResidenceOwner", " "));
 
             // comaker employment
-            coMakerKyc.put("employmentId", sp.getInt("coMakerEmploymentType", 0));
+
+            if(sp.contains("coMakerEmploymentType")) {
+                coMakerKyc.put("employmentId", sp.getInt("coMakerEmploymentType", 0));
+            } else {
+                coMakerInfo.put("employmentId", null);
+            }
+
             coMakerKyc.put("other_employment", sp.getString("coMakerEmploymentOthers", " "));
-            coMakerKyc.put("selfEmploymentType", sp.getInt("coMakerSelfEmployed", 0));
+
+            if(sp.contains("coMakerSelfEmployed")) {
+                coMakerKyc.put("selfEmploymentType", sp.getInt("coMakerSelfEmployed", 0));
+            } else {
+                coMakerInfo.put("selfEmploymentType", null);
+            }
+
             coMakerKyc.put("operation_years", sp.getString("coMakerOperationYears", " "));
             coMakerKyc.put("nameOfPresentEmployerBusiness", sp.getString("coMakerPresentEmployer", " "));
             coMakerKyc.put("natureOfBusiness", sp.getString("coMakerBusinessNature", " "));
@@ -282,7 +309,12 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
             coMakerKyc.put("relatedToOfficerId", sp.getInt("coMakerIsRelated", 0));
             coMakerKyc.put("staff_name", sp.getString("coMakerRelatedOfficerName", " "));
             coMakerKyc.put("staff_contact", sp.getString("coMakerOfficerContactNo", " "));
-            coMakerKyc.put("staff_relationship", sp.getInt("coMakerRelationshipToStaff", 0));
+            if(sp.contains("coMakerRelationshipToStaff")) {
+                coMakerKyc.put("staff_relationship", sp.getInt("coMakerRelationshipToStaff", 0));
+            } else {
+                coMakerInfo.put("staff_relationship", null);
+            }
+
 
             //final comaker object
             coMaker.put("info", coMakerInfo);
