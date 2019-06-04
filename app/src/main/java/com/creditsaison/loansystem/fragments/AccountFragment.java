@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.creditsaison.loansystem.MainActivity;
 import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentAccountBinding;
 import com.creditsaison.loansystem.viewmodel.AccountViewModel;
@@ -63,6 +64,9 @@ public class AccountFragment extends Fragment {
 
         final String MyPREFERENCES = "MyPrefs" ;
 
+        MainActivity main_act = (MainActivity)getActivity();
+        String ip_url = main_act.final_url;
+
         sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
 
@@ -78,7 +82,7 @@ public class AccountFragment extends Fragment {
         editor.putString("createWhat", "client");
         editor.commit();
 
-        getData();
+        getData(ip_url);
 
         viewModel = ViewModelProviders.of(this).get(AccountViewModel.class);
     }
@@ -130,7 +134,7 @@ public class AccountFragment extends Fragment {
         }
     }
 
-    public void getData() {
+    public void getData(String ip_url) {
         Thread databaseValue = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -138,7 +142,9 @@ public class AccountFragment extends Fragment {
                     String uNameandPword = "mifos:password";
                     String basicAutoPayload = "Basic " + Base64.encodeToString(uNameandPword.getBytes(), Base64.DEFAULT);
 
-                    URL url = new URL("https://192.168.227.159/fineract-provider/api/v1/cs_clients/template?staffInSelectedOfficeOnly=true");
+                    String f_url = ip_url + "fineract-provider/api/v1/cs_clients/template?staffInSelectedOfficeOnly=true";
+
+                    URL url = new URL(f_url);
 
                     HttpURLConnection conn = null;
 
@@ -181,7 +187,9 @@ public class AccountFragment extends Fragment {
                         String uNameandPword = "mifos:password";
                         String basicAutoPayload = "Basic " + Base64.encodeToString(uNameandPword.getBytes(), Base64.DEFAULT);
 
-                        URL url = new URL("https://192.168.227.159/fineract-provider/api/v1/loans/template?activeOnly=true&templateType=individual");
+                        String f_url = ip_url + "fineract-provider/api/v1/loans/template?activeOnly=true&templateType=individual";
+
+                        URL url = new URL(f_url);
 
                         HttpURLConnection conn = null;
 

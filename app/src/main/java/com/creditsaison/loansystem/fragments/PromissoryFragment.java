@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.creditsaison.loansystem.MainActivity;
 import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentPromiNoteBinding;
 import com.creditsaison.loansystem.viewmodel.PromissoryViewModel;
@@ -452,7 +453,12 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
 //
 //                    requestQueue.add(stringRequest);
 
-                    URL url = new URL("https://192.168.227.159/fineract-provider/api/v1/cs_clients");
+
+                    MainActivity main_act = (MainActivity)getActivity();
+                    String ip_url = main_act.final_url;
+                    String f_url = ip_url + "fineract-provider/api/v1/cs_clients";
+
+                    URL url = new URL(f_url);
 
                     //HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     HttpURLConnection conn = null;
