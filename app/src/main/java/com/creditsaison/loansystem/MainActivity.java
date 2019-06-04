@@ -10,7 +10,9 @@ import com.creditsaison.loansystem.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    public String final_url = "https://192.168.227.159/";
+//    public String final_url = "https://192.168.227.159/";
+    public String final_url = "https://100.26.101.219/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

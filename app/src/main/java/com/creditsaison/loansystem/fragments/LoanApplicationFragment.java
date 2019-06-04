@@ -26,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.creditsaison.loansystem.MainActivity;
 import com.creditsaison.loansystem.R;
 import com.creditsaison.loansystem.databinding.FragmentLoanApplicationBinding;
 import com.creditsaison.loansystem.viewmodel.LoanApplicationViewModel;
@@ -41,6 +42,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -180,6 +182,18 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v == btn_next) {
+            SimpleDateFormat df = new SimpleDateFormat("M/dd/yyyy");
+            Date dt_disburse, dt_submission;
+            boolean valid_date = false;
+            try {
+                dt_disburse = df.parse(disbursementDate.getText().toString());
+                dt_submission = df.parse(submissionDate.getText().toString());
+                if (dt_disburse.after(dt_submission) || dt_disburse.equals(dt_submission)){
+                    valid_date = true;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             String str_loanProduct = loanProduct.getSelectedItem().toString();
             int product_index = loanProductArray.indexOf(str_loanProduct);
@@ -188,28 +202,34 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
             String str_submissionDate = submissionDate.getText().toString();
             String str_disbursement = disbursementDate.getText().toString();
             String str_principal = principalAmount.getText().toString();
-            int int_principal = 0;
-            if (!TextUtils.isEmpty(str_principal)) {
-                int_principal = Integer.parseInt(str_principal);
-            }
+            if (TextUtils.isEmpty(str_principal) || TextUtils.isEmpty(str_disbursement)) {
 
+                Toast.makeText(getActivity().getApplicationContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show();
 
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("createWhat", "coMaker");
+            } else if (!valid_date){
 
-            editor.putInt("LoanProduct", loan_product_id);
-            editor.putString("LoanPurpose", str_loanPurpose);
-            editor.putString("LoanSubmissionDate", str_submissionDate);
-            editor.putString("LoanDisbursement", str_disbursement);
-            editor.putString("LoanPrincipal", str_principal);
+                Toast.makeText(getActivity().getApplicationContext(), "Birth date cannot be less than the submission date", Toast.LENGTH_SHORT).show();
 
-            editor.commit();
-
-
-            if (int_principal >= 50000) {
-                Navigation.findNavController(v).navigate(R.id.action_loanApplicationFragment_to_accountNewFragment_as_coMaker);
             } else {
-                Navigation.findNavController(v).navigate(R.id.action_loanApplicationFragment_to_termsConditionFragment);
+                int int_principal = Integer.parseInt(str_principal);
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("createWhat", "coMaker");
+
+                editor.putInt("LoanProduct", loan_product_id);
+                editor.putString("LoanPurpose", str_loanPurpose);
+                editor.putString("LoanSubmissionDate", str_submissionDate);
+                editor.putString("LoanDisbursement", str_disbursement);
+                editor.putString("LoanPrincipal", str_principal);
+
+                editor.commit();
+
+
+                if (int_principal >= 50000) {
+                    Navigation.findNavController(v).navigate(R.id.action_loanApplicationFragment_to_accountNewFragment_as_coMaker);
+                } else {
+                    Navigation.findNavController(v).navigate(R.id.action_loanApplicationFragment_to_termsConditionFragment);
+                }
             }
         } else if (v == btn_repayment) {
             Navigation.findNavController(v).navigate(R.id.action_loanApplicationFragment_to_loanRepaymentDetailsFragment);
@@ -244,7 +264,11 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
                     String uNameandPword = "mifos:password";
                     String basicAutoPayload = "Basic " + Base64.encodeToString(uNameandPword.getBytes(), Base64.DEFAULT);
 
-                    URL url = new URL("https://192.168.227.159/fineract-provider/api/v1/loans/template?activeOnly=true&productId="+selectedLoanProductID+"&templateType=individual");
+                    MainActivity main_act = (MainActivity)getActivity();
+                    String ip_url = main_act.final_url;
+                    String f_url = ip_url + "fineract-provider/api/v1/loans/template?activeOnly=true&productId="+selectedLoanProductID+"&templateType=individual";
+
+                    URL url = new URL(f_url);
 
                     HttpURLConnection conn = null;
 
@@ -326,68 +350,68 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
         String data = result.toString(UTF_8.name());
 
 
-            try {
+        try {
 
-                JSONObject detailsObject = new JSONObject(data);
+            JSONObject detailsObject = new JSONObject(data);
 
-                Iterator<String> keys = detailsObject.keys();
+            Iterator<String> keys = detailsObject.keys();
 
-                while(keys.hasNext()) {
-                    String key = keys.next();
-                    Log.v("**********************", "\"**********************");
-                    Log.v("keys", key);
-                }
-
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-
-                //getting loan products
-                //JSONArray arr_loan_products = detailsObject.getJSONArray("productOptions");
-                boolean allowPartialPeriodInterestCalcualtion =  detailsObject.optBoolean("allowPartialPeriodInterestCalcualtion");
-                int amortizationType =  detailsObject.getJSONObject("amortizationType").getInt("id");
-                int interestCalculationPeriodType =  detailsObject.getJSONObject("interestCalculationPeriodType").getInt("id");
-                int interestRatePerPeriod =  detailsObject.optInt("interestRatePerPeriod");
-                int interestType =  detailsObject.getJSONObject("interestType").getInt("id");
-                boolean isEqualAmortization =  detailsObject.optBoolean("isEqualAmortization");
-                int numberOfRepayments =  detailsObject.optInt("numberOfRepayments");
-                int repaymentEvery =  detailsObject.optInt("repaymentEvery");
-                int repaymentFrequencyTypeID =  detailsObject.getJSONObject("repaymentFrequencyType").getInt("id");
-                String repaymentFrequencyTypeValue = detailsObject.getJSONObject("repaymentFrequencyType").getString("value");
-                int transactionProcessingStrategyId =  detailsObject.optInt("transactionProcessingStrategyId");
-                int loanTermFrequency =  detailsObject.optInt("termFrequency");
-                int loanTermFrequencyTypeID =  detailsObject.getJSONObject("termPeriodFrequencyType").getInt("id");
-                String loanTermFrequencyTypeValue = detailsObject.getJSONObject("termPeriodFrequencyType").getString("value");
-
-
-                //add to sharedpreferences
-                editor.putBoolean("allowPartialPeriodInterestCalculation", allowPartialPeriodInterestCalcualtion);
-                editor.putInt("amortizationType", amortizationType);
-                editor.putInt("interestCalculationPeriodType", interestCalculationPeriodType);
-                editor.putInt("interestRatePerPeriod", interestRatePerPeriod);
-                editor.putInt("interestType", interestType);
-                editor.putBoolean("isEqualAmortization", isEqualAmortization);
-                editor.putInt("numberOfRepayments", numberOfRepayments);
-                editor.putInt("repaymentEvery", repaymentEvery);
-                editor.putInt("repaymentFrequencyTypeID", repaymentFrequencyTypeID);
-                editor.putInt("transactionProcessingStrategyId", transactionProcessingStrategyId);
-                editor.putInt("loanTermFrequency", loanTermFrequency);
-                editor.putInt("loanTermFrequencyTypeID", loanTermFrequencyTypeID);
-
-
-                editor.commit();
-
-                //set textviews
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        loanTenure.setText(String.valueOf(loanTermFrequency) + " " + loanTermFrequencyTypeValue);
-                        interestRate.setText(String.valueOf(interestRatePerPeriod) + "%");
-                        noOfRepayments.setText(String.valueOf(numberOfRepayments) + " " + repaymentFrequencyTypeValue);
-                    }
-                });
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+            while(keys.hasNext()) {
+                String key = keys.next();
+                Log.v("**********************", "\"**********************");
+                Log.v("keys", key);
             }
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+
+            //getting loan products
+            //JSONArray arr_loan_products = detailsObject.getJSONArray("productOptions");
+            boolean allowPartialPeriodInterestCalcualtion =  detailsObject.optBoolean("allowPartialPeriodInterestCalcualtion");
+            int amortizationType =  detailsObject.getJSONObject("amortizationType").getInt("id");
+            int interestCalculationPeriodType =  detailsObject.getJSONObject("interestCalculationPeriodType").getInt("id");
+            int interestRatePerPeriod =  detailsObject.optInt("interestRatePerPeriod");
+            int interestType =  detailsObject.getJSONObject("interestType").getInt("id");
+            boolean isEqualAmortization =  detailsObject.optBoolean("isEqualAmortization");
+            int numberOfRepayments =  detailsObject.optInt("numberOfRepayments");
+            int repaymentEvery =  detailsObject.optInt("repaymentEvery");
+            int repaymentFrequencyTypeID =  detailsObject.getJSONObject("repaymentFrequencyType").getInt("id");
+            String repaymentFrequencyTypeValue = detailsObject.getJSONObject("repaymentFrequencyType").getString("value");
+            int transactionProcessingStrategyId =  detailsObject.optInt("transactionProcessingStrategyId");
+            int loanTermFrequency =  detailsObject.optInt("termFrequency");
+            int loanTermFrequencyTypeID =  detailsObject.getJSONObject("termPeriodFrequencyType").getInt("id");
+            String loanTermFrequencyTypeValue = detailsObject.getJSONObject("termPeriodFrequencyType").getString("value");
+
+
+            //add to sharedpreferences
+            editor.putBoolean("allowPartialPeriodInterestCalculation", allowPartialPeriodInterestCalcualtion);
+            editor.putInt("amortizationType", amortizationType);
+            editor.putInt("interestCalculationPeriodType", interestCalculationPeriodType);
+            editor.putInt("interestRatePerPeriod", interestRatePerPeriod);
+            editor.putInt("interestType", interestType);
+            editor.putBoolean("isEqualAmortization", isEqualAmortization);
+            editor.putInt("numberOfRepayments", numberOfRepayments);
+            editor.putInt("repaymentEvery", repaymentEvery);
+            editor.putInt("repaymentFrequencyTypeID", repaymentFrequencyTypeID);
+            editor.putInt("transactionProcessingStrategyId", transactionProcessingStrategyId);
+            editor.putInt("loanTermFrequency", loanTermFrequency);
+            editor.putInt("loanTermFrequencyTypeID", loanTermFrequencyTypeID);
+
+
+            editor.commit();
+
+            //set textviews
+            getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    loanTenure.setText(String.valueOf(loanTermFrequency) + " " + loanTermFrequencyTypeValue);
+                    interestRate.setText(String.valueOf(interestRatePerPeriod) + "%");
+                    noOfRepayments.setText(String.valueOf(numberOfRepayments) + " " + repaymentFrequencyTypeValue);
+                }
+            });
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         return data;
@@ -395,5 +419,3 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
 
 }
 
-
-//https://192.168.227.159/fineract-provider/api/v1/loans/template?activeOnly=true&productId=1&templateType=individual

@@ -8,12 +8,15 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.creditsaison.loansystem.MainActivity;
 import com.creditsaison.loansystem.R;
@@ -49,6 +52,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class AccountFragment extends Fragment {
 
     SharedPreferences sharedpreferences;
+    Button btn_no;
 
     private FragmentAccountBinding binding;
     private AccountViewModel viewModel;
@@ -80,6 +84,10 @@ public class AccountFragment extends Fragment {
         editor.putString("loanAgreementImg", signImgDef);
         editor.putString("promNoteImg", signImgDef);
         editor.putString("createWhat", "client");
+        editor.putString("buttonEnable1", "disable");
+        editor.putString("buttonEnable2", "disable");
+
+
         editor.commit();
 
         getData(ip_url);
@@ -94,8 +102,26 @@ public class AccountFragment extends Fragment {
         binding = FragmentAccountBinding.inflate(inflater, container, false);
         binding.setViewModel(viewModel);
 
+        btn_no = (Button) binding.getRoot().findViewById(R.id.btn_no);
+
+        // start of click event
+        btn_no.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  String buttonEnable1 = sharedpreferences.getString("buttonEnable1", "");
+                  String buttonEnable2 = sharedpreferences.getString("buttonEnable2", "");
+
+                  if (buttonEnable1 == "enable" && buttonEnable2 == "enable"){
+                      Navigation.findNavController(v).navigate(R.id.action_accountFragment_to_accountNewFragment);
+                  } else {
+                      Toast.makeText(getActivity().getApplicationContext(), "Cannot Proceed Because of Database Connection Error", Toast.LENGTH_SHORT).show();
+                  }
+              }
+        });
+
         return binding.getRoot();
     }
+
 
     // always verify the host - dont check for certificate
     final static HostnameVerifier DO_NOT_VERIFY = new HostnameVerifier() {
@@ -298,10 +324,16 @@ public class AccountFragment extends Fragment {
                 editor.putString("arr_relationship", arr_relationship.toString());
                 editor.putString("arr_isRelated", arr_isRelated.toString());
 
+                editor.putString("buttonEnable1", "enable");
 
                 editor.commit();
 
             } catch (JSONException e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getActivity().getApplicationContext(), "Database Connectivity Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 e.printStackTrace();
             }
 
@@ -328,9 +360,16 @@ public class AccountFragment extends Fragment {
                 //add to sharedpreferences
                 editor.putString("arr_loan_products", arr_loan_products.toString());
 
+                editor.putString("buttonEnable2", "enable");
+
                 editor.commit();
 
             } catch (JSONException e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getActivity().getApplicationContext(), "Database Connectivity Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 e.printStackTrace();
             }
 
