@@ -16,10 +16,10 @@ public class LoanApplicationViewModel extends ViewModel {
     public void onButtonClick(View view) {
         switch (view.getId()){
             case R.id.btn_repayment:
-                Navigation.findNavController(view).navigate(R.id.action_loanApplicationFragment_to_loanRepaymentDetailsFragment2);
+                Navigation.findNavController(view).navigate(R.id.action_loanApplicationFragment_to_loanRepaymentDetailsFragment);
                 break;
             case R.id.btn_submit:
-                Navigation.findNavController(view).navigate(R.id.action_loanApplicationFragment_to_coMakerFragment);
+                Navigation.findNavController(view).navigate(R.id.action_loanApplicationFragment_to_accountNewFragment_as_coMaker);
                 break;
         }
     }

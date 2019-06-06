@@ -121,9 +121,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:src="@drawable/ic_dp_placeholder"
-            app:layout_constraintDimensionRatio="h,1:0.5"
+            app:layout_constraintDimensionRatio="h,1:1"
             app:layout_constraintBottom_toBottomOf="@+id/textInputLayout3"
-            app:layout_constraintLeft_toRightOf="@+id/textInputLayout2"
+
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textInputLayout"
             app:layout_constraintHorizontal_bias="0.5"
@@ -158,14 +158,14 @@
             style="@style/Button.Login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@color/primary"
             android:text="@string/button_add_photo"
             android:textSize="20sp"
             app:layout_constraintTop_toTopOf="@+id/textInputLayout4"
-            app:layout_constraintLeft_toRightOf="@id/textInputLayout4"
+            app:layout_constraintLeft_toLeftOf="@id/client_image"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/textInputLayout4"
             app:layout_constraintHorizontal_bias="0.5"/>
@@ -208,13 +208,15 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="3dp"
             android:textSize="18sp"
+            android:clickable="true"
+            android:hint="mm/dd/yyyy"
             app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
             tools:text="@string/birthdate" />
 
-        <View
+        <TextView
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -257,12 +259,147 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/gray_dark"
-            android:entries="@array/array_gender"
+
             android:spinnerMode="dropdown"
-            app:layout_constraintBottom_toTopOf="@+id/cb_gov_id"
+            app:layout_constraintBottom_toTopOf="@+id/textInputNationality"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_client_gender" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputNationality"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textInputBirthplace"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_gender">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_nationality"
+                style="@style/EditText.BaseWidth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/nationality"
+                android:inputType="text"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputBirthplace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_marital_stat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputNationality">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_birthplace"
+                style="@style/EditText.BaseWidth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/birthplace"
+                android:inputType="text"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_marital_stat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/marital"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/sp_marital"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputBirthplace" />
+
+        <Spinner
+            android:id="@+id/sp_marital"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/gray_dark"
+
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/textInputNumDependents"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_marital_stat" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputNumDependents"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_educ_stat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_marital">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_num_of_dependents"
+                style="@style/EditText.BaseWidth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/num_dependents"
+                android:inputType="number"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_educ_stat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/educ_stat"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/sp_educ_stat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_marital" />
+
+        <Spinner
+            android:id="@+id/sp_educ_stat"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/gray_dark"
+
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/btn_add_gov_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_educ_stat" />
 
 
         <CheckBox
@@ -272,14 +409,13 @@
             android:layout_alignParentLeft="true"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:text="@string/gov_id"
             android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@+id/sp_gender"
-            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+
+            app:layout_constraintBottom_toBottomOf="@+id/btn_add_gov_id"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/sp_gov_id_type"
             app:layout_constraintHorizontal_bias="0.5" />
@@ -291,13 +427,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+
             android:backgroundTint="@color/gray_dark"
             android:entries="@array/array_gov_ids"
             android:spinnerMode="dropdown"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayout6"
-            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintTop_toTopOf="@+id/btn_add_gov_id"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_add_gov_id"
             app:layout_constraintLeft_toRightOf="@+id/cb_gov_id"
             app:layout_constraintRight_toLeftOf="@id/textInputLayout6"
             app:layout_constraintHorizontal_bias="0.5" />
@@ -308,10 +443,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/sp_gender"
-            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+
+            app:layout_constraintTop_toTopOf="@+id/btn_add_gov_id"
+            app:layout_constraintBottom_toBottomOf="@+id/sp_gov_id_type"
             app:layout_constraintLeft_toRightOf="@+id/sp_gov_id_type"
             app:layout_constraintRight_toLeftOf="@id/btn_add_gov_id"
             app:layout_constraintHorizontal_bias="0.5">
@@ -336,32 +470,105 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/primary"
-            android:onClick="@{viewModel::onButtonClick}"
-            android:text="Upload"
+            android:text="Attach"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/sp_gender"
-            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintTop_toBottomOf="@+id/sp_educ_stat"
+            app:layout_constraintBottom_toBottomOf="@+id/sp_gov_id_type"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_bias="0.5" />
 
+        <CheckBox
+            android:id="@+id/cb_doc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="5dp"
+
+            android:paddingLeft="4dp"
+
+            android:text="Other documents"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="@+id/sp_doc_type"
+            app:layout_constraintBottom_toBottomOf="@id/sp_doc_type"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/sp_doc_type"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+        <Spinner
+            android:id="@+id/sp_doc_type"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+
+            android:backgroundTint="@color/gray_dark"
+            android:entries="@array/array_gov_ids"
+            android:spinnerMode="dropdown"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout7"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout7"
+            app:layout_constraintLeft_toRightOf="@+id/cb_doc"
+            app:layout_constraintRight_toLeftOf="@id/textInputLayout7"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
+            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintLeft_toRightOf="@+id/sp_doc_type"
+            app:layout_constraintRight_toLeftOf="@id/btn_add_doc"
+            app:layout_constraintHorizontal_bias="0.5">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_doc_source"
+                style="@style/EditText.BaseWidth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Source/Office"
+                android:inputType="text"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_submit"
+            android:id="@+id/btn_add_doc"
             style="@style/Button.Login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/primary"
-            android:onClick="@{viewModel::onButtonClick}"
-            android:text="@string/submit"
+            android:text="Attach"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/btn_add_gov_id"
+            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+        <Button
+            android:id="@+id/btn_next"
+            style="@style/Button.Login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/primary"
+            android:text="@string/next"
             android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cb_gov_id" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_add_doc"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

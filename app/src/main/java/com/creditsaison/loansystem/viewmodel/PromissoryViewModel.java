@@ -21,11 +21,11 @@ public class PromissoryViewModel extends ViewModel {
 
                 break;
 
-            case R.id.btn_agree3:
-                // do your code
-                Navigation.findNavController(view).navigate(R.id.action_promiNoteFragment_to_loanApplicationSentFragment);
-
-                break;
+//            case R.id.btn_agree3:
+//                // do your code
+//                Navigation.findNavController(view).navigate(R.id.action_promiNoteFragment_to_loanApplicationSentFragment);
+//
+//                break;
 
             case R.id.btn_disagree:
                 // do your code

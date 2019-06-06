@@ -32,21 +32,40 @@
         android:label="fragment_account_new"
         tools:layout="@layout/fragment_account_new" >
         <action
-            android:id="@+id/action_accountNewFragment_to_accountNewFragment2"
-            app:destination="@id/accountNewFragment2" />
+            android:id="@+id/action_accountNewFragment_to_residenceInformationFragment"
+            app:destination="@id/residenceInformationFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/accountNewFragment2"
-        android:name="com.creditsaison.loansystem.fragments.AccountNew2Fragment"
-        android:label="fragment_account_new_2"
-        tools:layout="@layout/fragment_account_new_2" >
+        android:id="@+id/residenceInformationFragment"
+        android:name="com.creditsaison.loansystem.fragments.ResidenceInformationFragment"
+        android:label="fragment_residence_information"
+        tools:layout="@layout/fragment_residence_information" >
         <action
-            android:id="@+id/action_accountNewFragment2_to_loanApplicationFragment2"
-            app:destination="@id/loanApplicationFragment" />
+            android:id="@+id/action_residenceInformationFragment_to_employmentInformationFragment"
+            app:destination="@id/employmentInformationFragment" />
     </fragment>
-
-
+    <fragment
+        android:id="@+id/employmentInformationFragment"
+        android:name="com.creditsaison.loansystem.fragments.EmploymentInfoFragment"
+        android:label="fragment_employment_information"
+        tools:layout="@layout/fragment_employment_info" >
+        <action
+            android:id="@+id/action_employmentInformationFragment_to_personalReferenceFragment"
+            app:destination="@id/personalReferenceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalReferenceFragment"
+        android:name="com.creditsaison.loansystem.fragments.PersonalReferenceFragment"
+        android:label="fragment_personal_reference"
+        tools:layout="@layout/fragment_personal_reference" >
+        <action
+            android:id="@+id/action_personalReferenceFragment_to_loanApplicationFragment"
+            app:destination="@id/loanApplicationFragment" />
+        <action
+            android:id="@+id/action_personalReferenceFragment_to_termsConditionFragment"
+            app:destination="@id/termsConditionFragment" />
+    </fragment>
     <fragment
         android:id="@+id/accountExistingFragment"
         android:name="com.creditsaison.loansystem.fragments.AccountExistingFragment"
@@ -55,9 +74,6 @@
         <action
             android:id="@+id/action_accountExistingFragment_to_accountNewFragment"
             app:destination="@id/accountNewFragment" />
-        <action
-            android:id="@+id/action_accountExistingFragment_to_coMakerFragment"
-            app:destination="@id/coMakerFragment" />
     </fragment>
     <fragment
         android:id="@+id/loanApplicationFragment"
@@ -65,20 +81,14 @@
         android:label="fragment_loan_application"
         tools:layout="@layout/fragment_loan_application" >
         <action
-            android:id="@+id/action_loanApplicationFragment_to_coMakerFragment"
-            app:destination="@id/coMakerFragment" />
+            android:id="@+id/action_loanApplicationFragment_to_accountNewFragment_as_coMaker"
+            app:destination="@id/accountNewFragment" />
         <action
-            android:id="@+id/action_loanApplicationFragment_to_loanRepaymentDetailsFragment2"
-            app:destination="@id/loanRepaymentDetailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/coMakerFragment"
-        android:name="com.creditsaison.loansystem.fragments.CoMakerFragment"
-        android:label="fragment_co_maker"
-        tools:layout="@layout/fragment_co_maker" >
-        <action
-            android:id="@+id/action_coMakerFragment_to_termsConditionFragment"
+            android:id="@+id/action_loanApplicationFragment_to_termsConditionFragment"
             app:destination="@id/termsConditionFragment" />
+        <action
+            android:id="@+id/action_loanApplicationFragment_to_loanRepaymentDetailsFragment"
+            app:destination="@id/loanRepaymentDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/loanRepaymentDetailsFragment"

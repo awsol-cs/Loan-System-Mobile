@@ -14,13 +14,6 @@ public class AccountViewModel extends ViewModel {
     }
 
     public void onButtonClick(View view) {
-        switch (view.getId()){
-            case R.id.btn_yes:
-                Navigation.findNavController(view).navigate(R.id.action_accountFragment_to_accountExistingFragment);
-                break;
-            case R.id.btn_no:
-                Navigation.findNavController(view).navigate(R.id.action_accountFragment_to_accountNewFragment);
-                break;
-        }
+        Navigation.findNavController(view).navigate(R.id.action_accountFragment_to_accountExistingFragment);
     }
 }

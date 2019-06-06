@@ -11,7 +11,7 @@
     <string name="confirm_button">CONFIRM</string>
     <string name="register">REGISTER</string>
     <string name="no_account">No account yet?</string>
-    <string name="existing_customer">Do you already have an MLhullier account?</string>
+    <string name="existing_customer">Do you already have an existing account?</string>
     <string name="yes_button">YES</string>
     <string name="no_button">NO</string>
     <string name="create_account_button">No, but I want to create one</string>
@@ -70,7 +70,7 @@
     <string name="center_id">Center Id</string>
     <string name="create_client">Create Client</string>
     <string name="create_savings_account">Add Savings Account</string>
-    <string name="create_loan_account">New Loan Application for </string>
+    <string name="create_loan_account">Loan Application</string>
     <string name="create_loan_terms">Loan Terms</string>
     <string name="create_center">Create Center</string>
     <string name="create_group">Create Group</string>
@@ -313,7 +313,7 @@
     <string name="loan">Loan</string>
     <string name="amount_paid">Amt. Paid</string>
     <string name="balance">Balance</string>
-    <string name="loan_principal">Principal</string>
+    <string name="loan_principal">Principal*</string>
     <string name="loan_interest">Interest</string>
     <string name="loan_fees">Fees</string>
     <string name="loan_penalty">Penalty</string>
@@ -383,7 +383,7 @@
     <string name="mname">Middle Name</string>
     <string name="last_name_mandatory">Last Name*</string>
     <string name="mnumber">Mobile Number</string>
-    <string name="dob">Date of Birth</string>
+    <string name="dob">Date of Birth*</string>
     <string name="office_name_mandatory">Office*</string>
     <string name="interest_p_period">Interest Posting Period</string>
     <string name="nominal_interest_rate"> Nominal interest rate</string>
@@ -445,7 +445,7 @@
     <string name="logout">Logout</string>
     <string name="connection_settings">Connection Settings</string>
     <string name="action_save_location">Save location</string>
-    <string name="loan_disbursement_date">Disbursement Date</string>
+    <string name="loan_disbursement_date">Disbursement Date*</string>
     <string name="loan_account_linking_option_label">Link Savings</string>
     <string name="select_linkage_account_hint">Select Account</string>
     <string name="select_week_hint">Select Week</string>
@@ -816,7 +816,6 @@
 
     <string-array name="array_loan_product">
         <item>Auto Loan</item>
-        <item>Auto Loan 6 Months</item>
         <item>Housing Loan</item>
         <item>Personal Loan</item>
         <item>Revolving Loan</item>
@@ -825,8 +824,8 @@
     </string-array>
 
     <string-array name="array_loan_purpose">
+        <item>Personal</item>
         <item>Tricycle for business</item>
-        <item>Free Purpose</item>
         <item>House downpayment</item>
         <item>Capital for business</item>
     </string-array>
@@ -872,20 +871,20 @@
     <string-array name="array_employment_type">
         <item>Private Sector</item>
         <item>Government</item>
+        <item>Professional</item>
         <item>Self-Employed</item>
         <item>Others</item>
     </string-array>
 
-    <string name="gov_id">Government ID:</string>
+    <string name="gov_id">Government ID</string>
     <string name="gov_id_num">ID Number</string>
     <string-array name="array_gov_ids">
-        <item>Type</item>
         <item>Passport</item>
         <item>PRC ID</item>
         <item>SSS ID</item>
     </string-array>
 
-    <string name="educ_stat">Educational Attainment:</string>
+    <string name="educ_stat">Educational Attainment</string>
     <string-array name="array_educ_stat">
         <item>High School</item>
         <item>College</item>
@@ -902,7 +901,7 @@
     <string name="operation_years">Years in Operation</string>
     <string name="num_employees">Number of Employees</string>
 
-    <string name="num_dependents">Number of Dependents:</string>
+    <string name="num_dependents">Number of Dependents</string>
     <string name="for_others">For Others</string>
     <string name="last_school">School Last Attended</string>
     <string name="birthplace">Place of Birth</string>
@@ -911,10 +910,11 @@
     <string name="residence_ownership">Residence Ownership</string>
     <string-array name="array_residence_ownership">
         <item>Owned</item>
-        <item>Co. Quarters</item>
-        <item>Mortgaged</item>
-        <item>With Relatives</item>
-        <item>Rented</item>
+        <item>Tenant</item>
+        <!--<item>Co. Quarters</item>-->
+        <!--<item>Mortgaged</item>-->
+        <!--<item>With Relatives</item>-->
+        <!--<item>Rented</item>-->
     </string-array>
 
     <string-array name="array_rank">
@@ -936,6 +936,22 @@
         <item>Others</item>
     </string-array>
 
+    <string-array name="array_address_type">
+        <item>Permanent</item>
+        <item>Current</item>
+    </string-array>
+
+    <string-array name="array_countries">
+        <item>Philippines</item>
+    </string-array>
+
+    <string-array name="array_states">
+        <item>Abra</item>
+        <item>Albay</item>
+        <item>Bataan</item>
+        <item>Cagayan</item>
+    </string-array>
+
 
     <string name="button_add_photo">Add Your Photo</string>
     <string name="button_add_docu_photo">Add photo of supporting documents</string>
@@ -952,7 +968,37 @@
     <string name="clear_pad">Clear Pad</string>
     <string name="save_signature">Save Signature</string>
 
+    <string name="next">Next</string>
+
     <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
+
+    <string name="residence_info">Residence Information</string>
+    <string name="employment_info">Employment Information</string>
+    <string name="personal_reference">Personal Reference</string>
+
+    <string name="street">Street</string>
+    <string name="address_line_1">Address Line 1</string>
+    <string name="address_line_2">Address Line 2</string>
+    <string name="address_line_3">Address Line 3</string>
+    <string name="city">City</string>
+    <string name="state_province">State/Province</string>
+    <string name="postal_code">Postal Code</string>
+    <string name="address_type">Address Type</string>
+    <string name="employment_others">Other Employment Type</string>
+    <string name="present_employer">Name of Present Employer or Business</string>
+    <string name="business_nature">Nature of Business</string>
+    <string name="office_address">Office Address</string>
+    <string name="office_phone">Office Phone</string>
+    <string name="mobile_phone">Mobile Phone</string>
+    <string name="local_no">Local Number</string>
+    <string name="fax_no">Fax Number</string>
+    <string name="email_address">Email Address</string>
+    <string name="title_or_position">Title or Position</string>
+    <string name="other_income">Other Income</string>
+    <string name="previous_employer">Name of Previous Employer</string>
+    <string name="previous_employer_address">Office Address of Previous Employer</string>
+    <string name="previous_employer_years">Years with Previous Employer</string>
+    <string name="present_employer_years">Years with Present Employer</string>
 
 
 </resources>

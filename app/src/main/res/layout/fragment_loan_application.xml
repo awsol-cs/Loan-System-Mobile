@@ -27,8 +27,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:textAlignment="textEnd"
-            app:layout_constraintBottom_toTopOf="@+id/tv_label_accountid"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toTopOf="@+id/tv_lproduct"
             app:layout_constraintEnd_toStartOf="@+id/tv_customer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,45 +46,14 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_page_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_page_title"
-            app:layout_constraintTop_toTopOf="@+id/tv_page_title"
-            tools:text="Customer Name" />
-
-        <TextView
-            android:id="@+id/tv_label_accountid"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="32dp"
-            android:text="@string/account_id"
-            android:textAlignment="textEnd"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_lproduct"
-            app:layout_constraintEnd_toStartOf="@+id/tv_account_id"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_page_title" />
-
-        <TextView
-            android:id="@+id/tv_account_id"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_label_accountid"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/tv_label_accountid"
-            app:layout_constraintTop_toTopOf="@+id/tv_label_accountid"
-            tools:text="@string/account_number" />
+            app:layout_constraintTop_toTopOf="@+id/tv_page_title" />
 
         <TextView
             android:id="@+id/tv_lproduct"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:paddingLeft="4dp"
@@ -95,7 +64,7 @@
             app:layout_constraintBottom_toTopOf="@+id/sp_lproduct"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_accountid" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_page_title" />
 
         <Spinner
             android:id="@+id/sp_lproduct"
@@ -106,7 +75,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
-            android:entries="@array/array_loan_product"
             android:paddingTop="10dp"
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toTopOf="@+id/tv_loan_purpose"
@@ -142,23 +110,73 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:entries="@array/array_loan_purpose"
-            app:layout_constraintBottom_toTopOf="@+id/tv_loan_disbursement"
+            app:layout_constraintBottom_toTopOf="@+id/tv_submission_date_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_loan_purpose" />
 
         <TextView
-            android:id="@+id/tv_disbursementon_date"
+            android:id="@+id/tv_submission_date_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:textAlignment="textEnd"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="Submission Date"
+            android:textAlignment="viewStart"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_loan_disbursement"
-            app:layout_constraintEnd_toStartOf="@+id/im_calendar"
-            app:layout_constraintStart_toEndOf="@+id/tv_loan_disbursement"
-            app:layout_constraintTop_toTopOf="@+id/tv_loan_disbursement"
-            tools:text="@string/disburse_date" />
+            app:layout_constraintBottom_toTopOf="@+id/tv_submission_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_loan_purpose" />
+
+        <TextView
+            android:id="@+id/tv_submission_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="4dp"
+            android:hint="mm/dd/yyyy"
+            android:textSize="18sp"
+            android:clickable="true"
+            app:layout_constraintBottom_toTopOf="@+id/submission_view"
+            app:layout_constraintEnd_toStartOf="@+id/im_submission_calendar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_submission_date_label" />
+
+        <ImageView
+            android:id="@+id/im_submission_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/baseline_calendar_today_black_24"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_submission_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_submission_date"
+            app:layout_constraintTop_toTopOf="@+id/tv_submission_date"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:id="@+id/submission_view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/gray_dark"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_loan_disbursement"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/im_submission_calendar" />
 
         <TextView
             android:id="@+id/tv_loan_disbursement"
@@ -173,10 +191,28 @@
             android:text="@string/loan_disbursement_date"
             android:textAlignment="viewStart"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout5"
-            app:layout_constraintEnd_toStartOf="@+id/tv_disbursementon_date"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sp_loan_purpose" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/submission_view"
+            app:layout_constraintBottom_toTopOf="@+id/tv_disbursementon_date"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_disbursementon_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="4dp"
+            android:hint="mm/dd/yyyy"
+            android:textSize="18sp"
+            android:clickable="true"
+            app:layout_constraintEnd_toStartOf="@+id/im_calendar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_loan_disbursement"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/im_calendar"
@@ -204,7 +240,7 @@
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/im_calendar" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_disbursementon_date" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout5"
@@ -256,8 +292,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_loan_term"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_loan_term"
-            app:layout_constraintTop_toTopOf="@+id/tv_loan_term"
-            tools:text="@string/loan_tenure_value" />
+            app:layout_constraintTop_toTopOf="@+id/tv_loan_term" />
 
         <TextView
             android:id="@+id/tv_loan_interest_rate"
@@ -284,8 +319,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_loan_interest_rate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_loan_interest_rate"
-            app:layout_constraintTop_toTopOf="@+id/tv_loan_interest_rate"
-            tools:text="@string/loan_interest_rate_value" />
+            app:layout_constraintTop_toTopOf="@+id/tv_loan_interest_rate" />
 
         <TextView
             android:id="@+id/tv_repayments"
@@ -314,8 +348,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_repayments"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_repayments"
-            app:layout_constraintTop_toTopOf="@+id/tv_repayments"
-            tools:text="@string/loan_repayments_value" />
+            app:layout_constraintTop_toTopOf="@+id/tv_repayments" />
 
         <Button
             android:id="@+id/btn_repayment"
@@ -327,7 +360,6 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
             android:background="@color/primary"
-            android:onClick="@{viewModel::onButtonClick}"
             android:text="@string/btn_view_repayment_details"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/btn_submit"
@@ -336,16 +368,15 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_repayments" />
 
         <Button
-            android:id="@+id/btn_submit"
+            android:id="@+id/btn_next"
             style="@style/Button.Login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@color/primary"
-            android:onClick="@{viewModel::onButtonClick}"
-            android:text="@string/submit"
+            android:text="@string/next"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

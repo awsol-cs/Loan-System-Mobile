@@ -57,6 +57,24 @@
         <item name="android:text">@string/create_client</item>
         <item name="android:textSize">24sp</item>
     </style>
+    <style name="TextView.ResidenceInformation" parent="TextView.Base">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:text">@string/residence_info</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="TextView.EmploymentInfo" parent="TextView.Base">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:text">@string/employment_info</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="TextView.PersonalReference" parent="TextView.Base">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:text">@string/personal_reference</item>
+        <item name="android:textSize">24sp</item>
+    </style>
     <style name="TextView.CreateCoMaker" parent="TextView.Base">
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
