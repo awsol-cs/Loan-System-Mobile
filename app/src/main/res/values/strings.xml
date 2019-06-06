@@ -313,7 +313,7 @@
     <string name="loan">Loan</string>
     <string name="amount_paid">Amt. Paid</string>
     <string name="balance">Balance</string>
-    <string name="loan_principal">Principal</string>
+    <string name="loan_principal">Principal*</string>
     <string name="loan_interest">Interest</string>
     <string name="loan_fees">Fees</string>
     <string name="loan_penalty">Penalty</string>
@@ -383,7 +383,7 @@
     <string name="mname">Middle Name</string>
     <string name="last_name_mandatory">Last Name*</string>
     <string name="mnumber">Mobile Number</string>
-    <string name="dob">Date of Birth</string>
+    <string name="dob">Date of Birth*</string>
     <string name="office_name_mandatory">Office*</string>
     <string name="interest_p_period">Interest Posting Period</string>
     <string name="nominal_interest_rate"> Nominal interest rate</string>
@@ -445,7 +445,7 @@
     <string name="logout">Logout</string>
     <string name="connection_settings">Connection Settings</string>
     <string name="action_save_location">Save location</string>
-    <string name="loan_disbursement_date">Disbursement Date</string>
+    <string name="loan_disbursement_date">Disbursement Date*</string>
     <string name="loan_account_linking_option_label">Link Savings</string>
     <string name="select_linkage_account_hint">Select Account</string>
     <string name="select_week_hint">Select Week</string>

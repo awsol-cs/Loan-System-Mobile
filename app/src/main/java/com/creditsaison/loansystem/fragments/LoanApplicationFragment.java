@@ -208,7 +208,7 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
 
             } else if (!valid_date){
 
-                Toast.makeText(getActivity().getApplicationContext(), "Birth date cannot be less than the submission date", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Disbursement date cannot be less than the submission date", Toast.LENGTH_SHORT).show();
 
             } else {
                 int int_principal = Integer.parseInt(str_principal);
