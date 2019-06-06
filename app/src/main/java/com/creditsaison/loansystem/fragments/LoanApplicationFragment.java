@@ -139,7 +139,6 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
                 String name = jsonObject1.optString("name");
                 loanProductArray.add(name);
                 loanProductIds.add(id);
-                Log.i("LOAN PRODUCT", name + "-" + id);
             }
             //setting spinner for residence ownership
             ArrayAdapter<String> adapter_products = new ArrayAdapter<String>(
@@ -150,7 +149,6 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
             loanProduct.setAdapter(adapter_products);
 
 
-            Log.i("LOAN PRODUCTS SIZE", String.valueOf(loanProductArray.size()));
 
 
         } catch (JSONException e) {
@@ -162,7 +160,6 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 int selectedProductIndex= parentView.getSelectedItemPosition();
                 int selectedProductID = loanProductIds.get(selectedProductIndex);
-                Log.i("SELECTED PROD ID", String.valueOf(selectedProductID));
 
                 getLoanProductDetails(selectedProductID);
 
@@ -353,14 +350,6 @@ public class LoanApplicationFragment extends Fragment implements View.OnClickLis
         try {
 
             JSONObject detailsObject = new JSONObject(data);
-
-            Iterator<String> keys = detailsObject.keys();
-
-            while(keys.hasNext()) {
-                String key = keys.next();
-                Log.v("**********************", "\"**********************");
-                Log.v("keys", key);
-            }
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
 

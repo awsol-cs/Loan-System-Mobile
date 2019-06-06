@@ -334,7 +334,6 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
                 Bitmap myBitmap = BitmapFactory.decodeFile(clientImagePath);
                 String str_clientImage = convertImage(myBitmap, 1);
                 image.put("clientImage", "data:image/jpeg;base64," + str_clientImage);
-                Log.i("Client", str_clientImage);
             }
 
             if(sp.contains("coMakerPhoto")) {
@@ -433,27 +432,6 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
                     String uNameandPword = "mifos:password";
                     String basicAutoPayload = "Basic " + Base64.encodeToString(uNameandPword.getBytes(), Base64.DEFAULT);
 
- //                   String url = "https://192.168.227.159/fineract-provider/api/v1/clients";
- //                   trustAllHosts();
-//                    RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-//                    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                            new Response.Listener<String>(){
-//
-//                                @Override
-//                                public void onResponse(String response) {
-//                                    Log.i("STATUS", response);
-//                                }
-//                            }, new Response.ErrorListener() {
-//
-//                        @Override
-//                        public void onErrorResponse(VolleyError error) {
-//                            Log.i("STATUS", error.toString());
-//                        }
-//                    });
-//
-//                    requestQueue.add(stringRequest);
-
-
                     MainActivity main_act = (MainActivity)getActivity();
                     String ip_url = main_act.final_url;
                     String f_url = ip_url + "fineract-provider/api/v1/cs_clients";
@@ -480,12 +458,9 @@ public class PromissoryFragment extends Fragment implements View.OnClickListener
                     conn.setDoOutput(true);
                     conn.setDoInput(true);
 
-                    Log.i("JSON", finalData.toString());
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
                     os.writeBytes(finalData.toString());
 
-//                    InputStream in = new BufferedInputStream(conn.getInputStream());
 
                     os.flush();
                     os.close();

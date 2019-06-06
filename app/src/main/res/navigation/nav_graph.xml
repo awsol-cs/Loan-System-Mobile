@@ -36,16 +36,6 @@
             app:destination="@id/residenceInformationFragment" />
     </fragment>
 
-    <!--<fragment-->
-        <!--android:id="@+id/accountNewFragment2"-->
-        <!--android:name="com.creditsaison.loansystem.fragments.AccountNew2Fragment"-->
-        <!--android:label="fragment_account_new_2"-->
-        <!--tools:layout="@layout/fragment_account_new_2" >-->
-        <!--<action-->
-            <!--android:id="@+id/action_accountNewFragment2_to_loanApplicationFragment2"-->
-            <!--app:destination="@id/loanApplicationFragment" />-->
-    <!--</fragment>-->
-
     <fragment
         android:id="@+id/residenceInformationFragment"
         android:name="com.creditsaison.loansystem.fragments.ResidenceInformationFragment"
@@ -84,9 +74,6 @@
         <action
             android:id="@+id/action_accountExistingFragment_to_accountNewFragment"
             app:destination="@id/accountNewFragment" />
-        <action
-            android:id="@+id/action_accountExistingFragment_to_coMakerFragment"
-            app:destination="@id/coMakerFragment" />
     </fragment>
     <fragment
         android:id="@+id/loanApplicationFragment"
@@ -102,15 +89,6 @@
         <action
             android:id="@+id/action_loanApplicationFragment_to_loanRepaymentDetailsFragment"
             app:destination="@id/loanRepaymentDetailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/coMakerFragment"
-        android:name="com.creditsaison.loansystem.fragments.CoMakerFragment"
-        android:label="fragment_co_maker"
-        tools:layout="@layout/fragment_co_maker" >
-        <action
-            android:id="@+id/action_coMakerFragment_to_termsConditionFragment"
-            app:destination="@id/termsConditionFragment" />
     </fragment>
     <fragment
         android:id="@+id/loanRepaymentDetailsFragment"

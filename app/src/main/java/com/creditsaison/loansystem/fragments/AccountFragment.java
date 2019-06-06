@@ -272,14 +272,6 @@ public class AccountFragment extends Fragment {
 
                 JSONObject jsonObject = new JSONObject(data);
 
-                Iterator<String> keys = jsonObject.keys();
-
-                while(keys.hasNext()) {
-                    String key = keys.next();
-                    Log.v("**********************", "\"**********************");
-                    Log.v("keys", key);
-                }
-
                 // this is the part where you save data in sharedpreference
                 SharedPreferences.Editor editor = sharedpreferences.edit();
 
@@ -343,14 +335,6 @@ public class AccountFragment extends Fragment {
             try {
 
                 JSONObject jsonObject = new JSONObject(data);
-
-                Iterator<String> keys = jsonObject.keys();
-
-                while(keys.hasNext()) {
-                    String key = keys.next();
-                    Log.v("**********************", "\"**********************");
-                    Log.v("keys", key);
-                }
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
 

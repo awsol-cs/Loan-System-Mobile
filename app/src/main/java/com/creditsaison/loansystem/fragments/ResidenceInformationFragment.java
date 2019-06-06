@@ -156,12 +156,6 @@ public class ResidenceInformationFragment extends Fragment {
             );
             country.setAdapter(adapter_country);
 
-            Log.i("ADDRESSTYPE SIZE", String.valueOf(addressTypeArray.size()));
-            Log.i("COUNTRY SIZE", String.valueOf(countryArray.size()));
-            Log.i("STATE SIZE", String.valueOf(stateArray.size()));
-            Log.i("OWNERSHIP SIZE", String.valueOf(ownershipArray.size()));
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -239,28 +233,6 @@ public class ResidenceInformationFragment extends Fragment {
         // end of click event
 
         return binding.getRoot();
-    }
-
-    public void storeData() {
-        Log.v("log_tag", "ResidenceInformation storing data");
-
-        sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString("currentSign", "termsCondition");
-        editor.commit();
-
-        String restoredText = sharedpreferences.getString("termsConditionImg", " ");
-
-        street = (EditText) binding.getRoot().findViewById(R.id.et_street);
-
-        String str_street = street.getText().toString();
-
-
-
-        Log.v("log_tag", str_street);
-
-
     }
 
 }

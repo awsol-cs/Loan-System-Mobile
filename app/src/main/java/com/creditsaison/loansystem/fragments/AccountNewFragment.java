@@ -259,10 +259,6 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
             );
             educational_status.setAdapter(adapter_educ_stat);
 
-            Log.i("GENDER SIZE", String.valueOf(genderArray.size()));
-            Log.i("MARITAL SIZE", String.valueOf(maritalArray.size()));
-            Log.i("EDUC SIZE", String.valueOf(educStatArray.size()));
-
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -366,7 +362,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
 
                     } catch (Exception ex) {
                         // Error occurred while creating the File
-                        Log.i("error", "error while creating the file");
+                        Log.i("exception_error", ex.toString());
                     }
                 }
             } else {
@@ -410,7 +406,7 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
                         checkOrientation(myBitmap);
                         client_image.setImageBitmap(rotatedBitmap);
                     } catch (IOException dfg) {
-                        Log.i("rotation", "error in rotation");
+                        Log.i("ioexception_error", dfg.toString());
                     }
 
                 } else {
@@ -587,19 +583,16 @@ public class AccountNewFragment extends Fragment implements View.OnClickListener
         String str_gender = gender.getSelectedItem().toString();
         int gender_index = genderArray.indexOf(str_gender);
         int gender_id = genderIds.get(gender_index);
-        Log.i("SELECTED GENDER + ID", str_gender + String.valueOf(gender_id));
 
         //for marital status
         String str_maritalStatus = marital_status.getSelectedItem().toString();
         int marital_index = maritalArray.indexOf(str_maritalStatus);
         int marital_status_id = maritalStatIds.get(marital_index);
-        Log.i("SELECTED MARITAL + ID", str_maritalStatus + String.valueOf(marital_status_id));
 
         //for educational stat
         String str_educStat = educational_status.getSelectedItem().toString();
         int educ_index = educStatArray.indexOf(str_educStat);
         int educ_status_id = educStatIds.get(educ_index);
-        Log.i("SELECTED EDUC + ID", str_educStat + String.valueOf(educ_status_id));
 
         // Saving
         sharedpreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
